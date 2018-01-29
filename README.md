@@ -1,1 +1,1 @@
-# HuntForGloryBackend
+# HuntForGloryFrontend
