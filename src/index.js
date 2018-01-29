@@ -70,7 +70,7 @@ class App extends React.Component {
 
     componentWillMount() {
         axios
-          .get('http://localhost:3001/api/quests')
+          .get('https://huntforglory.herokuapp.com/api/quests')
           .then(response => {
             this.setState({ quests: response.data })
           })
