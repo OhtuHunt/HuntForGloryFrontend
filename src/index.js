@@ -8,7 +8,7 @@ import axios from "axios";
 const GenerateCard = ({ title, questType, points, clickHandler}) => {
     return (
         <div onClick={clickHandler} style={{cursor: 'pointer'}}>
-                <Card>
+                <Card className="listingCard">
                     <CardBody>
                         <h2>{title}</h2>
                         <table style={{width: '100%'}}>
@@ -78,7 +78,7 @@ const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivati
           <h1> {state.quest.name} </h1>
           <div className="soloDesc">{state.quest.description}</div>
           <div>
-            <button onClick={handleStart}>
+            <button className="startButton" onClick={handleStart}>
               Start quest
             </button>
           </div>
