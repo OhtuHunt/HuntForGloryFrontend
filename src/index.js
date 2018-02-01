@@ -27,9 +27,24 @@ const GenerateCard = ({ title, questType, points, clickHandler}) => {
     );
 };
 
-const ShowOne = ({state, handleBack, handleStart, handleComplete}) => {
+const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivationCodeChange}) => {
 
-  if (state.started) {
+  if (state.completed){
+    return (
+      <div>
+        <Card>
+          <CardBody>
+            <button type="submit" onClick={handleBack}>
+              Go back
+            </button>
+            <h1> {state.quest.name} </h1>
+            <div>{state.quest.description}</div>
+            <h2> Quest Completed! </h2>
+          </CardBody>
+        </Card>
+      </div>
+    )
+  } else if (state.started) {
     return (
       <div>
         <Card>
@@ -40,10 +55,9 @@ const ShowOne = ({state, handleBack, handleStart, handleComplete}) => {
             <h1> {state.quest.name} </h1>
             <div>{state.quest.description}</div>
             <form onSubmit={handleComplete}>
-              <input value={state.activationCode} />
-
+              <input value={state.activationCode}
+                     onChange={handleActivationCodeChange}/>
               <button type="submit"> Complete </button>
-
             </form>
           </CardBody>
         </Card>
@@ -79,7 +93,8 @@ class App extends React.Component {
             showAll: true,
             quest: null,
             started: false,
-            activationCode: ''
+            activationCode: '',
+            completed: false
         }
     }
 
@@ -104,7 +119,9 @@ class App extends React.Component {
         this.setState({
           quest: null,
           showAll: true,
-          started: false
+          started: false,
+          completed: false,
+          activationCode: ''
         })
     }
 
@@ -114,9 +131,17 @@ class App extends React.Component {
       })
     }
 
-    handleCompleteQuest = () => {
+    handleCompleteQuest = (event) => {
+      event.preventDefault()
       this.setState({
+        completed: true,
+        activationCode: ''
+      })
+    }
 
+    handleActivationCodeChange = (event) => {
+      this.setState({
+        activationCode: event.target.value
       })
     }
 
@@ -137,7 +162,10 @@ class App extends React.Component {
 
       return (
         <div>
-          <ShowOne state={this.state} handleBack={this.handleBackButtonClick} handleStart={this.handleStartQuest} handleComplete={this.handleCompleteQuest}/>
+          <ShowOne state={this.state} handleBack={this.handleBackButtonClick}
+           handleStart={this.handleStartQuest}
+           handleComplete={this.handleCompleteQuest}
+           handleActivationCodeChange={this.handleActivationCodeChange}/>
         </div>
       )
     }
