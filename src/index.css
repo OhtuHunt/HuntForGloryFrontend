@@ -19,11 +19,8 @@ html {
 .questType {
     text-align: left;
 }
+
 button {
-    border: 0;
-    border-radius: 0;
-    background: none;
-    -webkit-appearance: none;
     cursor: pointer;
 }
 .solo {
@@ -130,7 +127,6 @@ body {
         position: fixed;bottom:0;
         text-align: center;
         font-size: 16px;
-        margin-bottom: 3px;
         box-shadow: 4px 0 5px 0 rgba(0, 0, 0, 0.14), 2px 0 9px 1px rgba(0, 0, 0, 0.12), 4px 0 2px -2px rgba(0, 0, 0, 0.2);
         padding: 6px 6px 6px 0;
         will-change: transform;

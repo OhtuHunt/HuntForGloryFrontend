@@ -7,8 +7,7 @@ import axios from "axios";
 
 const GenerateCard = ({ title, questType, points, clickHandler}) => {
     return (
-        <div>
-            <button style={{width:'100%'}} onClick={clickHandler}>
+        <div onClick={clickHandler} style={{cursor: 'pointer'}}>
                 <Card>
                     <CardBody>
                         <h2>{title}</h2>
@@ -22,7 +21,6 @@ const GenerateCard = ({ title, questType, points, clickHandler}) => {
                         </table>
                     </CardBody>
                 </Card>
-            </button>
         </div>
     );
 };
