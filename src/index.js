@@ -27,16 +27,44 @@ const GenerateCard = ({ title, questType, points, clickHandler}) => {
     );
 };
 
-const ShowOne = ({quest, handleBack}) => {
+const ShowOne = ({state, handleBack, handleStart, handleComplete}) => {
+
+  if (state.started) {
+    return (
+      <div>
+        <Card>
+          <CardBody>
+            <button type="submit" onClick={handleBack}>
+              Go back
+            </button>
+            <h1> {state.quest.name} </h1>
+            <div>{state.quest.description}</div>
+            <form onSubmit={handleComplete}>
+              <input value={state.activationCode} />
+
+              <button type="submit"> Complete </button>
+
+            </form>
+          </CardBody>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <button onClick={handleBack}>
-        Go back
-      </button>
       <Card>
         <CardBody>
-          <h1> {quest.name} </h1>
-          <div>{quest.description}</div>
+          <button type="submit" onClick={handleBack}>
+            Go back
+          </button>
+          <h1> {state.quest.name} </h1>
+          <div>{state.quest.description}</div>
+          <div>
+            <button onClick={handleStart}>
+              Start quest
+            </button>
+          </div>
         </CardBody>
       </Card>
     </div>
@@ -47,24 +75,11 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            quests: [{
-    "id": 1,
-    "name": "TestiQuest0",
-    "description": "Tässä on kuvaus",
-    "points": 900,
-    "done": false,
-    "__v": 0,
-    "type": "Yksilöquest"
-},{
-    "id": 2,
-    "name": "TestiQuest1",
-    "description": "Tässä on kuvaus",
-    "points": 92929,
-    "done": false,
-    "type": "Co-op quest"
-}],
+            quests: [],
             showAll: true,
-            quest: null
+            quest: null,
+            started: false,
+            activationCode: ''
         }
     }
 
@@ -88,8 +103,21 @@ class App extends React.Component {
     handleBackButtonClick = () => {
         this.setState({
           quest: null,
-          showAll: true
+          showAll: true,
+          started: false
         })
+    }
+
+    handleStartQuest = () => {
+      this.setState({
+        started: true
+      })
+    }
+
+    handleCompleteQuest = () => {
+      this.setState({
+
+      })
     }
 
     render() {
@@ -103,13 +131,13 @@ class App extends React.Component {
             points={quest.points}
             clickHandler ={this.handleQuestShowClick(quest.id)}
             />)}
-            </div>
+          </div>
           )
       }
 
       return (
         <div>
-          <ShowOne quest={this.state.quest} handleBack={this.handleBackButtonClick}/>
+          <ShowOne state={this.state} handleBack={this.handleBackButtonClick} handleStart={this.handleStartQuest} handleComplete={this.handleCompleteQuest}/>
         </div>
       )
     }
