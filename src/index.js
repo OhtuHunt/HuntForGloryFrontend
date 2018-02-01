@@ -7,8 +7,7 @@ import axios from "axios";
 
 const GenerateCard = ({ title, questType, points, clickHandler}) => {
     return (
-        <div>
-            <button style={{width:'100%'}} onClick={clickHandler}>
+        <div onClick={clickHandler} style={{cursor: 'pointer'}}>
                 <Card>
                     <CardBody>
                         <h2>{title}</h2>
@@ -22,23 +21,27 @@ const GenerateCard = ({ title, questType, points, clickHandler}) => {
                         </table>
                     </CardBody>
                 </Card>
-            </button>
         </div>
     );
 };
+
+const cardStyle = {
+  height: window.innerHeight * 0.75,
+
+}
 
 const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivationCodeChange}) => {
 
   if (state.completed){
     return (
       <div>
-        <Card>
+        <Card style={cardStyle} className="solo">
           <CardBody>
             <button type="submit" onClick={handleBack}>
               Go back
             </button>
             <h1> {state.quest.name} </h1>
-            <div>{state.quest.description}</div>
+            <div className="soloDesc">{state.quest.description}</div>
             <h2> Quest Completed! </h2>
           </CardBody>
         </Card>
@@ -47,13 +50,13 @@ const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivati
   } else if (state.started) {
     return (
       <div>
-        <Card>
+        <Card style={cardStyle} className="solo">
           <CardBody>
             <button type="submit" onClick={handleBack}>
               Go back
             </button>
             <h1> {state.quest.name} </h1>
-            <div>{state.quest.description}</div>
+            <div className="soloDesc">{state.quest.description}</div>
             <form onSubmit={handleComplete}>
               <input value={state.activationCode}
                      onChange={handleActivationCodeChange}/>
@@ -67,13 +70,13 @@ const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivati
 
   return (
     <div>
-      <Card>
+      <Card style={cardStyle} className="solo">
         <CardBody>
           <button type="submit" onClick={handleBack}>
             Go back
           </button>
           <h1> {state.quest.name} </h1>
-          <div>{state.quest.description}</div>
+          <div className="soloDesc">{state.quest.description}</div>
           <div>
             <button onClick={handleStart}>
               Start quest
@@ -175,5 +178,26 @@ class App extends React.Component {
     }
 };
 
+const footerTable = {
+  width: window.innerWidth,
+}
+
+const Footer = () => {
+  return (
+      <table style={footerTable}>
+          <td>
+              Pisteet: 0
+          </td>
+          <td>
+              Rank: 1
+          </td>
+          <td>
+              Status: active
+          </td>
+      </table>
+  )
+}
+
 ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Footer />, document.getElementById("footer"));
 registerServiceWorker();
