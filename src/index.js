@@ -133,10 +133,14 @@ class App extends React.Component {
 
     handleCompleteQuest = (event) => {
       event.preventDefault()
-      this.setState({
-        completed: true,
-        activationCode: ''
-      })
+      if (this.state.quest.activationCode === this.state.activationCode) {
+        this.setState({
+          completed: true,
+          activationCode: ''
+        })
+      } else {
+        window.alert("Incorrect activation code!")
+      }
     }
 
     handleActivationCodeChange = (event) => {
