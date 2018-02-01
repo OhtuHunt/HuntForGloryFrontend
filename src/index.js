@@ -185,15 +185,19 @@ const footerTable = {
 const Footer = () => {
   return (
       <table style={footerTable}>
-          <td>
-              Pisteet: 0
-          </td>
-          <td>
-              Rank: 1
-          </td>
-          <td>
-              Status: active
-          </td>
+        <tbody>
+          <tr>
+            <td>
+                Pisteet: 0
+            </td>
+            <td>
+                Rank: 1
+            </td>
+            <td>
+                Status: active
+            </td>
+          </tr>
+        </tbody>
       </table>
   )
 }
