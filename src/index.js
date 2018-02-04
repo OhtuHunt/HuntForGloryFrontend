@@ -2,91 +2,10 @@ import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Card, CardBody } from "react-simple-card";
 import axios from "axios";
-
-const GenerateCard = ({ title, questType, points, clickHandler}) => {
-    return (
-        <div onClick={clickHandler} style={{cursor: 'pointer'}}>
-                <Card className="listingCard">
-                    <CardBody>
-                        <h2>{title}</h2>
-                        <table style={{width: '100%'}}>
-                            <tbody>
-                                <tr>
-                                    <td className="questType">{questType}</td>
-                                    <td className="points">{points}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </CardBody>
-                </Card>
-        </div>
-    );
-};
-
-const cardStyle = {
-  height: window.innerHeight * 0.75,
-
-}
-
-const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivationCodeChange}) => {
-
-  if (state.completed){
-    return (
-      <div>
-        <Card style={cardStyle} className="solo">
-          <CardBody>
-            <button type="submit" onClick={handleBack}>
-              Go back
-            </button>
-            <h1> {state.quest.name} </h1>
-            <div className="soloDesc">{state.quest.description}</div>
-            <h2> Quest Completed! </h2>
-          </CardBody>
-        </Card>
-      </div>
-    )
-  } else if (state.started) {
-    return (
-      <div>
-        <Card style={cardStyle} className="solo">
-          <CardBody>
-            <button type="submit" onClick={handleBack}>
-              Go back
-            </button>
-            <h1> {state.quest.name} </h1>
-            <div className="soloDesc">{state.quest.description}</div>
-            <form onSubmit={handleComplete}>
-              <input value={state.activationCode}
-                     onChange={handleActivationCodeChange}/>
-              <button type="submit"> Complete </button>
-            </form>
-          </CardBody>
-        </Card>
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      <Card style={cardStyle} className="solo">
-        <CardBody>
-          <button type="submit" onClick={handleBack}>
-            Go back
-          </button>
-          <h1> {state.quest.name} </h1>
-          <div className="soloDesc">{state.quest.description}</div>
-          <div>
-            <button className="startButton" onClick={handleStart}>
-              Start quest
-            </button>
-          </div>
-        </CardBody>
-      </Card>
-    </div>
-  )
-}
+import Footer from "./components/footer"
+import ShowOne from "./components/show_one"
+import ShowAll from "./components/show_all"
 
 class App extends React.Component {
     constructor(props) {
@@ -156,13 +75,7 @@ class App extends React.Component {
       if (this.state.showAll === true) {
         return (
           <div>
-          {this.state.quests.map(quest => <GenerateCard
-            key={quest.id}
-            title={quest.name}
-            questType={quest.type}
-            points={quest.points}
-            clickHandler ={this.handleQuestShowClick(quest.id)}
-            />)}
+            <ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick}/>
           </div>
           )
       }
@@ -177,30 +90,6 @@ class App extends React.Component {
       )
     }
 };
-
-const footerTable = {
-  width: window.innerWidth,
-}
-
-const Footer = () => {
-  return (
-      <table style={footerTable}>
-        <tbody>
-          <tr>
-            <td>
-                Pisteet: 0
-            </td>
-            <td>
-                Rank: 1
-            </td>
-            <td>
-                Status: active
-            </td>
-          </tr>
-        </tbody>
-      </table>
-  )
-}
 
 ReactDOM.render(<App />, document.getElementById("root"));
 ReactDOM.render(<Footer />, document.getElementById("footer"));
