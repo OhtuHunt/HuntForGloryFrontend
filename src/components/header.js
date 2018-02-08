@@ -26,8 +26,6 @@ const Header = ({ handleShowAll }) => {
                     </tbody>
                 </table>
             </div>
-
-
         </div>
     )
 }

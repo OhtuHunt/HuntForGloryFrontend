@@ -1,9 +1,9 @@
 import "./index.css";
-import registerServiceWorker from "./registerServiceWorker";
+// import registerServiceWorker from "./registerServiceWorker";
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
-import Header from "./components/header"
+// import Header from "./components/header"
 import Footer from "./components/footer"
 import ShowOne from "./components/show_one"
 import ShowAll from "./components/show_all"
@@ -105,6 +105,6 @@ class App extends React.Component {
 };
 
 ReactDOM.render(<App />, document.getElementById("root"));
-ReactDOM.render(<Header />, document.getElementById("header"));
+// ReactDOM.render(<Header />, document.getElementById("header"));
 ReactDOM.render(<Footer />, document.getElementById("footer"));
-registerServiceWorker();
+// registerServiceWorker();
