@@ -13,13 +13,14 @@ const Header = ({ handleShowAll }) => {
                     <tbody>
                         <tr>
                             <td>
-                                {/* Does nothing, no functionality in the buttons/tabs to be figured out */}
-                                <button className='navButton' onClick={handleShowAll}>Show all</button>
+                                <button className='navButton' onClick={handleShowAll()}>Show all</button>
                             </td>
                             <td>
+                                {/* Does nothing, to be implemented when we have points to create a leaderboard */}
                                 <button className='navButton'>Leaderboard</button>
                             </td>
                             <td>
+                                {/* Does nothing, to be implemented when we have an user with settings */}
                                 <button className='navButton'>User settings</button>
                             </td>
                         </tr>

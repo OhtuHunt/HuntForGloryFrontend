@@ -91,7 +91,7 @@ body {
 
 .navButton {
     background: #e9af43;
-    width: 120px;
+    width: 100%;
 }
 
 .header {
@@ -134,7 +134,7 @@ body {
   transition: transform 0.233s cubic-bezier(0, 0, 0.21, 1) 0.1s, -webkit-transform 0.233s cubic-bezier(0, 0, 0.21, 1) 0.1s;
   z-index: 1000; }
 
-  .header .headerButton {
+.header .headerButton {
     width: 24px;
     height: 24px;
     margin-right: 16px;
@@ -146,12 +146,12 @@ body {
     border: none;
     outline: none;
     cursor: pointer; }
-  .header #butRefresh {
+.header #butRefresh {
     background: url(/images/ic_refresh_white_24px.svg) center center no-repeat; }
-  .header #butAdd {
+.header #butAdd {
     background: url(/images/ic_add_white_24px.svg) center center no-repeat; }
 
-    .footer {
+.footer {
         width: 100%;
         height: 15px;
         color: #FFF;

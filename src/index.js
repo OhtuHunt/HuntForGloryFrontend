@@ -3,7 +3,7 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
-// import Header from "./components/header"
+import Header from "./components/header"
 import Footer from "./components/footer"
 import ShowOne from "./components/show_one"
 import ShowAll from "./components/show_all"
@@ -87,18 +87,35 @@ class App extends React.Component {
   render() {
     if (this.state.showAll === true) {
       return (
+
         <div>
+          <header className="header">
+            <div id="header">
+              <Header handleShowAll={this.handleShowAll} />
+            </div>
+          </header>
           <ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />
+          <footer class="footer">
+            <div id="footer"><Footer /></div>
+          </footer>
         </div>
       )
     }
 
     return (
       <div>
+        <header className="header">
+          <div id="header">
+            <Header handleShowAll={this.handleShowAll} />
+          </div>
+        </header>
         <ShowOne state={this.state} handleBack={this.handleBackButtonClick}
           handleStart={this.handleStartQuest}
           handleComplete={this.handleCompleteQuest}
           handleActivationCodeChange={this.handleActivationCodeChange} />
+        <footer class="footer">
+          <div id="footer"><Footer /></div>
+        </footer>
       </div>
     )
   }
@@ -106,5 +123,4 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 // ReactDOM.render(<Header />, document.getElementById("header"));
-ReactDOM.render(<Footer />, document.getElementById("footer"));
 // registerServiceWorker();
