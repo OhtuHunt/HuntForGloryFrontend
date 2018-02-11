@@ -2,11 +2,11 @@ import "./index.css";
 // import registerServiceWorker from "./registerServiceWorker";
 import React from "react";
 import ReactDOM from "react-dom";
-import axios from "axios";
 import Header from "./components/header"
 import Footer from "./components/footer"
 import ShowOne from "./components/show_one"
 import ShowAll from "./components/show_all"
+import questService from "./services/quests"
 
 class App extends React.Component {
   constructor(props) {
@@ -17,13 +17,16 @@ class App extends React.Component {
       quest: null,
       started: false,
       activationCode: '',
-      completed: false
+      completed: false,
+      user: {
+        admin: true
+      }
     }
   }
 
   componentWillMount() {
-    axios
-      .get('https://huntforglory.herokuapp.com/api/quests')
+    questService
+      .getAll()
       .then(response => {
         this.setState({ quests: response.data })
       })
@@ -64,6 +67,22 @@ class App extends React.Component {
     this.setState({
       started: true
     })
+  }
+
+  handleDeleteQuest = (id) => {
+    return () => {
+      if (window.confirm("Do you want to delete this quest?")) {
+        questService
+        .remove(id)
+        .then(() => {
+          const quests = this.state.quests.filter(quest => quest.id !== id)
+          this.setState({
+            quests: quests,
+            showAll: true
+          })
+        })
+      }
+    }
   }
 
   handleCompleteQuest = (event) => {
@@ -112,7 +131,8 @@ class App extends React.Component {
         <ShowOne state={this.state} handleBack={this.handleBackButtonClick}
           handleStart={this.handleStartQuest}
           handleComplete={this.handleCompleteQuest}
-          handleActivationCodeChange={this.handleActivationCodeChange} />
+          handleActivationCodeChange={this.handleActivationCodeChange}
+          handleDelete ={this.handleDeleteQuest} />
         <footer class="footer">
           <div id="footer"><Footer /></div>
         </footer>

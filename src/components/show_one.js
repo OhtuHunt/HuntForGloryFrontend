@@ -2,14 +2,14 @@ import React from 'react'
 import { Card, CardBody } from "react-simple-card";
 import cardStyle from "./cardstyle"
 
-const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivationCodeChange}) => {
+const ShowOne = ({state, handleBack, handleDelete, handleStart, handleComplete, handleActivationCodeChange}) => {
 
   if (state.completed){
     return (
       <div>
         <Card style={cardStyle} className="solo">
           <CardBody>
-            <QuestInfo state={state} handleBack={handleBack}/>
+            <QuestInfo state={state} handleBack={handleBack} handleDelete={handleDelete}/>
             <h2> Quest Completed! </h2>
           </CardBody>
         </Card>
@@ -20,7 +20,7 @@ const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivati
       <div>
         <Card style={cardStyle} className="solo">
           <CardBody>
-            <QuestInfo state={state} handleBack={handleBack}/>
+            <QuestInfo state={state} handleBack={handleBack} handleDelete={handleDelete}/>
             <ShowActivationCodeForm state={state}
               handleActivationCodeChange={handleActivationCodeChange}
             />
@@ -34,7 +34,7 @@ const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivati
     <div>
       <Card style={cardStyle} className="solo">
         <CardBody>
-          <QuestInfo state={state} handleBack={handleBack}/>
+          <QuestInfo state={state} handleBack={handleBack} handleDelete={handleDelete}/>
           <ShowStartButton handleStart={handleStart}/>
         </CardBody>
       </Card>
@@ -42,9 +42,10 @@ const ShowOne = ({state, handleBack, handleStart, handleComplete, handleActivati
   )
 }
 
-const QuestInfo = ({state, handleBack}) => {
+const QuestInfo = ({state, handleBack, handleDelete}) => {
   return (
     <div>
+      <AdminToolsForQuest state={state} handleDelete={handleDelete} />
       <button className="backButton" onClick={handleBack}>
         <span>
           Go back
@@ -76,6 +77,24 @@ const ShowStartButton = ({handleStart}) => {
       </button>
     </div>
   )
+}
+
+const AdminToolsForQuest = ({state, handleDelete}) => {
+  if (state.user !== null) {
+    if (state.user.admin) {
+      return (
+        <div>
+          <button className="deleteQuest" onClick={handleDelete(state.quest.id)}>
+            Delete
+          </button>
+        </div>
+      )
+    } else {
+      return (
+        <div></div>
+      )
+    }
+  }
 }
 
 export default ShowOne
