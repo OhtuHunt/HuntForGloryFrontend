@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, CardBody } from "react-simple-card";
 import cardStyle from "./cardstyle"
+import questService from "../services/quests"
 
 const ShowOne = ({state, handleBack, handleDelete, handleStart, handleComplete, handleActivationCodeChange}) => {
 
