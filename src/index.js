@@ -7,6 +7,10 @@ import Footer from "./components/footer"
 import ShowOne from "./components/show_one"
 import ShowAll from "./components/show_all"
 import questService from "./services/quests"
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
 
 class App extends React.Component {
   constructor(props) {
@@ -104,23 +108,6 @@ class App extends React.Component {
   }
 
   render() {
-    if (this.state.showAll === true) {
-      return (
-
-        <div>
-          <header className="header">
-            <div id="header">
-              <Header handleShowAll={this.handleShowAll} />
-            </div>
-          </header>
-          <ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />
-          <footer class="footer">
-            <div id="footer"><Footer /></div>
-          </footer>
-        </div>
-      )
-    }
-
     return (
       <div>
         <header className="header">
@@ -128,11 +115,13 @@ class App extends React.Component {
             <Header handleShowAll={this.handleShowAll} />
           </div>
         </header>
-        <ShowOne state={this.state} handleBack={this.handleBackButtonClick}
-          handleStart={this.handleStartQuest}
-          handleComplete={this.handleCompleteQuest}
-          handleActivationCodeChange={this.handleActivationCodeChange}
-          handleDelete ={this.handleDeleteQuest} />
+        {/*------ ROUTER ------ */}
+        <Router>
+          <div>
+            <Route exact path="/" render={() => (<ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />)} />
+          </div>
+        </Router>
+        {/*------/ROUTER ------ */}
         <footer class="footer">
           <div id="footer"><Footer /></div>
         </footer>
@@ -140,6 +129,8 @@ class App extends React.Component {
     )
   }
 };
+
+
 
 ReactDOM.render(<App />, document.getElementById("root"));
 // ReactDOM.render(<Header />, document.getElementById("header"));
