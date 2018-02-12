@@ -6,6 +6,7 @@ import Header from "./components/header"
 import Footer from "./components/footer"
 import ShowOne from "./components/show_one"
 import ShowAll from "./components/show_all"
+import Leaderboard from "./components/leaderboard"
 import questService from "./services/quests"
 import {
   BrowserRouter as Router,
@@ -119,6 +120,7 @@ class App extends React.Component {
         <Router>
           <div>
             <Route exact path="/" render={() => (<ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />)} />
+            <Route path="/leaderboard" render={Leaderboard} />
           </div>
         </Router>
         {/*------/ROUTER ------ */}
