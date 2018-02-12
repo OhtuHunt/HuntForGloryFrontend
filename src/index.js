@@ -118,7 +118,7 @@ class App extends React.Component {
           <div>
             <ul className="header">
               <h1 className='header__title'>Hunt for Glory</h1>
-              <li><NavLink exact to="/">Home</NavLink></li>
+              <li><NavLink exact to="/">Quests</NavLink></li>
               <li><NavLink to="/leaderboard">Leaderboard</NavLink></li>
               <li><NavLink to="/userpage">Userpage</NavLink></li>
             </ul>
