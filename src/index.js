@@ -7,11 +7,13 @@ import Footer from "./components/footer"
 import ShowOne from "./components/show_one"
 import ShowAll from "./components/show_all"
 import Leaderboard from "./components/leaderboard"
+import Userpage from "./components/userpage"
 import questService from "./services/quests"
 import {
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom'
+  Route,
+  NavLink,
+  HashRouter
+} from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +27,8 @@ class App extends React.Component {
       completed: false,
       user: {
         admin: true
-      }
+      },
+      router: true
     }
   }
 
@@ -78,14 +81,14 @@ class App extends React.Component {
     return () => {
       if (window.confirm("Do you want to delete this quest?")) {
         questService
-        .remove(id)
-        .then(() => {
-          const quests = this.state.quests.filter(quest => quest.id !== id)
-          this.setState({
-            quests: quests,
-            showAll: true
+          .remove(id)
+          .then(() => {
+            const quests = this.state.quests.filter(quest => quest.id !== id)
+            this.setState({
+              quests: quests,
+              showAll: true
+            })
           })
-        })
       }
     }
   }
@@ -109,30 +112,72 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <header className="header">
-          <div id="header">
-            <Header handleShowAll={this.handleShowAll} />
-          </div>
-        </header>
-        {/*------ ROUTER ------ */}
-        <Router>
+    if (this.state.router === true) {
+      return (
+        <HashRouter>
           <div>
-            <Route exact path="/" render={() => (<ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />)} />
-            <Route path="/leaderboard" render={Leaderboard} />
+            <ul className="header">
+              <h1 className='header__title'>Hunt for Glory</h1>
+              <li><NavLink exact to="/">Home</NavLink></li>
+              <li><NavLink to="/leaderboard">Leaderboard</NavLink></li>
+              <li><NavLink to="/userpage">Userpage</NavLink></li>
+            </ul>
+            <div className="content">
+              <Route exact path="/" render={() => this.state.showAll ? 
+                <ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />
+                : <ShowOne state={this.state} handleBack={this.handleBackButtonClick}
+                  handleStart={this.handleStartQuest}
+                  handleComplete={this.handleCompleteQuest}
+                  handleActivationCodeChange={this.handleActivationCodeChange}
+                  handleDelete={this.handleDeleteQuest} />} />
+              <Route path="/leaderboard" component={Leaderboard} />
+              <Route path="/userpage" component={Userpage} />
+            </div>
+            <footer class="footer">
+              <div id="footer"><Footer /></div>
+            </footer>
           </div>
-        </Router>
-        {/*------/ROUTER ------ */}
-        <footer class="footer">
-          <div id="footer"><Footer /></div>
-        </footer>
-      </div>
-    )
+
+        </HashRouter>
+      )
+    } else {
+      if (this.state.showAll === true) {
+        return (
+
+          <div>
+            <header className="header">
+              <div id="header">
+                <Header handleShowAll={this.handleShowAll} />
+              </div>
+            </header>
+            <ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />
+            <footer class="footer">
+              <div id="footer"><Footer /></div>
+            </footer>
+          </div>
+        )
+      }
+
+      return (
+        <div>
+          <header className="header">
+            <div id="header">
+              <Header handleShowAll={this.handleShowAll} />
+            </div>
+          </header>
+          <ShowOne state={this.state} handleBack={this.handleBackButtonClick}
+            handleStart={this.handleStartQuest}
+            handleComplete={this.handleCompleteQuest}
+            handleActivationCodeChange={this.handleActivationCodeChange}
+            handleDelete={this.handleDeleteQuest} />
+          <footer class="footer">
+            <div id="footer"><Footer /></div>
+          </footer>
+        </div>
+      )
+    }
   }
 };
-
-
 
 ReactDOM.render(<App />, document.getElementById("root"));
 // ReactDOM.render(<Header />, document.getElementById("header"));

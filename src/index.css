@@ -39,7 +39,7 @@ button {
 }
 
 .deleteButton {
-  background-color: ##ef4768; /* Red-ish */
+  background-color: #ef4768; /* Red-ish */
   border-style: solid;
   color: white;
   padding: 15px 32px;
@@ -240,3 +240,40 @@ ul {
 a {
     text-decoration: none;
 }
+
+.active {
+    background-color: #0099FF;
+}
+
+h1, h2, p, ul, li {
+    font-family: sans-serif;
+    width: 100%;
+    
+  }
+  ul.header li {
+    display: inline;
+    list-style-type: none;
+    margin: 0;
+  }
+  ul.header {
+    background-color: #e9af43;
+    padding: 0;
+  }
+  ul.header li a {
+    color: #FFF;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 20px;
+    display: inline-block;
+  }
+  .content {
+    background-color: #FFF;
+    padding: 20px;
+  }
+  .content h2 {
+    padding: 0;
+    margin: 0;
+  }
+  .content li {
+    margin-bottom: 10px;
+  }
