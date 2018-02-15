@@ -1,27 +1,19 @@
-import React from 'react'
+import React from "react";
 
-const footerTable = {
-  width: window.innerWidth,
-}
+// const footerTable = {
+//   width: window.innerWidth
+// }
 
 const Footer = () => {
   return (
-      <table style={footerTable}>
-        <tbody>
-          <tr>
-            <td>
-                Pisteet: 0
-            </td>
-            <td>
-                Rank: 1
-            </td>
-            <td>
-                Status: active
-            </td>
-          </tr>
-        </tbody>
-      </table>
-  )
-}
+    <div className="footer">
+      <ul className="footerList">
+        <li>Pisteet: 0</li>
+        <li>Status: online</li>
+        <li>Rank: 1</li>
+      </ul>
+    </div>
+  );
+};
 
-export default Footer
+export default Footer;
