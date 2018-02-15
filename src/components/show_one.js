@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, CardBody } from "react-simple-card";
 import cardStyle from "./cardstyle"
-import questService from "../services/quests"
+// import questService from "../services/quests"
 
 const ShowOne = ({state, handleDelete, handleStart, handleComplete, handleActivationCodeChange}) => {
   
@@ -43,12 +43,16 @@ const ShowOne = ({state, handleDelete, handleStart, handleComplete, handleActiva
   )
 }
 
+const questInfoStyle = {
+  height: window.innerHeight * 0.4
+}
+
 const QuestInfo = ({state, handleDelete}) => {
   return (
     <div>
       <AdminToolsForQuest state={state} handleDelete={handleDelete} />
       <h1> {state.quest.name} </h1>
-      <div className="soloDesc">{state.quest.description}</div>
+      <div className="soloDesc" style={questInfoStyle}>{state.quest.description}</div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardBody } from "react-simple-card";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const GenerateCard = ({ id, title, questType, points, clickHandler }) => {
 

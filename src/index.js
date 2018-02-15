@@ -114,7 +114,7 @@ class App extends React.Component {
             <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/userpage" component={Userpage} />
           </div>
-          <footer class="footer">
+          <footer className="footer">
             <div id="footer"><Footer /></div>
           </footer>
         </div>

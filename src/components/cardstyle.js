@@ -1,5 +1,5 @@
 const cardStyle = {
-  height: window.innerHeight * 0.75,
+  height: window.innerHeight * 0.72
 }
 
 export default cardStyle
