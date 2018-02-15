@@ -1,13 +1,16 @@
 import React from 'react'
 import { Card, CardBody } from "react-simple-card";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-const GenerateCard = ({ title, questType, points, clickHandler}) => {
+const GenerateCard = ({ id, title, questType, points, clickHandler }) => {
+
     return (
-        <div onClick={clickHandler} style={{cursor: 'pointer'}}>
+            <Link to={`/quests/${id}`} onClick={clickHandler} style={{ cursor: 'pointer' }}>
                 <Card className="listingCard">
                     <CardBody>
+
                         <h2>{title}</h2>
-                        <table style={{width: '100%'}}>
+                        <table style={{ width: '100%' }}>
                             <tbody>
                                 <tr>
                                     <td className="questType">{questType}</td>
@@ -17,7 +20,8 @@ const GenerateCard = ({ title, questType, points, clickHandler}) => {
                         </table>
                     </CardBody>
                 </Card>
-        </div>
+            </Link>
+
     );
 };
 

@@ -3,14 +3,14 @@ import { Card, CardBody } from "react-simple-card";
 import cardStyle from "./cardstyle"
 import questService from "../services/quests"
 
-const ShowOne = ({state, handleBack, handleDelete, handleStart, handleComplete, handleActivationCodeChange}) => {
-
+const ShowOne = ({state, handleDelete, handleStart, handleComplete, handleActivationCodeChange}) => {
+  
   if (state.completed){
     return (
       <div>
         <Card style={cardStyle} className="solo">
           <CardBody>
-            <QuestInfo state={state} handleBack={handleBack} handleDelete={handleDelete}/>
+            <QuestInfo state={state} handleDelete={handleDelete}/>
             <h2> Quest Completed! </h2>
           </CardBody>
         </Card>
@@ -21,7 +21,7 @@ const ShowOne = ({state, handleBack, handleDelete, handleStart, handleComplete, 
       <div>
         <Card style={cardStyle} className="solo">
           <CardBody>
-            <QuestInfo state={state} handleBack={handleBack} handleDelete={handleDelete}/>
+            <QuestInfo state={state} handleDelete={handleDelete}/>
             <ShowActivationCodeForm state={state}
               handleActivationCodeChange={handleActivationCodeChange}
             />
@@ -35,7 +35,7 @@ const ShowOne = ({state, handleBack, handleDelete, handleStart, handleComplete, 
     <div>
       <Card style={cardStyle} className="solo">
         <CardBody>
-          <QuestInfo state={state} handleBack={handleBack} handleDelete={handleDelete}/>
+          <QuestInfo state={state} handleDelete={handleDelete}/>
           <ShowStartButton handleStart={handleStart}/>
         </CardBody>
       </Card>
@@ -43,15 +43,10 @@ const ShowOne = ({state, handleBack, handleDelete, handleStart, handleComplete, 
   )
 }
 
-const QuestInfo = ({state, handleBack, handleDelete}) => {
+const QuestInfo = ({state, handleDelete}) => {
   return (
     <div>
       <AdminToolsForQuest state={state} handleDelete={handleDelete} />
-      <button className="backButton" onClick={handleBack}>
-        <span>
-          Go back
-        </span>
-      </button>
       <h1> {state.quest.name} </h1>
       <div className="soloDesc">{state.quest.description}</div>
     </div>
@@ -61,11 +56,11 @@ const QuestInfo = ({state, handleBack, handleDelete}) => {
 const ShowActivationCodeForm = ({state, handleComplete, handleActivationCodeChange}) => {
   return (
     <div>
-      <form onSubmit={handleComplete}>
+      {/* <form onSubmit={handleComplete}> */}
+
         <input value={state.activationCode}
           onChange={handleActivationCodeChange}/>
         <button type="submit"> Complete </button>
-      </form>
     </div>
   )
 }

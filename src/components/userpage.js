@@ -3,8 +3,8 @@ import React from 'react'
 const Userpage = () => {
     return (
         <div>
-            <h2>Hello Osku</h2>
-            <p>here you can change your settings or something</p>
+            <h2>Hello Henri!</h2>
+            <p>This is your personal page for settings etc. upcoming on spring 4</p>
         </div>
     )
 }
