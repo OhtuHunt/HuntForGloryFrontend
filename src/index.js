@@ -93,12 +93,14 @@ class App extends React.Component {
     return (
       <HashRouter>
         <div>
-          <ul className="header">
-            <h1 className='header__title'>Hunt for Glory</h1>
-            <li><NavLink exact to="/">Quests</NavLink></li>
-            <li><NavLink to="/leaderboard">Leaderboard</NavLink></li>
-            <li><NavLink to="/userpage">Userpage</NavLink></li>
-          </ul>
+          <h1 className="header__title">Hunt for Glory</h1>
+            <div className="header">
+              <ul className="headerButtons">
+                <li><NavLink exact to="/">Quests</NavLink></li>
+                <li><NavLink to="/leaderboard">Leaderboard</NavLink></li>
+                <li><NavLink to="/userpage">Userpage</NavLink></li>
+              </ul>
+            </div>
           <div className="content">
             <Route exact path="/" render={() =>
               <ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />
@@ -107,7 +109,8 @@ class App extends React.Component {
               handleStart={this.handleStartQuest}
               handleComplete={this.handleCompleteQuest}
               handleActivationCodeChange={this.handleActivationCodeChange}
-              handleDelete={this.handleDeleteQuest} />} />
+              handleDelete={this.handleDeleteQuest} />
+            } />
             <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/userpage" component={Userpage} />
           </div>
@@ -115,7 +118,6 @@ class App extends React.Component {
             <div id="footer"><Footer /></div>
           </footer>
         </div>
-
       </HashRouter>
     )
   }
