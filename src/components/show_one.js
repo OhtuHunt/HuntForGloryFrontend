@@ -3,14 +3,14 @@ import { Card, CardBody } from "react-simple-card";
 import cardStyle from "./cardstyle"
 // import questService from "../services/quests"
 
-const ShowOne = ({state, handleDelete, handleStart, handleComplete, handleActivationCodeChange}) => {
-  
-  if (state.completed){
+const ShowOne = ({quest, state, handleDelete, handleStart, handleComplete, handleActivationCodeChange}) => {
+
+  if (quest.completed){
     return (
       <div>
         <Card style={cardStyle} className="solo">
           <CardBody>
-            <QuestInfo state={state} handleDelete={handleDelete}/>
+            <QuestInfo quest={quest} state={state} handleDelete={handleDelete}/>
             <h2> Quest Completed! </h2>
           </CardBody>
         </Card>
@@ -21,8 +21,8 @@ const ShowOne = ({state, handleDelete, handleStart, handleComplete, handleActiva
       <div>
         <Card style={cardStyle} className="solo">
           <CardBody>
-            <QuestInfo state={state} handleDelete={handleDelete}/>
-            <ShowActivationCodeForm state={state}
+            <QuestInfo quest={quest} state={state} handleDelete={handleDelete}/>
+            <ShowActivationCodeForm quest={quest} state={state} handleComplete={handleComplete}
               handleActivationCodeChange={handleActivationCodeChange}
             />
           </CardBody>
@@ -35,7 +35,7 @@ const ShowOne = ({state, handleDelete, handleStart, handleComplete, handleActiva
     <div>
       <Card style={cardStyle} className="solo">
         <CardBody>
-          <QuestInfo state={state} handleDelete={handleDelete}/>
+          <QuestInfo quest={quest} state={state} handleDelete={handleDelete}/>
           <ShowStartButton handleStart={handleStart}/>
         </CardBody>
       </Card>
@@ -47,24 +47,22 @@ const questInfoStyle = {
   height: window.innerHeight * 0.4
 }
 
-const QuestInfo = ({state, handleDelete}) => {
+const QuestInfo = ({quest, state, handleDelete}) => {
   return (
     <div>
-      <AdminToolsForQuest state={state} handleDelete={handleDelete} />
-      <h1> {state.quest.name} </h1>
-      <div className="soloDesc" style={questInfoStyle}>{state.quest.description}</div>
+      <AdminToolsForQuest quest={quest} state={state} handleDelete={handleDelete} />
+      <h1> {quest.name} </h1>
+      <div className="soloDesc" style={questInfoStyle}>{quest.description}</div>
     </div>
   )
 }
 
-const ShowActivationCodeForm = ({state, handleComplete, handleActivationCodeChange}) => {
+const ShowActivationCodeForm = ({ quest, state, handleComplete, handleActivationCodeChange}) => {
   return (
     <div>
-      {/* <form onSubmit={handleComplete}> */}
-
         <input value={state.activationCode}
           onChange={handleActivationCodeChange}/>
-        <button type="submit"> Complete </button>
+        <button onClick={() => handleComplete({quest})}> Complete </button>
     </div>
   )
 }
@@ -79,12 +77,12 @@ const ShowStartButton = ({handleStart}) => {
   )
 }
 
-const AdminToolsForQuest = ({state, handleDelete}) => {
+const AdminToolsForQuest = ({quest, state, handleDelete}) => {
   if (state.user !== null) {
     if (state.user.admin) {
       return (
         <div>
-          <button className="deleteQuest" onClick={handleDelete(state.quest.id)}>
+          <button className="deleteQuest" onClick={handleDelete(quest.id)}>
             Delete
           </button>
         </div>

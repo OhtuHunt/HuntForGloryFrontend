@@ -46,6 +46,12 @@ class App extends React.Component {
   }
 
   handleStartQuest = () => {
+    //Should receive quest as param
+
+    //Quest in database does not have started
+    //Change needs to be saved to database
+
+
     this.setState({
       started: true
     })
@@ -67,20 +73,19 @@ class App extends React.Component {
     }
   }
 
-  handleCompleteQuest = (event) => {
-    // event.preventDefault()
+  handleCompleteQuest = ({quest}) => {
 
-    this.setState({
-      activationCode: ''
-    })
-    // if (this.state.quest.activationCode === this.state.activationCode) {
-    //   this.setState({
-    //     completed: true,
-    //     activationCode: ''
-    //   })
-    // } else {
+    //The change in the status of completed is not saved to database
+    //First implement adding quests, update did not exist yet
+
+    if (quest.activationCode === this.state.activationCode) {
+      this.setState({
+        completed: true,
+        activationCode: ''
+      })
+    } else {
     window.alert("Incorrect activation code!")
-    // }
+    }
   }
 
   handleActivationCodeChange = (event) => {
@@ -90,22 +95,26 @@ class App extends React.Component {
   }
 
   render() {
+
+    const questById = (id) =>
+      this.state.quests.find(quest => quest.id === id)
+
     return (
       <HashRouter>
         <div>
           <h1 className="header__title">Hunt for Glory</h1>
-            <div className="header">
-              <ul className="headerButtons">
-                <li><NavLink exact to="/">Quests</NavLink></li>
-                <li><NavLink to="/leaderboard">Leaderboard</NavLink></li>
-                <li><NavLink to="/userpage">Userpage</NavLink></li>
-              </ul>
-            </div>
+          <div className="header">
+            <ul className="headerButtons">
+              <li><NavLink exact to="/">Quests</NavLink></li>
+              <li><NavLink to="/leaderboard">Leaderboard</NavLink></li>
+              <li><NavLink to="/userpage">Userpage</NavLink></li>
+            </ul>
+          </div>
           <div className="content">
             <Route exact path="/" render={() =>
               <ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />
             } />
-            <Route exact path="/quests/:id" render={() => <ShowOne state={this.state}
+            <Route exact path="/quests/:id" render={({match}) => <ShowOne quest={questById(match.params.id)} state={this.state}
               handleStart={this.handleStartQuest}
               handleComplete={this.handleCompleteQuest}
               handleActivationCodeChange={this.handleActivationCodeChange}
