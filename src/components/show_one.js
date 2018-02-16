@@ -16,7 +16,7 @@ const ShowOne = ({quest, state, handleDelete, handleStart, handleComplete, handl
         </Card>
       </div>
     )
-  } else if (state.started) {
+  } else if (quest.started) {
     return (
       <div>
         <Card style={cardStyle} className="solo">
@@ -36,7 +36,7 @@ const ShowOne = ({quest, state, handleDelete, handleStart, handleComplete, handl
       <Card style={cardStyle} className="solo">
         <CardBody>
           <QuestInfo quest={quest} state={state} handleDelete={handleDelete}/>
-          <ShowStartButton handleStart={handleStart}/>
+          <ShowStartButton quest={quest} handleStart={handleStart}/>
         </CardBody>
       </Card>
     </div>
@@ -67,10 +67,10 @@ const ShowActivationCodeForm = ({ quest, state, handleComplete, handleActivation
   )
 }
 
-const ShowStartButton = ({handleStart}) => {
+const ShowStartButton = ({ quest, handleStart }) => {
   return (
     <div>
-      <button className="startButton" onClick={handleStart}>
+      <button className="startButton" onClick={() => handleStart({quest})}>
         Start quest
       </button>
     </div>

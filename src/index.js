@@ -45,12 +45,19 @@ class App extends React.Component {
     }
   }
 
-  handleStartQuest = () => {
-    //Should receive quest as param
+  handleStartQuest = ({quest}) => {
+    const started = true
 
-    //Quest in database does not have started
-    //Change needs to be saved to database
-
+    questService
+      .update(quest.id, { started })
+      .then(updatedQuest => {
+        this.setState({
+          quests: this.state.quests.map(q => q.id !== quest.id ? q : updatedQuest),
+        })
+      })
+      .catch(error => {
+        // this.createNewQuest({})
+      })
 
     this.setState({
       started: true
@@ -82,7 +89,7 @@ class App extends React.Component {
         completed: true,
         activationCode: ''
       })
-      
+
       questService
         .update(quest.id, { done })
         .then(updatedQuest => {
@@ -104,7 +111,7 @@ class App extends React.Component {
       .create(quest)
       .then(quest => {
         this.setState({
-          quests: this.state.quests.filter(q=>q.id!==quest.id).concat(quest),
+          quests: this.state.quests.filter(q => q.id !== quest.id).concat(quest),
         })
       })
   }
