@@ -123,9 +123,7 @@ class App extends React.Component {
             <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/userpage" component={Userpage} />
           </div>
-          <footer className="footer">
-            <div id="footer"><Footer /></div>
-          </footer>
+            <Footer />
         </div>
       </HashRouter>
     )
