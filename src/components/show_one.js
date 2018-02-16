@@ -5,7 +5,7 @@ import cardStyle from "./cardstyle"
 
 const ShowOne = ({quest, state, handleDelete, handleStart, handleComplete, handleActivationCodeChange}) => {
 
-  if (quest.completed){
+  if (quest.done){
     return (
       <div>
         <Card style={cardStyle} className="solo">

@@ -73,19 +73,40 @@ class App extends React.Component {
     }
   }
 
-  handleCompleteQuest = ({quest}) => {
+  handleCompleteQuest = ({ quest }) => {
 
-    //The change in the status of completed is not saved to database
-    //First implement adding quests, update did not exist yet
+    const done = true
 
     if (quest.activationCode === this.state.activationCode) {
       this.setState({
         completed: true,
         activationCode: ''
       })
+      
+      questService
+        .update(quest.id, { done })
+        .then(updatedQuest => {
+          this.setState({
+            quests: this.state.quests.map(q => q.id !== quest.id ? q : updatedQuest),
+          })
+        })
+        .catch(error => {
+          // this.createNewQuest({})
+        })
     } else {
-    window.alert("Incorrect activation code!")
+      window.alert("Incorrect activation code!")
     }
+  }
+
+  //In progress
+  createNewQuest = (quest) => {
+    questService
+      .create(quest)
+      .then(quest => {
+        this.setState({
+          quests: this.state.quests.filter(q=>q.id!==quest.id).concat(quest),
+        })
+      })
   }
 
   handleActivationCodeChange = (event) => {
@@ -114,7 +135,7 @@ class App extends React.Component {
             <Route exact path="/" render={() =>
               <ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />
             } />
-            <Route exact path="/quests/:id" render={({match}) => <ShowOne quest={questById(match.params.id)} state={this.state}
+            <Route exact path="/quests/:id" render={({ match }) => <ShowOne quest={questById(match.params.id)} state={this.state}
               handleStart={this.handleStartQuest}
               handleComplete={this.handleCompleteQuest}
               handleActivationCodeChange={this.handleActivationCodeChange}
@@ -123,7 +144,7 @@ class App extends React.Component {
             <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/userpage" component={Userpage} />
           </div>
-            <Footer />
+          <Footer />
         </div>
       </HashRouter>
     )
