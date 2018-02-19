@@ -1,5 +1,11 @@
 import axios from 'axios'
-const baseUrl = 'https://huntforglory.herokuapp.com/api/quests'
+
+let baseUrl = ''
+if (process.env.NODE_ENV === 'development') {
+  baseUrl = process.env.DEV_URL
+} else {
+  baseUrl = process.env.BASE_URL || 'https://huntforglory.herokuapp.com/api/quests'
+}
 
 const getAll = () => {
   return axios.get(baseUrl)
