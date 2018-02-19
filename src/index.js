@@ -90,8 +90,10 @@ class App extends React.Component {
         activationCode: ''
       })
 
+      quest.done = true
+
       questService
-        .update(quest.id, { done })
+        .update(quest.id, quest)
         .then(updatedQuest => {
           this.setState({
             quests: this.state.quests.map(q => q.id !== quest.id ? q : updatedQuest),
