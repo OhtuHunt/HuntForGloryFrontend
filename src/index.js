@@ -47,9 +47,10 @@ class App extends React.Component {
 
   handleStartQuest = ({quest}) => {
     const started = true
+    quest.started = true
 
     questService
-      .update(quest.id, { started })
+      .update(quest.id, quest)
       .then(updatedQuest => {
         this.setState({
           quests: this.state.quests.map(q => q.id !== quest.id ? q : updatedQuest),
