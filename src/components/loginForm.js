@@ -3,13 +3,13 @@ import React from 'react'
 const LoginForm = ({ handleLogin }) => {
     return (
         <div>
-            <h2>Kirjaudu sisään TMC-tunnuksilla</h2>
+            <h2>Log in with your TMC-credentials</h2>
             <form onSubmit={handleLogin}>
-                <input type="text" name="username" placeholder="Käyttäjätunnus"/>
+                <input type="text" name="username" placeholder="Username"/>
                 <br></br>
-                <input type="password" name="password" placeholder="Salasana"/>
+                <input type="password" name="password" placeholder="Password"/>
                 <br></br>
-                <button type="submit">Kirjaudu</button>
+                <button type="submit">Login</button>
             </form>
         </div>
     )
