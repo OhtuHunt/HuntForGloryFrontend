@@ -12,6 +12,7 @@ import {
   NavLink,
   HashRouter
 } from "react-router-dom";
+import LoginForm from "./components/loginForm";
 
 
 class App extends React.Component {
@@ -23,18 +24,18 @@ class App extends React.Component {
       started: false,
       activationCode: '',
       completed: false,
-      user: {
-        admin: true
-      }
+      user: null
     }
   }
 
-  componentWillMount() {
-    questService
-      .getAll()
-      .then(response => {
-        this.setState({ quests: response.data })
-      })
+  async componentWillMount() {
+    const response = await questService.getAll()
+    this.setState({ quests: response.data })
+
+    const loggedInUser = window.localStorage.getItem("LoggedTmcUser")
+    if (loggedInUser) {
+      this.setState({ user: loggedInUser })
+    }
   }
 
   handleQuestShowClick = (id) => {
@@ -46,7 +47,6 @@ class App extends React.Component {
   }
 
   handleStartQuest = ({quest}) => {
-    const started = true
     quest.started = true
 
     questService
@@ -82,8 +82,6 @@ class App extends React.Component {
   }
 
   handleCompleteQuest = ({ quest }) => {
-
-    const done = true
 
     if (quest.activationCode === this.state.activationCode) {
       this.setState({
@@ -125,6 +123,15 @@ class App extends React.Component {
     })
   }
 
+  handleLogin = (event) => {
+    event.preventDefault()
+
+    // to be further implemented
+    console.log(event.target.username.value)
+    event.target.username.value = ''
+    event.target.password.value = ''
+  }
+
   render() {
 
     const questById = (id) =>
@@ -141,6 +148,13 @@ class App extends React.Component {
               <li><NavLink to="/userpage">Userpage</NavLink></li>
             </ul>
           </div>
+          {this.state.user === null ? 
+          <div className="login">
+            
+              <LoginForm handleLogin={this.handleLogin}/>
+            
+          </div>
+          :
           <div className="content">
             <Route exact path="/" render={() =>
               <ShowAll state={this.state} handleQuestShowClick={this.handleQuestShowClick} />
@@ -154,6 +168,7 @@ class App extends React.Component {
             <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/userpage" component={Userpage} />
           </div>
+          }
           <Footer />
         </div>
       </HashRouter>
