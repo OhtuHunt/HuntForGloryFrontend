@@ -17,9 +17,7 @@ class App extends React.Component {
     this.state = {
       quests: [],
       quest: null,
-      started: false,
       activationCode: "",
-      completed: false,
       user: null
     };
   }
@@ -58,10 +56,6 @@ class App extends React.Component {
       .catch(error => {
         // this.createNewQuest({})
       });
-
-    this.setState({
-      started: true
-    });
   };
 
   handleDeleteQuest = id => {
@@ -81,7 +75,6 @@ class App extends React.Component {
   handleCompleteQuest = ({ quest }) => {
     if (quest.activationCode === this.state.activationCode) {
       this.setState({
-        completed: true,
         activationCode: ""
       });
 
