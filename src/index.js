@@ -124,6 +124,7 @@ class App extends React.Component {
       "LoggedTmcUser",
       JSON.stringify(response.data.user)
     );
+    questService.setToken(response.token)
     this.setState({
       user: response.data.user
     });
