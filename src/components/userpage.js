@@ -1,7 +1,7 @@
 import React from 'react'
 import NewQuest from './NewQuest'
 
-const Userpage = ({ createNewQuest }) => {
+const Userpage = ({ createNewQuest}) => {
     return (
         <div>
             <h2>Hello Henrik!</h2>

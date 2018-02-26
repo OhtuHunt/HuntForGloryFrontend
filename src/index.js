@@ -10,6 +10,7 @@ import questService from "./services/quests";
 import { Route, NavLink, HashRouter } from "react-router-dom";
 import LoginForm from "./components/loginForm";
 import loginService from "./services/login";
+import Notification from "./components/Notification"
 
 class App extends React.Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class App extends React.Component {
       quests: [],
       quest: null,
       activationCode: "",
-      user: null
+      user: null,
+      message: null
     };
   }
 
@@ -99,8 +101,12 @@ class App extends React.Component {
 
   createNewQuest = (quest) => {
     this.setState({
-      quests: this.state.quests.concat(quest)
+      quests: this.state.quests.concat(quest),
+      message: `${quest.name} has been created.`
     })
+    setTimeout(() => {
+      this.setState({message: null})
+    }, 3000)
   };
 
 
@@ -159,6 +165,7 @@ class App extends React.Component {
               </li>
             </ul>
           </div>
+          <Notification message={this.state.message} />
           {this.state.user === null ? (
             <div className="login">
               <LoginForm handleLogin={this.handleLogin} />
@@ -190,7 +197,10 @@ class App extends React.Component {
                   )}
                 />
                 <Route path="/leaderboard" component={Leaderboard} />
-                <Route path="/userpage" render={() => (<Userpage createNewQuest={this.createNewQuest.bind(this)} />)} />
+                <Route path="/userpage" render={() => (
+                  <Userpage
+                    createNewQuest={this.createNewQuest.bind(this)}
+                  />)} />
               </div>
             )}
           {this.state.user !== null ? (
