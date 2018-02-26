@@ -97,14 +97,13 @@ class App extends React.Component {
     }
   };
 
-  //In progress
-  createNewQuest = quest => {
-    questService.create(quest).then(quest => {
-      this.setState({
-        quests: this.state.quests.filter(q => q.id !== quest.id).concat(quest)
-      });
-    });
+  createNewQuest = (quest) => {
+    this.setState({
+      quests: this.state.quests.concat(quest)
+    })
   };
+
+
 
   handleActivationCodeChange = event => {
     this.setState({
@@ -164,40 +163,40 @@ class App extends React.Component {
               <LoginForm handleLogin={this.handleLogin} />
             </div>
           ) : (
-            <div className="content">
-              <Route
-                exact
-                path="/"
-                render={() => (
-                  <ShowAll
-                    state={this.state}
-                    handleQuestShowClick={this.handleQuestShowClick}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/quests/:id"
-                render={({ match }) => (
-                  <ShowOne
-                    quest={questById(match.params.id)}
-                    state={this.state}
-                    handleStart={this.handleStartQuest}
-                    handleComplete={this.handleCompleteQuest}
-                    handleActivationCodeChange={this.handleActivationCodeChange}
-                    handleDelete={this.handleDeleteQuest}
-                  />
-                )}
-              />
-              <Route path="/leaderboard" component={Leaderboard} />
-              <Route path="/userpage" component={Userpage} />
-            </div>
-          )}
+              <div className="content">
+                <Route
+                  exact
+                  path="/"
+                  render={() => (
+                    <ShowAll
+                      state={this.state}
+                      handleQuestShowClick={this.handleQuestShowClick}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/quests/:id"
+                  render={({ match }) => (
+                    <ShowOne
+                      quest={questById(match.params.id)}
+                      state={this.state}
+                      handleStart={this.handleStartQuest}
+                      handleComplete={this.handleCompleteQuest}
+                      handleActivationCodeChange={this.handleActivationCodeChange}
+                      handleDelete={this.handleDeleteQuest}
+                    />
+                  )}
+                />
+                <Route path="/leaderboard" component={Leaderboard} />
+                <Route path="/userpage" render={() => (<Userpage createNewQuest={this.createNewQuest.bind(this)} />)} />
+              </div>
+            )}
           {this.state.user !== null ? (
-            <Footer username={this.state.user.username} handleLogout={this.handleLogout}/>
+            <Footer username={this.state.user.username} handleLogout={this.handleLogout} />
           ) : (
-            <Footer username="Status: offline" />
-          )}
+              <Footer username="Status: offline" />
+            )}
         </div>
       </HashRouter>
     );
