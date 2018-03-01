@@ -27,16 +27,20 @@ class App extends React.Component {
   }
 
   async componentWillMount() {
-    const quests = await questService.getAll();
-    const users = await userService.getAll();
-    const sortedUsers = users.sort((a, b) => {return b.points-a.points})
-    this.setState({ quests: quests.data, users: sortedUsers });
-
     const loggedInUser = window.localStorage.getItem("LoggedTmcUser");
     if (loggedInUser !== null) {
       const parsedUser = JSON.parse(loggedInUser);
+      const newToken = {
+        token: parsedUser.token
+      }
+      questService.setToken(newToken)
       this.setState({ user: parsedUser });
     }
+
+    const quests = await questService.getAll();
+    const users = await userService.getAll();
+    const sortedUsers = users.sort((a, b) => { return b.points - a.points })
+    this.setState({ quests: quests, users: sortedUsers });
   }
 
   handleQuestShowClick = id => {
@@ -103,16 +107,27 @@ class App extends React.Component {
     }
   };
 
-  createNewQuest = (quest) => {
+  createNewQuest = (newQuest) => {
     this.setState({
-      quests: this.state.quests.concat(quest),
-      message: `${quest.name} has been created.`
+      quests: this.state.quests.concat(newQuest),
+      message: `${newQuest.name} has been created.`
     })
     setTimeout(() => {
       this.setState({ message: null })
     }, 3000)
   };
 
+  editQuest = (quest) => {
+    let editedQuests = this.state.quests.map(q => q.id === quest.id ? quest : q)
+    this.setState({
+      quests: editedQuests,
+      message: `${quest.name} has been edited.`,
+      quest: null
+    })
+    setTimeout(() => {
+      this.setState({ message: null })
+    }, 3000)
+  };
 
 
   handleActivationCodeChange = event => {
@@ -130,11 +145,15 @@ class App extends React.Component {
     event.target.username.value = "";
     event.target.password.value = "";
     const response = await loginService.login(user);
+    const cacheUser = { ...response.data.user, token: response.data.token }
     window.localStorage.setItem(
       "LoggedTmcUser",
-      JSON.stringify(response.data.user)
+      JSON.stringify(cacheUser)
     );
-    questService.setToken(response.token)
+    const newToken = {
+      token: response.data.token
+    }
+    questService.setToken(newToken)
     this.setState({
       user: response.data.user
     });
@@ -195,12 +214,13 @@ class App extends React.Component {
                       handleStart={this.handleStartQuest}
                       handleComplete={this.handleCompleteQuest}
                       handleActivationCodeChange={this.handleActivationCodeChange}
-                      handleDelete={this.handleDeleteQuest}
+                      handleDelete={this.handleDeleteQuest.bind(this)}
+                      editQuest={this.editQuest.bind(this)}
                     />
                   )}
                 />
                 <Route path="/leaderboard" render={() => (
-                  <Leaderboard users={this.state.users}/>)} />
+                  <Leaderboard users={this.state.users} />)} />
                 <Route path="/userpage" render={() => (
                   <Userpage
                     createNewQuest={this.createNewQuest.bind(this)}

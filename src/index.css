@@ -444,6 +444,8 @@ input {
 
 .createform {
   color: black;
+  height: 100%;
+  background-color: white;
 }
 
 .createform input {

@@ -3,12 +3,12 @@ import questService from '../services/quests'
 import Toggleable from './Toggleable'
 import "../index.css";
 
-const QuestForm = ({ onSubmit, handleChange, name, description, points, type, activationCode }) => {
+const QuestForm = ({ handleSubmit, handleChange, name, description, points, type, activationCode }) => {
     return (
         <div className="createform">
-            <h2>create new quest</h2>
+            <h2>edit quest</h2>
 
-            <form  onSubmit={onSubmit}>
+            <form  onSubmit={handleSubmit}>
                 <div>
                     <p>name</p>
                 <input 
@@ -54,30 +54,31 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                         onChange={handleChange}
                     />
                 </div>
-                <button type="submit">create</button>
+                <button type="submit">edit</button>
             </form>
         </div>
     )
 }
 
-class NewQuest extends React.Component {
+class EditQuest extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: "",
-            description: "",
-            points: 0,
-            type: "",
-            activationCode: ""
+            name: props.quest.name,
+            description: props.quest.description,
+            points: Number(props.quest.points),
+            type: props.quest.type,
+            activationCode: props.quest.activationCode
         }
-        this.createNewQuest = props.createNewQuest
+        this.editQuest = props.editQuest
+        this.quest = props.quest
     }
 
     formVisibility = () => {
         this.setState({ visible: !this.state.visible })
     }
 
-    addQuest = async (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault()
         this.questForm.toggleVisibility()
         const questObject = {
@@ -87,16 +88,8 @@ class NewQuest extends React.Component {
             type: this.state.type,
             activationCode: this.state.activationCode
         }
-
-        const newQuest = await questService.create(questObject)
-        this.createNewQuest(newQuest)
-        this.setState({
-            name: "",
-            description: "",
-            points: "",
-            type: "",
-            activationCode: ""
-        })
+        const editedQuest = await questService.update(this.quest.id, questObject)
+        this.editQuest(editedQuest)
     }
 
     handleQuestChange = (event) => {
@@ -107,9 +100,9 @@ class NewQuest extends React.Component {
     render() {
         return (
             <div>
-                <Toggleable buttonLabel="new quest" ref={component => this.questForm = component}>
+                <Toggleable buttonLabel="edit quest" ref={component => this.questForm = component}>
                     <QuestForm
-                        onSubmit={this.addQuest}
+                        handleSubmit={this.handleSubmit}
                         handleChange={this.handleQuestChange}
                         name={this.state.name}
                         description={this.state.description}
@@ -125,4 +118,4 @@ class NewQuest extends React.Component {
     }
 }
 
-export default NewQuest
+export default EditQuest
