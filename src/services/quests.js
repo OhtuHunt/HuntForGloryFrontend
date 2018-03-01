@@ -37,4 +37,9 @@ const remove = async (id) => {
   return response
 }
 
-export default { getAll, create, remove, getOne, update, setToken }
+const startQuest = async (id) => {
+  const response = await axios.put(`${baseUrl}/start/${id}`, config())
+  return response.data
+}
+
+export default { getAll, create, remove, getOne, update, setToken, startQuest }

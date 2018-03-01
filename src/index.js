@@ -51,21 +51,22 @@ class App extends React.Component {
     };
   };
 
-  handleStartQuest = ({ quest }) => {
-    quest.started = true;
-
-    questService
-      .update(quest.id, quest)
-      .then(updatedQuest => {
-        this.setState({
-          quests: this.state.quests.map(
-            q => (q.id !== quest.id ? q : updatedQuest)
-          )
-        });
-      })
-      .catch(error => {
-        // this.createNewQuest({})
-      });
+  // To be implemented further
+  handleStartQuest = async ({ quest }) => {
+    // quest.started = true;
+    console.log(this.state.user.token)
+    await questService.startQuest(quest.id)
+      // .update(quest.id, quest)
+      // .then(updatedQuest => {
+      //   this.setState({
+      //     quests: this.state.quests.map(
+      //       q => (q.id !== quest.id ? q : updatedQuest)
+      //     )
+      //   });
+      // })
+      // .catch(error => {
+      //   // this.createNewQuest({})
+      // });
   };
 
   handleDeleteQuest = id => {
@@ -145,6 +146,7 @@ class App extends React.Component {
     event.target.username.value = "";
     event.target.password.value = "";
     const response = await loginService.login(user);
+    console.log(response.data.token)
     const cacheUser = { ...response.data.user, token: response.data.token }
     window.localStorage.setItem(
       "LoggedTmcUser",
@@ -155,7 +157,7 @@ class App extends React.Component {
     }
     questService.setToken(newToken)
     this.setState({
-      user: response.data.user
+      user: cacheUser
     });
   };
 
