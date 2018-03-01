@@ -1,13 +1,14 @@
 import React from 'react'
 import NewQuest from './NewQuest'
 
-const Userpage = ({ createNewQuest}) => {
+const Userpage = ({ createNewQuest, state }) => {
+
     return (
         <div>
             <h2>Hello Henrik!</h2>
             <p>This is your personal page for settings etc. upcoming on spring 4</p>
-
-            <NewQuest createNewQuest={createNewQuest} />
+            {state.user.admin ? <NewQuest createNewQuest={createNewQuest} /> : null}
+            
         </div>
     )
 }

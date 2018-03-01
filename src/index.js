@@ -204,6 +204,7 @@ class App extends React.Component {
                 <Route path="/userpage" render={() => (
                   <Userpage
                     createNewQuest={this.createNewQuest.bind(this)}
+                    state={this.state}
                   />)} />
               </div>
             )}
