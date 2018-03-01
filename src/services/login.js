@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let baseUrl = process.env.NODE_ENV === 'production' ? 'https://huntforglory.herokuapp.com/api/login' : 'https://hunttest.herokuapp.com/api/login'
+let baseUrl = 'https://huntforglory.herokuapp.com/api/login'
 
 const login = (props) => {
     const valuesGiven = {
