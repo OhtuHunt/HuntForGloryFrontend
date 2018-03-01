@@ -59,7 +59,7 @@ const QuestInfo = ({quest, state, handleDelete}) => {
 
 const ShowActivationCodeForm = ({ quest, state, handleComplete, handleActivationCodeChange}) => {
   return (
-    <div>
+    <div className="activationCodeForm">
         <input value={state.activationCode}
           onChange={handleActivationCodeChange}/>
         <button onClick={() => handleComplete({quest})}> Complete </button>

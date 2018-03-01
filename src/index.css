@@ -25,6 +25,10 @@ html {
 
 button {
   cursor: pointer;
+  background-color: #e9af43;
+  color: white;
+  font-weight: bold;
+  height: 30px;
 }
 
 .backButton:hover {
@@ -262,6 +266,11 @@ body {
     -webkit-transform 0.233s cubic-bezier(0, 0, 0.21, 1) 0.1s;
   z-index: 1000;
 }
+
+.footerList button {
+  height: 20px;
+}
+
 ul.footerList li {
   list-style-type: none;
   margin-top: 0px;
@@ -399,4 +408,34 @@ ul.headerButtons li a {
 }
 .content li {
   margin-bottom: 10px;
+}
+.leaderboardTable table {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+
+.leaderboardTable td {
+  border: 2px solid #865700;
+  height: 10%;
+  width: 10%;
+}
+
+.leaderboardTopRow {
+  font-weight: bold;
+  line-height: 30px;
+}
+
+.leaderboardHeader {
+  color: #865700
+}
+
+.leaderboard {
+  background-color: white;
+  height: 75vh;
+}
+
+input {
+  height: 30px;
+  font-size: 100%;
 }

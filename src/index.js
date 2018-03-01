@@ -11,6 +11,7 @@ import { Route, NavLink, HashRouter } from "react-router-dom";
 import LoginForm from "./components/loginForm";
 import loginService from "./services/login";
 import Notification from "./components/Notification"
+import userService from "./services/users"
 
 class App extends React.Component {
   constructor(props) {
@@ -20,13 +21,16 @@ class App extends React.Component {
       quest: null,
       activationCode: "",
       user: null,
-      message: null
+      message: null,
+      users: []
     };
   }
 
   async componentWillMount() {
-    const response = await questService.getAll();
-    this.setState({ quests: response.data });
+    const quests = await questService.getAll();
+    const users = await userService.getAll();
+    const sortedUsers = users.sort((a, b) => {return b.points-a.points})
+    this.setState({ quests: quests.data, users: sortedUsers });
 
     const loggedInUser = window.localStorage.getItem("LoggedTmcUser");
     if (loggedInUser !== null) {
@@ -105,7 +109,7 @@ class App extends React.Component {
       message: `${quest.name} has been created.`
     })
     setTimeout(() => {
-      this.setState({message: null})
+      this.setState({ message: null })
     }, 3000)
   };
 
@@ -145,7 +149,6 @@ class App extends React.Component {
 
   render() {
     const questById = id => this.state.quests.find(quest => quest.id === id);
-
     return (
       <HashRouter>
         <div>
@@ -196,18 +199,15 @@ class App extends React.Component {
                     />
                   )}
                 />
-                <Route path="/leaderboard" component={Leaderboard} />
+                <Route path="/leaderboard" render={() => (
+                  <Leaderboard users={this.state.users}/>)} />
                 <Route path="/userpage" render={() => (
                   <Userpage
                     createNewQuest={this.createNewQuest.bind(this)}
                   />)} />
               </div>
             )}
-          {this.state.user !== null ? (
-            <Footer username={this.state.user.username} handleLogout={this.handleLogout} />
-          ) : (
-              <Footer username="Status: offline" />
-            )}
+          <Footer user={this.state.user} handleLogout={this.handleLogout} />
         </div>
       </HashRouter>
     );

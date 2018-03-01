@@ -4,12 +4,12 @@ import React from "react";
 //   width: window.innerWidth
 // }
 
-const Footer = ({ username, handleLogout }) => {
+const Footer = ({ user, handleLogout }) => {
   return (
     <div className="footer">
       <ul className="footerList">
-        <li>Pisteet: 0</li>
-        <li>{handleLogout === undefined ? <div>{username}</div> : <div>{username} <button onClick={handleLogout}>Logout</button></div>}
+        <li>{user === null ? <div>Points: 0</div> : <div>Points: {user.points}</div>}</li>
+        <li>{user === null ? <div>Status: offline</div> : <div>{user.username} <button onClick={handleLogout}>Logout</button></div>}
         </li>
         <li>Rank: 1</li>
       </ul>
