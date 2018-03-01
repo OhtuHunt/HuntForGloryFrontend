@@ -1,16 +1,17 @@
 import React from 'react'
 import questService from '../services/quests'
 import Toggleable from './Toggleable'
+import "../index.css";
 
 const QuestForm = ({ onSubmit, handleChange, name, description, points, type, activationCode }) => {
     return (
-        <div>
+        <div className="createform">
             <h2>create new quest</h2>
 
-            <form onSubmit={onSubmit}>
+            <form  onSubmit={onSubmit}>
                 <div>
-                    name
-  <input
+                    <p className="createform">name</p>
+                <input className="createform" 
                         type="text"
                         name="name"
                         value={name}
@@ -18,17 +19,17 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                    description
-  <input
-                        type="text"
+                <p className="createform">description</p>
+                    <input className="createform"
+                        type="textarea"
                         name="description"
                         value={description}
                         onChange={handleChange}
                     />
                 </div>
                 <div>
-                    points
-  <input
+                <p className="createform">points</p>
+                    <input className="createform"
                         type="number"
                         name="points"
                         value={points}
@@ -36,8 +37,8 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                    type
-  <input
+                <p className="createform">type</p>
+                    <input className="createform"
                         type="text"
                         name="type"
                         value={type}
@@ -45,15 +46,15 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                    activationCode
-  <input
+                <p className="createform">activationcode</p>
+                    <input className="createform"
                         type="text"
                         name="activationCode"
                         value={activationCode}
                         onChange={handleChange}
                     />
                 </div>
-                <button type="submit">create</button>
+                <button className="createform" type="submit">create</button>
             </form>
         </div>
     )

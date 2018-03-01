@@ -409,6 +409,7 @@ ul.headerButtons li a {
 .content li {
   margin-bottom: 10px;
 }
+
 .leaderboardTable table {
   margin-left: auto;
   margin-right: auto;
@@ -438,4 +439,32 @@ ul.headerButtons li a {
 input {
   height: 30px;
   font-size: 100%;
+}
+
+.createform {
+  color: black;
+}
+
+input.createform {
+  width: 70%;
+  padding: 10px 20px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+}
+
+p.createform {
+  padding-top: 15px;
+  font-size: 15px;
+  font-weight: bold; 
+}
+
+button.createform {
+  margin: 5px;
+  border-radius: 5px;
 }
