@@ -269,6 +269,7 @@ body {
 
 .footerList button {
   height: 20px;
+
 }
 
 ul.footerList li {
@@ -445,26 +446,25 @@ input {
   color: black;
 }
 
-input.createform {
+.createform input {
   width: 70%;
-  padding: 10px 20px;
+  padding: 5px 20px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  box-sizing: content-box;
   display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 5px;
 }
 
-p.createform {
+.createform p {
   padding-top: 15px;
   font-size: 15px;
   font-weight: bold; 
 }
 
-button.createform {
+.createform button {
   margin: 5px;
-  border-radius: 5px;
 }

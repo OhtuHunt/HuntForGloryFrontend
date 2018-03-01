@@ -10,8 +10,8 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
 
             <form  onSubmit={onSubmit}>
                 <div>
-                    <p className="createform">name</p>
-                <input className="createform" 
+                    <p>name</p>
+                <input 
                         type="text"
                         name="name"
                         value={name}
@@ -19,8 +19,8 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                <p className="createform">description</p>
-                    <input className="createform"
+                <p>description</p>
+                    <input
                         type="textarea"
                         name="description"
                         value={description}
@@ -28,8 +28,8 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                <p className="createform">points</p>
-                    <input className="createform"
+                <p>points</p>
+                    <input
                         type="number"
                         name="points"
                         value={points}
@@ -37,8 +37,8 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                <p className="createform">type</p>
-                    <input className="createform"
+                <p>type</p>
+                    <input
                         type="text"
                         name="type"
                         value={type}
@@ -46,15 +46,15 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                <p className="createform">activationcode</p>
-                    <input className="createform"
+                <p>activationcode</p>
+                    <input
                         type="text"
                         name="activationCode"
                         value={activationCode}
                         onChange={handleChange}
                     />
                 </div>
-                <button className="createform" type="submit">create</button>
+                <button type="submit">create</button>
             </form>
         </div>
     )
