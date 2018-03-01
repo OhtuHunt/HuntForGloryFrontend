@@ -10,7 +10,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
 
             <form  onSubmit={onSubmit}>
                 <div>
-                    name
+                    <p className="createform">name</p>
                 <input className="createform" 
                         type="text"
                         name="name"
@@ -19,16 +19,16 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                    description
+                <p className="createform">description</p>
                     <input className="createform"
-                        type="text"
+                        type="textarea"
                         name="description"
                         value={description}
                         onChange={handleChange}
                     />
                 </div>
                 <div>
-                    points
+                <p className="createform">points</p>
                     <input className="createform"
                         type="number"
                         name="points"
@@ -37,7 +37,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                    type
+                <p className="createform">type</p>
                     <input className="createform"
                         type="text"
                         name="type"
@@ -46,7 +46,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                    activationCode
+                <p className="createform">activationcode</p>
                     <input className="createform"
                         type="text"
                         name="activationCode"
@@ -54,7 +54,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                         onChange={handleChange}
                     />
                 </div>
-                <button type="submit">create</button>
+                <button className="createform" type="submit">create</button>
             </form>
         </div>
     )

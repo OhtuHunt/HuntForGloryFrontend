@@ -405,9 +405,8 @@ ul.headerButtons li a {
 }
 
 input.createform {
-  width: 60%;
-  padding: 12px 20px;
-  margin: 0;
+  width: 70%;
+  padding: 10px 20px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -415,4 +414,16 @@ input.createform {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5px;
+}
+
+p.createform {
+  padding-top: 15px;
+  font-size: 15px;
+  font-weight: bold; 
+}
+
+button.createform {
+  margin: 5px;
+  border-radius: 5px;
 }
