@@ -1,16 +1,17 @@
 import React from 'react'
 import questService from '../services/quests'
 import Toggleable from './Toggleable'
+import "../index.css";
 
 const QuestForm = ({ onSubmit, handleChange, name, description, points, type, activationCode }) => {
     return (
-        <div>
+        <div className="createform">
             <h2>create new quest</h2>
 
-            <form onSubmit={onSubmit}>
+            <form  onSubmit={onSubmit}>
                 <div>
                     name
-  <input
+                <input className="createform" 
                         type="text"
                         name="name"
                         value={name}
@@ -19,7 +20,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                 </div>
                 <div>
                     description
-  <input
+                    <input className="createform"
                         type="text"
                         name="description"
                         value={description}
@@ -28,7 +29,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                 </div>
                 <div>
                     points
-  <input
+                    <input className="createform"
                         type="number"
                         name="points"
                         value={points}
@@ -37,7 +38,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                 </div>
                 <div>
                     type
-  <input
+                    <input className="createform"
                         type="text"
                         name="type"
                         value={type}
@@ -46,7 +47,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                 </div>
                 <div>
                     activationCode
-  <input
+                    <input className="createform"
                         type="text"
                         name="activationCode"
                         value={activationCode}
