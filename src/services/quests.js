@@ -38,7 +38,8 @@ const remove = async (id) => {
 }
 
 const startQuest = async (id) => {
-  const response = await axios.put(`${baseUrl}/start/${id}`, config())
+  const body = {}
+  const response = await axios.put(`${baseUrl}/${id}/start`, body, config())
   return response.data
 }
 

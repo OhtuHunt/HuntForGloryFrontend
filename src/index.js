@@ -230,7 +230,7 @@ class App extends React.Component {
                   />)} />
               </div>
             )}
-          <Footer user={this.state.user} handleLogout={this.handleLogout} />
+          <Footer user={this.state.user} users={this.state.users} handleLogout={this.handleLogout} />
         </div>
       </HashRouter>
     );
