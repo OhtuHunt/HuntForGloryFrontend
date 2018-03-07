@@ -10,8 +10,8 @@ const Footer = ({ user, users, handleLogout }) => {
     let index = 0
     users.forEach(function (u) {
       index++
-      if (u._id === user.id) {
-        rank = index
+      if (u.id === user._id) {
+        rank = rank + index
       }
     })
   }
