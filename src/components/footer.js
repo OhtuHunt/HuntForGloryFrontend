@@ -19,7 +19,7 @@ const Footer = ({ user, users, handleLogout }) => {
   return (
     <div className="footer">
       <ul className="footerList">
-        <li>{user === null ? <div>Points: 0</div> : <div>Points: {user.points}</div>}</li>
+        <li>{user === null ? null : <div>Points: {user.points}</div>}</li>
         <li>{user === null ? <div>Status: offline</div> : <div>{user.username} <button onClick={handleLogout}>Logout</button></div>}
         </li>
         <li>{user === null ? null : <div>Rank: {rank}</div>}</li>
