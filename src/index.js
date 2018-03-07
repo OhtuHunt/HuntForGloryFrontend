@@ -168,6 +168,17 @@ class App extends React.Component {
     })
   }
 
+  handleDeleteAccount = () => {
+    // There is a button, need to check backend for how removing should work before confirming
+    if (window.confirm("Do you want to delete your account?")) {
+      userService.remove(this.state.user.id)
+      this.setState({
+        user: null
+      })
+    }
+    
+  }
+
   render() {
     const questById = id => this.state.quests.find(quest => quest.id === id);
     return (
@@ -226,6 +237,7 @@ class App extends React.Component {
                 <Route path="/userpage" render={() => (
                   <Userpage
                     createNewQuest={this.createNewQuest.bind(this)}
+                    handleDelete={this.handleDeleteAccount}
                     state={this.state}
                   />)} />
               </div>
