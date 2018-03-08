@@ -51,4 +51,10 @@ const finishQuest = async (id, code) => {
   return response.data
 }
 
-export default { getAll, create, remove, getOne, update, setToken, startQuest, finishQuest }
+const deactivateQuest = async (id) => {
+  const body = {}
+  const response = await axios.post(`${baseUrl}/${id}/deactivated`, body, config())
+  return response.data
+}
+
+export default { getAll, create, remove, getOne, update, setToken, startQuest, finishQuest, deactivateQuest }

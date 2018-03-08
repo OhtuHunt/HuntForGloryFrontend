@@ -3,7 +3,7 @@ import questService from '../services/quests'
 import Toggleable from './Toggleable'
 import "../index.css";
 
-const QuestForm = ({ handleSubmit, handleChange, name, description, points, type, activationCode }) => {
+const QuestForm = ({ handleSubmit, handleChange, name, description, points, type, activationCode, deactivated }) => {
     return (
         <div className="createform">
             <h2>edit quest</h2>
@@ -68,7 +68,8 @@ class EditQuest extends React.Component {
             description: props.quest.description,
             points: Number(props.quest.points),
             type: props.quest.type,
-            activationCode: props.quest.activationCode
+            activationCode: props.quest.activationCode,
+            deactivated: props.quest.deactivated
         }
         this.editQuest = props.editQuest
         this.quest = props.quest
@@ -86,7 +87,8 @@ class EditQuest extends React.Component {
             description: this.state.description,
             points: this.state.points,
             type: this.state.type,
-            activationCode: this.state.activationCode
+            activationCode: this.state.activationCode,
+            deactivated: this.state.deactivated
         }
         const editedQuest = await questService.update(this.quest.id, questObject)
         this.editQuest(editedQuest)

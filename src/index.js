@@ -131,6 +131,18 @@ class App extends React.Component {
     }, 3000)
   };
 
+  handleDeactivate = async (id) => {
+    const quest = await questService.deactivateQuest(id)
+    const updatedQuests = this.state.quests.map(q => q.id === quest.id ? quest : q)
+    this.setState({
+      quest: quest,
+      quests: updatedQuests,
+      message: `'${quest.name}' deactivated`
+    })
+    setTimeout(() => {
+      this.setState({ message: null})
+    }, 3000)
+  }
 
   handleActivationCodeChange = event => {
     this.setState({
@@ -159,6 +171,7 @@ class App extends React.Component {
     this.setState({
       user: cacheUser
     });
+    this.componentWillMount()
   };
 
   handleLogout = () => {
@@ -218,6 +231,7 @@ class App extends React.Component {
                       handleActivationCodeChange={this.handleActivationCodeChange}
                       handleDelete={this.handleDeleteQuest.bind(this)}
                       editQuest={this.editQuest.bind(this)}
+                      handleDeactivate={this.handleDeactivate.bind(this)}
                     />
                   )}
                 />
@@ -227,10 +241,12 @@ class App extends React.Component {
                   <Userpage
                     createNewQuest={this.createNewQuest.bind(this)}
                     state={this.state}
+                    handleLogout={this.handleLogout}
+                    user={this.state.user}
                   />)} />
               </div>
             )}
-          <Footer user={this.state.user} handleLogout={this.handleLogout} />
+          <Footer user={this.state.user} users={this.state.users}/>
         </div>
       </HashRouter>
     );

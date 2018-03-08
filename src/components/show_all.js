@@ -3,7 +3,7 @@ import GenerateCard from "./generate_card"
 
 const ShowAll = ({state, handleQuestShowClick}) => {
   return (
-    <div>
+    <div className="showAll">
       {state.quests.map(quest => <GenerateCard
         key={quest.id}
         id={quest.id}
