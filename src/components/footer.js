@@ -6,7 +6,7 @@ import React from "react";
 
 const Footer = ({ user, users, handleLogout }) => {
   let rank = 0
-  if (user !== null) {
+  if (users !== undefined) {
     let index = 0
     users.forEach(function (u) {
       index++

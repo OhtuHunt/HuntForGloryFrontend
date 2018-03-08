@@ -27,20 +27,43 @@ class App extends React.Component {
   }
 
   async componentWillMount() {
+    const users = await userService.getAll();
     const loggedInUser = window.localStorage.getItem("LoggedTmcUser");
     if (loggedInUser !== null) {
       const parsedUser = JSON.parse(loggedInUser);
       const newToken = {
         token: parsedUser.token
       }
+      const user = users.find(u => u.id === parsedUser.id)
+      const updatedUser = { ...parsedUser, quests: user.quests }
       questService.setToken(newToken)
-      this.setState({ user: parsedUser });
+      this.setState({ user: updatedUser });
     }
 
     const quests = await questService.getAll();
-    const users = await userService.getAll();
     const sortedUsers = users.sort((a, b) => { return b.points - a.points })
-    this.setState({ quests: quests, users: sortedUsers });
+    const updatedQuests = this.setQuestState(quests)
+    this.setState({ quests: updatedQuests, users: sortedUsers });
+  }
+
+  setQuestState = (quests) => {
+    let updatedQuests = []
+    if (this.state.user !== null) {
+      quests.forEach(q => {
+        if (q.usersStarted.length !== 0) {
+          q.usersStarted.forEach(us => {
+            if (us.user === this.state.user.id && us.finishTime === null) {
+              updatedQuests = updatedQuests.concat({ ...q, started: true })
+            } else if (us.user === this.state.user.id && us.finishTime !== null) {
+              updatedQuests = updatedQuests.concat({ ...q, finished: true })
+            }
+          })
+        } else {
+          updatedQuests = updatedQuests.concat(q)
+        }
+      })
+    }
+    return updatedQuests
   }
 
   handleQuestShowClick = id => {
@@ -53,20 +76,12 @@ class App extends React.Component {
 
   // To be implemented further
   handleStartQuest = async ({ quest }) => {
-    // quest.started = true;
-    console.log(this.state.user.token)
-    await questService.startQuest(quest.id)
-      // .update(quest.id, quest)
-      // .then(updatedQuest => {
-      //   this.setState({
-      //     quests: this.state.quests.map(
-      //       q => (q.id !== quest.id ? q : updatedQuest)
-      //     )
-      //   });
-      // })
-      // .catch(error => {
-      //   // this.createNewQuest({})
-      // });
+    const user = await questService.startQuest(quest.id)
+    const quests = await questService.getAll()
+    const updatedQuests = this.setQuestState(quests)
+    this.setState({
+      user: { ...user, token: this.state.user.token }, quests: updatedQuests
+    })
   };
 
   handleDeleteQuest = id => {
@@ -83,29 +98,13 @@ class App extends React.Component {
     };
   };
 
-  handleCompleteQuest = ({ quest }) => {
-    if (quest.activationCode === this.state.activationCode) {
-      this.setState({
-        activationCode: ""
-      });
-
-      quest.done = true;
-
-      questService
-        .update(quest.id, quest)
-        .then(updatedQuest => {
-          this.setState({
-            quests: this.state.quests.map(
-              q => (q.id !== quest.id ? q : updatedQuest)
-            )
-          });
-        })
-        .catch(error => {
-          // this.createNewQuest({})
-        });
-    } else {
-      window.alert("Incorrect activation code!");
-    }
+  handleCompleteQuest = async ({ quest }) => {
+    const user = await questService.finishQuest(quest.id, this.state.activationCode)
+    const quests = await questService.getAll()
+    const updatedQuests = this.setQuestState(quests)
+    this.setState({
+      user: { ...user, token: this.state.user.token}, quests: updatedQuests, activationCode: ''
+    })
   };
 
   createNewQuest = (newQuest) => {
@@ -146,7 +145,6 @@ class App extends React.Component {
     event.target.username.value = "";
     event.target.password.value = "";
     const response = await loginService.login(user);
-    console.log(response.data.token)
     const cacheUser = { ...response.data.user, token: response.data.token }
     window.localStorage.setItem(
       "LoggedTmcUser",
@@ -166,17 +164,6 @@ class App extends React.Component {
     this.setState({
       user: null
     })
-  }
-
-  handleDeleteAccount = () => {
-    // There is a button, need to check backend for how removing should work before confirming
-    if (window.confirm("Do you want to delete your account?")) {
-      userService.remove(this.state.user.id)
-      this.setState({
-        user: null
-      })
-    }
-    
   }
 
   render() {
@@ -237,12 +224,11 @@ class App extends React.Component {
                 <Route path="/userpage" render={() => (
                   <Userpage
                     createNewQuest={this.createNewQuest.bind(this)}
-                    handleDelete={this.handleDeleteAccount}
                     state={this.state}
                   />)} />
               </div>
             )}
-          <Footer user={this.state.user} users={this.state.users} handleLogout={this.handleLogout} />
+          <Footer user={this.state.user} handleLogout={this.handleLogout} />
         </div>
       </HashRouter>
     );

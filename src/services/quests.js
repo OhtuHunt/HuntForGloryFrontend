@@ -4,7 +4,7 @@ let baseUrl = 'https://huntforglory.herokuapp.com/api/quests'
 let token
 
 const setToken = (props) => {
-  token = `Bearer ${props.token}`
+  token = `bearer ${props.token}`
 }
 
 const config = () => {
@@ -39,8 +39,16 @@ const remove = async (id) => {
 
 const startQuest = async (id) => {
   const body = {}
-  const response = await axios.put(`${baseUrl}/${id}/start`, body, config())
+  const response = await axios.post(`${baseUrl}/${id}/start`, body, config())
   return response.data
 }
 
-export default { getAll, create, remove, getOne, update, setToken, startQuest }
+const finishQuest = async (id, code) => {
+  const body = {
+    activationCode: code
+  }
+  const response = await axios.post(`${baseUrl}/${id}/finish`, body, config())
+  return response.data
+}
+
+export default { getAll, create, remove, getOne, update, setToken, startQuest, finishQuest }

@@ -10,7 +10,7 @@ const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, hand
     return <Redirect to="/" />
   }
 
-  if (quest.done) {
+  if (quest.finished) {
     return (
       <div>
         <Card style={cardStyle} className="solo">
