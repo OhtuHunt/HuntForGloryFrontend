@@ -56,6 +56,8 @@ class App extends React.Component {
               updatedQuests = updatedQuests.concat({ ...q, started: true })
             } else if (us.user === this.state.user.id && us.finishTime !== null) {
               updatedQuests = updatedQuests.concat({ ...q, finished: true })
+            } else {
+             updatedQuests = updatedQuests.concat(q)
             }
           })
         } else {
