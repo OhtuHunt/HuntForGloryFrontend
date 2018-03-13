@@ -1,5 +1,6 @@
 import React from 'react'
 import NewQuest from './NewQuest'
+import EditUserInformation from './EditUserInformation'
 
 const Userpage = ({ user, createNewQuest, handleDelete, state, handleLogout }) => {
 
@@ -17,6 +18,7 @@ const Userpage = ({ user, createNewQuest, handleDelete, state, handleLogout }) =
             <br></br>
             <br></br>
             <br></br>
+            <EditUserInformation user={user} />
             <button onClick={handleDelete}>delete account</button>
             
         </div>
