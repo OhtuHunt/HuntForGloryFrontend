@@ -5,13 +5,13 @@ let baseUrl = 'https://huntforglory.herokuapp.com/api/users'
 let token
 
 const setToken = (props) => {
-  token = `bearer ${props.token}`
+    token = `bearer ${props.token}`
 }
 
 const config = () => {
-  return {
-      headers: { 'Authorization': token }
-  }
+    return {
+        headers: { 'Authorization': token }
+    }
 }
 
 const getAll = async () => {
@@ -25,8 +25,8 @@ const update = async (updatedUser, id) => {
 }
 
 const remove = async (id) => {
-    // const response = await axios.delete(`${baseUrl}/${id}`, config())
-    // return response
+    const response = await axios.delete(`${baseUrl}/${id}`, config())
+    return response
 }
 
-export default { getAll, remove, update, setToken}
+export default { getAll, remove, update, setToken }

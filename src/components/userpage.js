@@ -3,7 +3,6 @@ import NewQuest from './NewQuest'
 import EditUserInformation from './EditUserInformation'
 
 const Userpage = ({ user, createNewQuest, handleDelete, state, handleLogout, editUser }) => {
-
     return (
         <div style={{height: '100%'}}>
             <h2>Hello {user.username}!</h2>
@@ -19,6 +18,9 @@ const Userpage = ({ user, createNewQuest, handleDelete, state, handleLogout, edi
             <br></br>
             <br></br>
             <EditUserInformation user={user} edit={editUser}/>
+            <br></br>
+            <br></br>
+            <br></br>
             <button onClick={handleDelete}>delete account</button>
             
         </div>

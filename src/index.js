@@ -148,6 +148,17 @@ class App extends React.Component {
     }, 3000)
   }
 
+  handleDeleteAccount = () => {
+    if (window.confirm("Do you want to delete your account?")) {
+      userService.remove(this.state.user.id)
+      window.localStorage.removeItem("LoggedTmcUser")
+      this.setState({
+        user: null
+      })
+    }
+    
+  }
+
   handleDeactivate = async (id) => {
     const quest = await questService.deactivateQuest(id)
     const updatedQuests = this.state.quests.map(q => q.id === quest.id ? quest : q)
@@ -258,6 +269,7 @@ class App extends React.Component {
                   <Userpage
                     createNewQuest={this.createNewQuest.bind(this)}
                     state={this.state}
+                    handleDelete={this.handleDeleteAccount.bind(this)}
                     handleLogout={this.handleLogout}
                     user={this.state.user}
                     editUser={this.editUser}
