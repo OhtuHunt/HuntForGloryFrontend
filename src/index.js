@@ -37,6 +37,7 @@ class App extends React.Component {
       const user = users.find(u => u.id === parsedUser.id)
       const updatedUser = { ...parsedUser, quests: user.quests }
       questService.setToken(newToken)
+      userService.setToken(newToken)
       this.setState({ user: updatedUser });
     }
 
@@ -129,7 +130,23 @@ class App extends React.Component {
     setTimeout(() => {
       this.setState({ message: null })
     }, 3000)
-  };
+  }
+
+  editUser = (user) => {
+    this.setState({
+      user,
+      message: 'New user information has been saved.'
+    })
+    window.localStorage.setItem(
+      "LoggedTmcUser",
+      JSON.stringify(this.state.user)
+    );
+    setTimeout(() => {
+      this.setState({
+        message: null
+      })
+    }, 3000)
+  }
 
   handleDeactivate = async (id) => {
     const quest = await questService.deactivateQuest(id)
@@ -243,6 +260,7 @@ class App extends React.Component {
                     state={this.state}
                     handleLogout={this.handleLogout}
                     user={this.state.user}
+                    editUser={this.editUser}
                   />)} />
               </div>
             )}

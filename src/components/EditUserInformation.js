@@ -26,9 +26,9 @@ class EditUserInformation extends React.Component {
             quests: this.props.user.quests
 
         }
-
-        //const editedUser = await userService.update(this.props.user.id)
-        //stuff
+        const editedUser = await userService.update(user, this.props.user.id)
+        console.log(editedUser)
+        this.props.edit(editedUser)
     }
 
     handleFormChange = (event) => {
@@ -37,8 +37,6 @@ class EditUserInformation extends React.Component {
 
     render() {
         return (
-
-
             <Toggleable buttonLabel="edit profile" ref={component => this.EditUserInformation = component}>
                 <div className="createform">
                     <h2>edit profile information</h2>
@@ -66,8 +64,6 @@ class EditUserInformation extends React.Component {
                     </form>
                 </div>
             </Toggleable>
-
-
         )
     }
 }
