@@ -1,7 +1,11 @@
 import axios from 'axios'
 
-let baseUrl = 'https://huntforglory.herokuapp.com/api/users'
-
+let baseUrl = ''
+if (process.env.REACT_APP_LOCAL !== 'true') {
+    baseUrl = process.env.REACT_APP_ENV !== 'development' ? `${process.env.REACT_APP_BASE_URL}/api/users` : `${process.env.REACT_APP_DEV_URL}/api/users`
+} else {
+    baseUrl = `http://localhost:3001/api/users`
+}
 let token
 
 const setToken = (props) => {

@@ -12,6 +12,7 @@ import LoginForm from "./components/loginForm";
 import loginService from "./services/login";
 import Notification from "./components/Notification"
 import userService from "./services/users"
+require('dotenv').config()
 
 class App extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class App extends React.Component {
       message: null,
       users: []
     };
+
   }
 
   async componentWillMount() {
@@ -34,11 +36,15 @@ class App extends React.Component {
       const newToken = {
         token: parsedUser.token
       }
+      try {
       const user = users.find(u => u.id === parsedUser.id)
       const updatedUser = { ...parsedUser, quests: user.quests }
       questService.setToken(newToken)
       userService.setToken(newToken)
       this.setState({ user: updatedUser });
+      } catch (exception) {
+        this.handleLogout()
+      }
     }
 
     const quests = await questService.getAll();
