@@ -1,22 +1,21 @@
-import "./index.css";
-import React from "react";
-import ReactDOM from "react-dom";
-import Footer from "./components/footer";
-import ShowOne from "./components/show_one";
-import ShowAll from "./components/show_all";
-import Leaderboard from "./components/leaderboard";
-import Userpage from "./components/userpage";
-import questService from "./services/quests";
-import { Route, NavLink, HashRouter } from "react-router-dom";
-import LoginForm from "./components/loginForm";
-import loginService from "./services/login";
+import "./index.css"
+import React from "react"
+import ReactDOM from "react-dom"
+import Footer from "./components/footer"
+import ShowOne from "./components/show_one"
+import ShowAll from "./components/show_all"
+import Leaderboard from "./components/leaderboard"
+import Userpage from "./components/userpage"
+import questService from "./services/quests"
+import { Route, NavLink, HashRouter } from "react-router-dom"
+import LoginForm from "./components/loginForm"
+import loginService from "./services/login"
 import Notification from "./components/Notification"
 import userService from "./services/users"
-require('dotenv').config()
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       quests: [],
       quest: null,
@@ -24,15 +23,15 @@ class App extends React.Component {
       user: null,
       message: null,
       users: []
-    };
+    }
 
   }
 
   async componentWillMount() {
-    const users = await userService.getAll();
-    const loggedInUser = window.localStorage.getItem("LoggedTmcUser");
+    const users = await userService.getAll()
+    const loggedInUser = window.localStorage.getItem("LoggedTmcUser")
     if (loggedInUser !== null) {
-      const parsedUser = JSON.parse(loggedInUser);
+      const parsedUser = JSON.parse(loggedInUser)
       const newToken = {
         token: parsedUser.token
       }
@@ -41,16 +40,16 @@ class App extends React.Component {
       const updatedUser = { ...parsedUser, quests: user.quests }
       questService.setToken(newToken)
       userService.setToken(newToken)
-      this.setState({ user: updatedUser });
+      this.setState({ user: updatedUser })
       } catch (exception) {
         this.handleLogout()
       }
     }
 
-    const quests = await questService.getAll();
+    const quests = await questService.getAll()
     const sortedUsers = users.sort((a, b) => { return b.points - a.points })
     const updatedQuests = this.setQuestState(quests)
-    this.setState({ quests: updatedQuests, users: sortedUsers });
+    this.setState({ quests: updatedQuests, users: sortedUsers })
   }
 
   setQuestState = (quests) => {
@@ -79,11 +78,10 @@ class App extends React.Component {
     return () => {
       this.setState({
         quest: this.state.quests.find(q => q.id === id)
-      });
-    };
-  };
+      })
+    }
+  }
 
-  // To be implemented further
   handleStartQuest = async ({ quest }) => {
     const user = await questService.startQuest(quest.id)
     const quests = await questService.getAll()
@@ -91,21 +89,21 @@ class App extends React.Component {
     this.setState({
       user: { ...user, token: this.state.user.token }, quests: updatedQuests
     })
-  };
+  }
 
   handleDeleteQuest = id => {
     return () => {
       if (window.confirm("Do you want to delete this quest?")) {
         questService.remove(id).then(() => {
-          const quests = this.state.quests.filter(quest => quest.id !== id);
+          const quests = this.state.quests.filter(quest => quest.id !== id)
           this.setState({
             quests: quests,
             showAll: true
-          });
-        });
+          })
+        })
       }
-    };
-  };
+    }
+  }
 
   handleCompleteQuest = async ({ quest }) => {
     const user = await questService.finishQuest(quest.id, this.state.activationCode)
@@ -114,7 +112,7 @@ class App extends React.Component {
     this.setState({
       user: { ...user, token: this.state.user.token}, quests: updatedQuests, activationCode: ''
     })
-  };
+  }
 
   createNewQuest = (newQuest) => {
     this.setState({
@@ -124,7 +122,7 @@ class App extends React.Component {
     setTimeout(() => {
       this.setState({ message: null })
     }, 3000)
-  };
+  }
 
   editQuest = (quest) => {
     let editedQuests = this.state.quests.map(q => q.id === quest.id ? quest : q)
@@ -146,7 +144,7 @@ class App extends React.Component {
     window.localStorage.setItem(
       "LoggedTmcUser",
       JSON.stringify(this.state.user)
-    );
+    )
     setTimeout(() => {
       this.setState({
         message: null
@@ -181,32 +179,31 @@ class App extends React.Component {
   handleActivationCodeChange = event => {
     this.setState({
       activationCode: event.target.value
-    });
-  };
+    })
+  }
 
   handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const user = {
       username: event.target.username.value,
       password: event.target.password.value
-    };
-    event.target.username.value = "";
-    event.target.password.value = "";
-    const response = await loginService.login(user);
+    }
+    event.target.password.value = ""
+    const response = await loginService.login(user)
     const cacheUser = { ...response.data.user, token: response.data.token }
     window.localStorage.setItem(
       "LoggedTmcUser",
       JSON.stringify(cacheUser)
-    );
+    )
     const newToken = {
       token: response.data.token
     }
     questService.setToken(newToken)
     this.setState({
       user: cacheUser
-    });
+    })
     this.componentWillMount()
-  };
+  }
 
   handleLogout = () => {
     window.localStorage.removeItem("LoggedTmcUser")
@@ -216,7 +213,7 @@ class App extends React.Component {
   }
 
   render() {
-    const questById = id => this.state.quests.find(quest => quest.id === id);
+    const questById = id => this.state.quests.find(quest => quest.id === id)
     return (
       <HashRouter>
         <div>
@@ -285,8 +282,8 @@ class App extends React.Component {
           <Footer user={this.state.user} users={this.state.users}/>
         </div>
       </HashRouter>
-    );
+    )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"))
