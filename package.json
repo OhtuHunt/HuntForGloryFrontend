@@ -20,7 +20,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && cp -r ./img ./build/static && cp ./img/icons/favicon.ico ./build/static",
+    "build": "react-scripts build && cp -r ./img ./build/static && cp ./img/icons/favicon.ico ./build/static && mv ./build ./builds/build",
+    "buildDev": "REACT_APP_ENV=development react-scripts build && cp -r ./img ./build/static && cp ./img/icons/favicon.ico ./build/static && mv ./build ./builds/buildDev",
+    "buildLocal": "REACT_APP_ENV=development REACT_APP_LOCAL=true react-scripts build && cp -r ./img ./build/static && cp ./img/icons/favicon.ico ./build/static && mv ./build ./builds/buildLocal",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "dev": "REACT_APP_ENV=development react-scripts start",
