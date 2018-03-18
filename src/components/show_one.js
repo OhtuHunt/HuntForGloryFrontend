@@ -2,9 +2,10 @@ import React from 'react'
 import { Card, CardBody } from "react-simple-card";
 import EditQuest from "./EditQuest"
 import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 // import questService from "../services/quests"
 
-const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, handleActivationCodeChange, editQuest, handleDeactivate }) => {
+const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, handleActivationCodeChange, editQuest, handleDeactivate, store }) => {
   if (quest === undefined) {
     return <Redirect to="/" />
   }
@@ -26,7 +27,7 @@ const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, hand
         <Card style={{ height: '100%' }} className="solo">
           <CardBody>
             <QuestInfo quest={quest} state={state} handleDelete={handleDelete} editQuest={editQuest} handleDeactivate={handleDeactivate} />
-            <ShowActivationCodeForm quest={quest} state={state} handleComplete={handleComplete}
+            <ShowActivationCodeForm quest={quest} state={state} handleComplete={handleComplete} store={store}
               handleActivationCodeChange={handleActivationCodeChange}
             />
           </CardBody>
@@ -61,10 +62,10 @@ const QuestInfo = ({ quest, state, handleDelete, editQuest, handleDeactivate }) 
   )
 }
 
-const ShowActivationCodeForm = ({ quest, state, handleComplete, handleActivationCodeChange }) => {
+const ShowActivationCodeForm = ({ quest, state, handleComplete, handleActivationCodeChange, store }) => {
   return (
     <div className="activationCodeForm">
-      <input value={state.activationCode}
+      <input value={store.getState().activationCode}
         onChange={handleActivationCodeChange} />
       <button onClick={() => handleComplete({ quest })}> Complete </button>
     </div>
@@ -113,4 +114,10 @@ const AdminToolsForQuest = ({ quest, state, handleDelete, editQuest, handleDeact
   }
 }
 
-export default ShowOne
+const mapStateToProps = (state) => {
+  return {
+      activationCode: state.activationCode
+  }
+}
+
+export default connect(mapStateToProps)(ShowOne)

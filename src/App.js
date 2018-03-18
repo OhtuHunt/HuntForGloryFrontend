@@ -12,6 +12,7 @@ import loginService from "./services/login"
 import Notification from "./components/Notification"
 import userService from "./services/users"
 import { notify } from './reducers/notificationReducer'
+import {setActivationCode, clearActivationCode} from './reducers/activationCodeReducer'
 import { connect } from 'react-redux'
 
 class App extends React.Component {
@@ -106,12 +107,13 @@ class App extends React.Component {
   }
 
   handleCompleteQuest = async ({ quest }) => {
-    const user = await questService.finishQuest(quest.id, this.state.activationCode)
+    const user = await questService.finishQuest(quest.id, this.props.store.getState().activationCode)
     const quests = await questService.getAll()
     const updatedQuests = this.setQuestState(quests)
     this.setState({
-      user: { ...user, token: this.state.user.token}, quests: updatedQuests, activationCode: ''
+      user: { ...user, token: this.state.user.token}, quests: updatedQuests
     })
+    this.props.clearActivationCode()
   }
 
   createNewQuest = (newQuest) => {
@@ -164,9 +166,7 @@ class App extends React.Component {
   }
 
   handleActivationCodeChange = event => {
-    this.setState({
-      activationCode: event.target.value
-    })
+    this.props.setActivationCode(event.target.value)
   }
 
   handleLogin = async (event) => {
@@ -243,6 +243,7 @@ class App extends React.Component {
                   path="/quests/:id"
                   render={({ match }) => (
                     <ShowOne
+                      store={this.props.store}
                       quest={questById(match.params.id)}
                       state={this.state}
                       handleStart={this.handleStartQuest}
@@ -274,4 +275,10 @@ class App extends React.Component {
   }
 }
 
-export default connect(null, { notify })(App)
+const mapStateToProps = (state) => {
+  return {
+      activationCode: state.activationCode
+  }
+}
+
+export default connect(mapStateToProps, { notify, setActivationCode, clearActivationCode })(App)
