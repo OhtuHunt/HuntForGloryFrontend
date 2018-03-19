@@ -14,6 +14,7 @@ import userService from "./services/users"
 import { notify } from './reducers/notificationReducer'
 import { setActivationCode, clearActivationCode } from './reducers/activationCodeReducer'
 import { connect } from 'react-redux'
+import SwipeableRoutes from 'react-swipeable-routes'
 
 class App extends React.Component {
   constructor(props) {
@@ -77,14 +78,6 @@ class App extends React.Component {
       })
     }
     return updatedQuests
-  }
-
-  handleQuestShowClick = id => {
-    return () => {
-      this.setState({
-        quest: this.state.quests.find(q => q.id === id)
-      })
-    }
   }
 
   handleStartQuest = async (quest) => {
@@ -228,7 +221,6 @@ class App extends React.Component {
               </li>
             </ul>
           </div>
-
           <Notification store={this.props.store} />
           {this.state.user === null ? (
             <div className="login">
@@ -236,44 +228,49 @@ class App extends React.Component {
             </div>
           ) : (
               <div className="content">
-                <Route
-                  exact
-                  path="/"
-                  render={() => (
-                    <ShowAll
-                      state={this.state}
-                      handleQuestShowClick={this.handleQuestShowClick}
-                    />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/quests/:id"
-                  render={({ match }) => (
-                    <ShowOne
-                      store={this.props.store}
-                      quest={questById(match.params.id)}
-                      state={this.state}
-                      handleStart={this.handleStartQuest}
-                      handleComplete={this.handleCompleteQuest}
-                      handleActivationCodeChange={this.handleActivationCodeChange}
-                      handleDelete={this.handleDeleteQuest.bind(this)}
-                      editQuest={this.editQuest.bind(this)}
-                      handleDeactivate={this.handleDeactivate.bind(this)}
-                    />
-                  )}
-                />
-                <Route path="/leaderboard" render={() => (
-                  <Leaderboard users={this.state.users} />)} />
-                <Route path="/userpage" render={() => (
-                  <Userpage
-                    createNewQuest={this.createNewQuest.bind(this)}
-                    state={this.state}
-                    handleDelete={this.handleDeleteAccount.bind(this)}
-                    handleLogout={this.handleLogout}
-                    user={this.state.user}
-                    editUser={this.editUser}
-                  />)} />
+                <SwipeableRoutes>
+                  <Route
+                    exact
+                    path="/quests/:id"
+                    defaultParams={{ id: "0" }}
+                    render={({ match }) => (
+                      <ShowOne
+                        store={this.props.store}
+                        quest={questById(match.params.id)}
+                        state={this.state}
+                        handleStart={this.handleStartQuest}
+                        handleComplete={this.handleCompleteQuest}
+                        handleActivationCodeChange={this.handleActivationCodeChange}
+                        handleDelete={this.handleDeleteQuest.bind(this)}
+                        editQuest={this.editQuest.bind(this)}
+                        handleDeactivate={this.handleDeactivate.bind(this)}
+                      />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path="/"
+                    render={() => (
+                      <ShowAll state={this.state} />)}
+                  />
+                  <Route
+                    path="/leaderboard"
+                    render={() => (
+                      <Leaderboard users={this.state.users} />)}
+                  />
+                  <Route
+                    path="/userpage"
+                    render={() => (
+                      <Userpage
+                        createNewQuest={this.createNewQuest.bind(this)}
+                        state={this.state}
+                        handleDelete={this.handleDeleteAccount.bind(this)}
+                        handleLogout={this.handleLogout}
+                        user={this.state.user}
+                        editUser={this.editUser}
+                      />)}
+                  />
+                </SwipeableRoutes>
               </div>
             )}
           <Footer user={this.state.user} users={this.state.users} />

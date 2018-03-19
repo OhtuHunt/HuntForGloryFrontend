@@ -5,6 +5,8 @@ import EditUserInformation from './EditUserInformation'
 const Userpage = ({ user, createNewQuest, handleDelete, state, handleLogout, editUser }) => {
     return (
         <div style={{height: '100%'}}>
+        {user !== undefined ? 
+        <div>
             <h2>Hello {user.username}!</h2>
             <br></br>
             <br></br>
@@ -22,7 +24,11 @@ const Userpage = ({ user, createNewQuest, handleDelete, state, handleLogout, edi
             <br></br>
             <br></br>
             <button onClick={handleDelete}>delete account</button>
-            
+            </div>
+            :
+            <div>
+            </div>
+        }
         </div>
     )
 }

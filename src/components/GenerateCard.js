@@ -1,11 +1,11 @@
 import React from 'react'
 import { Card, CardBody } from "react-simple-card";
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-const GenerateCard = ({ id, title, questType, points, clickHandler }) => {
+const GenerateCard = ({ id, title, questType, points }) => {
 
     return (
-            <Link to={`/quests/${id}`} onClick={clickHandler} style={{ cursor: 'pointer' }}>
+            <NavLink to={`/quests/${id}`} style={{ cursor: 'pointer' }}>
                 <Card className="listingCard">
                     <CardBody>
 
@@ -20,7 +20,7 @@ const GenerateCard = ({ id, title, questType, points, clickHandler }) => {
                         </table>
                     </CardBody>
                 </Card>
-            </Link>
+            </NavLink>
 
     );
 };

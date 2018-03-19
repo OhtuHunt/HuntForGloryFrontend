@@ -17,14 +17,14 @@ const Leaderboard = ({ users }) => {
                             <td>Ranking</td><td>Username</td><td>Points</td>
                         </tr>
                         {users.map(user =>
-                                <tr key={user.id}>
-                                    <td>{getNumber()}.</td><td>{user.username}</td><td>{user.points}</td>
-                                </tr>)}
-                </tbody>
-            </table>
+                            <tr key={user.id}>
+                                <td>{getNumber()}.</td><td>{user.username}</td><td>{user.points}</td>
+                            </tr>)}
+                    </tbody>
+                </table>
             </div>
-            </div>
-            )
-        }
-        
+        </div>
+    )
+}
+
 export default Leaderboard
