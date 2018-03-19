@@ -1,13 +1,13 @@
 import "./index.css"
 import React from "react"
-import Footer from "./components/footer"
-import ShowOne from "./components/show_one"
-import ShowAll from "./components/show_all"
-import Leaderboard from "./components/leaderboard"
-import Userpage from "./components/userpage"
+import Footer from "./components/Footer"
+import ShowOne from "./components/ShowOne"
+import ShowAll from "./components/ShowAll"
+import Leaderboard from "./components/Leaderboard"
+import Userpage from "./components/Userpage"
 import questService from "./services/quests"
 import { Route, NavLink, HashRouter } from "react-router-dom"
-import LoginForm from "./components/loginForm"
+import LoginForm from "./components/LoginForm"
 import loginService from "./services/login"
 import Notification from "./components/Notification"
 import userService from "./services/users"
@@ -62,20 +62,21 @@ class App extends React.Component {
           const isStarted = us.find(a => {
             return a.user === this.state.user.id
           })
-          if(isStarted) {
-            if(isStarted.finishTime !== null) {
-              updatedQuests = updatedQuests.concat({...q, finished: true})
+          if (isStarted) {
+            if (isStarted.finishTime !== null) {
+              updatedQuests = updatedQuests.concat({ ...q, finished: true })
             } else {
-              updatedQuests = updatedQuests.concat({...q, started: true})
+              updatedQuests = updatedQuests.concat({ ...q, started: true })
             }
           } else {
             updatedQuests = updatedQuests.concat(q)
           }
+        } else {
+          updatedQuests = updatedQuests.concat(q)
         }
       })
-
-      return updatedQuests
     }
+    return updatedQuests
   }
 
   handleQuestShowClick = id => {
@@ -95,17 +96,13 @@ class App extends React.Component {
     })
   }
 
-  handleDeleteQuest = id => {
-    return () => {
-      if (window.confirm("Do you want to delete this quest?")) {
-        questService.remove(id).then(() => {
-          const quests = this.state.quests.filter(quest => quest.id !== id)
-          this.setState({
-            quests: quests,
-            showAll: true
-          })
-        })
-      }
+  handleDeleteQuest = async (id) => {
+    if (window.confirm("Do you want to delete this quest?")) {
+      await questService.remove(id)
+      const filteredQuests = this.state.quests.filter(quest => quest.id !== id)
+      this.setState({
+        quests: filteredQuests
+      })
     }
   }
 
@@ -179,19 +176,23 @@ class App extends React.Component {
       password: event.target.password.value
     }
     event.target.password.value = ""
-    const response = await loginService.login(user)
-    const cacheUser = { ...response.data.user, token: response.data.token }
-    window.localStorage.setItem(
-      "LoggedTmcUser",
-      JSON.stringify(cacheUser)
-    )
-    const newToken = {
-      token: response.data.token
+    try {
+      const response = await loginService.login(user)
+      const cacheUser = { ...response.data.user, token: response.data.token }
+      window.localStorage.setItem(
+        "LoggedTmcUser",
+        JSON.stringify(cacheUser)
+      )
+      const newToken = {
+        token: response.data.token
+      }
+      questService.setToken(newToken)
+      this.setState({
+        user: cacheUser
+      })
+    } catch (exception) {
+      this.props.notify("Invalid username or password", 3000)
     }
-    questService.setToken(newToken)
-    this.setState({
-      user: cacheUser
-    })
     this.componentWillMount()
   }
 

@@ -87,7 +87,7 @@ const AdminToolsForQuest = ({ quest, state, handleDelete, editQuest, handleDeact
     if (state.user.admin) {
       return (
         <div>
-          <button className="deleteQuest" onClick={handleDelete(quest.id)}>
+          <button className="deleteQuest" onClick={() => handleDelete(quest.id)}>
             Delete
           </button>
           <br></br>

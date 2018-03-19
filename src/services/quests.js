@@ -2,7 +2,7 @@ import axios from 'axios'
 
 let baseUrl = ''
 if (process.env.REACT_APP_LOCAL !== 'true') {
-  baseUrl = process.env.REACT_APP_ENV !== 'development' ? `${process.env.REACT_APP_BASE_URL}/api/quests` : `${process.env.REACT_APP_DEV_URL}/api/quests`
+  baseUrl = process.env.REACT_APP_ENV !== 'development' ? `https://huntforglory.herokuapp.com/api/quests` : `https://hunttest.herokuapp.com/api/quests`
 } else {
   baseUrl = `http://localhost:3001/api/quests`
 }

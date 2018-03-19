@@ -1,5 +1,5 @@
 import React from 'react'
-import GenerateCard from "./generate_card"
+import GenerateCard from "./GenerateCard"
 
 const ShowAll = ({state, handleQuestShowClick}) => {
   return (

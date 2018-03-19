@@ -16,6 +16,9 @@ html {
   overflow: hidden;
 }
 
+button:disabled {
+  background-color: #ccc;
+}
 .points {
   text-align: right;
 }
