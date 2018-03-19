@@ -12,7 +12,7 @@ import loginService from "./services/login"
 import Notification from "./components/Notification"
 import userService from "./services/users"
 import { notify } from './reducers/notificationReducer'
-import {setActivationCode, clearActivationCode} from './reducers/activationCodeReducer'
+import { setActivationCode, clearActivationCode } from './reducers/activationCodeReducer'
 import { connect } from 'react-redux'
 
 class App extends React.Component {
@@ -37,11 +37,11 @@ class App extends React.Component {
         token: parsedUser.token
       }
       try {
-      const user = users.find(u => u.id === parsedUser.id)
-      const updatedUser = { ...parsedUser, quests: user.quests }
-      questService.setToken(newToken)
-      userService.setToken(newToken)
-      this.setState({ user: updatedUser })
+        const user = users.find(u => u.id === parsedUser.id)
+        const updatedUser = { ...parsedUser, quests: user.quests }
+        questService.setToken(newToken)
+        userService.setToken(newToken)
+        this.setState({ user: updatedUser })
       } catch (exception) {
         this.handleLogout()
       }
@@ -58,21 +58,24 @@ class App extends React.Component {
     if (this.state.user !== null) {
       quests.forEach(q => {
         if (q.usersStarted.length !== 0) {
-          q.usersStarted.forEach(us => {
-            if (us.user === this.state.user.id && us.finishTime === null) {
-              updatedQuests = updatedQuests.concat({ ...q, started: true })
-            } else if (us.user === this.state.user.id && us.finishTime !== null) {
-              updatedQuests = updatedQuests.concat({ ...q, finished: true })
-            } else {
-             updatedQuests = updatedQuests.concat(q)
-            }
+          let us = q.usersStarted
+          const isStarted = us.find(a => {
+            return a.user === this.state.user.id
           })
-        } else {
-          updatedQuests = updatedQuests.concat(q)
+          if(isStarted) {
+            if(isStarted.finishTime !== null) {
+              updatedQuests = updatedQuests.concat({...q, finished: true})
+            } else {
+              updatedQuests = updatedQuests.concat({...q, started: true})
+            }
+          } else {
+            updatedQuests = updatedQuests.concat(q)
+          }
         }
       })
+
+      return updatedQuests
     }
-    return updatedQuests
   }
 
   handleQuestShowClick = id => {
@@ -111,7 +114,7 @@ class App extends React.Component {
     const quests = await questService.getAll()
     const updatedQuests = this.setQuestState(quests)
     this.setState({
-      user: { ...user, token: this.state.user.token}, quests: updatedQuests
+      user: { ...user, token: this.state.user.token }, quests: updatedQuests
     })
     this.props.clearActivationCode()
   }
@@ -140,7 +143,7 @@ class App extends React.Component {
       "LoggedTmcUser",
       JSON.stringify(this.state.user)
     )
-    
+
     this.props.notify('New user information has been saved', 5000)
   }
 
@@ -152,7 +155,7 @@ class App extends React.Component {
         user: null
       })
     }
-    
+
   }
 
   handleDeactivate = async (id) => {
@@ -220,8 +223,8 @@ class App extends React.Component {
               </li>
             </ul>
           </div>
-          
-          <Notification store={this.props.store}/>
+
+          <Notification store={this.props.store} />
           {this.state.user === null ? (
             <div className="login">
               <LoginForm handleLogin={this.handleLogin} />
@@ -268,7 +271,7 @@ class App extends React.Component {
                   />)} />
               </div>
             )}
-          <Footer user={this.state.user} users={this.state.users}/>
+          <Footer user={this.state.user} users={this.state.users} />
         </div>
       </HashRouter>
     )
@@ -277,7 +280,7 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-      activationCode: state.activationCode
+    activationCode: state.activationCode
   }
 }
 
