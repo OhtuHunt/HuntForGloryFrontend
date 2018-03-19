@@ -6,9 +6,8 @@ const GenerateCard = ({ id, title, questType, points }) => {
 
     return (
             <NavLink to={`/quests/${id}`} style={{ cursor: 'pointer' }}>
-                <Card className="listingCard">
+                <Card style={{width:'auto'}}>
                     <CardBody>
-
                         <h2>{title}</h2>
                         <table style={{ width: '100%' }}>
                             <tbody>

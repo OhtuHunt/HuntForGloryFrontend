@@ -13,7 +13,7 @@ const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, hand
   if (quest.finished) {
     return (
       <div>
-        <Card style={{ height: '100%' }} className="solo">
+        <Card style={{ height: '100%', width: 'auto' }}>
           <CardBody>
             <QuestInfo quest={quest} state={state} handleDelete={handleDelete} editQuest={editQuest} handleDeactivate={handleDeactivate} />
             <h2> Quest Completed! </h2>
@@ -24,7 +24,7 @@ const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, hand
   } else if (quest.started) {
     return (
       <div>
-        <Card style={{ height: '100%' }} className="solo">
+        <Card style={{ height: '100%', width: 'auto' }}>
           <CardBody>
             <QuestInfo quest={quest} state={state} handleDelete={handleDelete} editQuest={editQuest} handleDeactivate={handleDeactivate} />
             <ShowActivationCodeForm quest={quest} state={state} handleComplete={handleComplete} store={store}
@@ -38,7 +38,7 @@ const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, hand
 
   return (
     <div>
-      <Card style={{ height: '100%' }} className="solo">
+      <Card style={{ height: '100%', width: 'auto' }}>
         <CardBody>
           <QuestInfo quest={quest} state={state} handleDelete={handleDelete} editQuest={editQuest} handleDeactivate={handleDeactivate} />
           <ShowStartButton quest={quest} handleStart={handleStart} />

@@ -3,7 +3,7 @@ import GenerateCard from "./GenerateCard"
 
 const ShowAll = ({state, handleQuestShowClick}) => {
   return (
-    <div className="showAll">
+    <div className="showAll" style={{ overflowX: 'visible'}}>
       {state !== undefined ?
       <div>
       {state.quests.map(quest => <GenerateCard
