@@ -87,7 +87,7 @@ class App extends React.Component {
     }
   }
 
-  handleStartQuest = async ({ quest }) => {
+  handleStartQuest = async (quest) => {
     const user = await questService.startQuest(quest.id)
     const quests = await questService.getAll()
     const updatedQuests = this.setQuestState(quests)
@@ -106,13 +106,17 @@ class App extends React.Component {
     }
   }
 
-  handleCompleteQuest = async ({ quest }) => {
-    const user = await questService.finishQuest(quest.id, this.props.store.getState().activationCode)
-    const quests = await questService.getAll()
-    const updatedQuests = this.setQuestState(quests)
-    this.setState({
-      user: { ...user, token: this.state.user.token }, quests: updatedQuests
-    })
+  handleCompleteQuest = async (quest) => {
+    try {
+      const user = await questService.finishQuest(quest.id, this.props.store.getState().activationCode)
+      const quests = await questService.getAll()
+      const updatedQuests = this.setQuestState(quests)
+      this.setState({
+        user: { ...user, token: this.state.user.token }, quests: updatedQuests
+      })
+    } catch (exception) {
+      this.props.notify("Invalid activation code", 3000)
+    }
     this.props.clearActivationCode()
   }
 

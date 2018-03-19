@@ -3,7 +3,7 @@ import { Card, CardBody } from "react-simple-card";
 import EditQuest from "./EditQuest"
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-// import questService from "../services/quests"
+import Spinner from 'react-spinkit'
 
 const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, handleActivationCodeChange, editQuest, handleDeactivate, store }) => {
   if (quest === undefined) {
@@ -62,24 +62,101 @@ const QuestInfo = ({ quest, state, handleDelete, editQuest, handleDeactivate }) 
   )
 }
 
-const ShowActivationCodeForm = ({ quest, state, handleComplete, handleActivationCodeChange, store }) => {
-  return (
-    <div className="activationCodeForm">
-      <input value={store.getState().activationCode}
-        onChange={handleActivationCodeChange} />
-      <button onClick={() => handleComplete({ quest })}> Complete </button>
-    </div>
-  )
+class ShowActivationCodeForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      ...this.props.state,
+      quest: this.props.quest,
+      loading: false,
+      activationCode: ''
+    }
+    this.handleComplete = this.props.handleComplete
+    this.store = this.props.store
+  }
+
+  changeLoading = () => {
+    this.setState({
+      loading: this.state.loading === true ? false : true
+    })
+  }
+
+  handleChange = (event) => {
+    this.setState({ activationCode: event.target.value })
+  }
+
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    this.changeLoading()
+    await this.handleComplete(this.state.quest)
+    this.changeLoading()
+  }
+
+  render() {
+    return (
+      <div className="activationCodeForm">
+        <input
+          type="text"
+          onChange={this.handleChange}
+          name="activationCode" />
+        {this.state.loading === true ?
+          <div style={{ marginLeft: '49%' }}>
+            <Spinner name="circle" fadeIn="none" />
+          </div>
+          :
+          <div>
+            <button onClick={this.handleSubmit}> Complete </button>
+          </div>
+        }
+      </div>
+    )
+  }
 }
 
-const ShowStartButton = ({ quest, handleStart }) => {
-  return (
-    <div>
-      <button className="startButton" onClick={() => handleStart({ quest })}>
-        Start quest
-      </button>
-    </div>
-  )
+class ShowStartButton extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      quest: this.props.quest,
+      loading: false
+    }
+    this.handleStart = this.props.handleStart
+  }
+
+  changeLoading = () => {
+    this.setState({
+      loading: this.state.loading === true ? false : true
+    })
+  }
+
+  handleChange = (event) => {
+    this.setState({ activationCode: event.target.value })
+  }
+
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    this.changeLoading()
+    await this.handleStart(this.state.quest)
+    this.changeLoading()
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.loading === true ?
+          <div style={{ marginLeft: '49%' }}>
+            <Spinner name="circle" fadeIn="none" />
+          </div>
+          :
+          <div>
+            <button className="startButton" onClick={this.handleSubmit}>
+              Start quest
+        </button>
+          </div>
+        }
+      </div>
+    )
+  }
 }
 
 const AdminToolsForQuest = ({ quest, state, handleDelete, editQuest, handleDeactivate }) => {
@@ -87,7 +164,7 @@ const AdminToolsForQuest = ({ quest, state, handleDelete, editQuest, handleDeact
     if (state.user.admin) {
       return (
         <div>
-          <button className="deleteQuest" onClick={() => handleDelete(quest.id)}>
+          <button className="deleteQuest" onClick={handleDelete(quest.id)}>
             Delete
           </button>
           <br></br>
@@ -116,7 +193,7 @@ const AdminToolsForQuest = ({ quest, state, handleDelete, editQuest, handleDeact
 
 const mapStateToProps = (state) => {
   return {
-      activationCode: state.activationCode
+    activationCode: state.activationCode
   }
 }
 
