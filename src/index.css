@@ -75,7 +75,7 @@ button {
   font-size: 16px;
 }
 
-.card.solo {
+.solo {
   white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
   white-space: -webkit-pre-wrap; /*Chrome & Safari */
   white-space: -pre-wrap; /* Opera 4-6 */
@@ -85,7 +85,6 @@ button {
   word-break: keep-all;
   white-space: normal;
   height: 100%;
-  width: 96%;
 }
 .soloDesc {
   overflow-y: scroll;
