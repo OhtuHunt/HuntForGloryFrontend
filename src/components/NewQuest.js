@@ -1,6 +1,9 @@
 import React from 'react'
 import questService from '../services/quests'
 import Toggleable from './Toggleable'
+import { notify } from '../reducers/notificationReducer'
+import { createQuest } from '../reducers/questReducer'
+import { connect } from 'react-redux'
 import "../index.css";
 
 const QuestForm = ({ onSubmit, handleChange, name, description, points, type, activationCode }) => {
@@ -8,10 +11,10 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
         <div className="createform">
             <h2>create new quest</h2>
 
-            <form  onSubmit={onSubmit}>
+            <form onSubmit={onSubmit}>
                 <div>
                     <p>name</p>
-                <input 
+                    <input
                         type="text"
                         name="name"
                         value={name}
@@ -19,7 +22,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                <p>description</p>
+                    <p>description</p>
                     <input
                         type="textarea"
                         name="description"
@@ -28,7 +31,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                <p>points</p>
+                    <p>points</p>
                     <input
                         type="number"
                         name="points"
@@ -37,7 +40,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                <p>type</p>
+                    <p>type</p>
                     <input
                         type="text"
                         name="type"
@@ -46,7 +49,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     />
                 </div>
                 <div>
-                <p>activationcode</p>
+                    <p>activationcode</p>
                     <input
                         type="text"
                         name="activationCode"
@@ -88,8 +91,9 @@ class NewQuest extends React.Component {
             activationCode: this.state.activationCode
         }
 
-        const newQuest = await questService.create(questObject)
-        this.createNewQuest(newQuest)
+        this.props.createQuest(questObject)
+        this.props.notify(`${questObject.name} has been created.`, 5000)
+
         this.setState({
             name: "",
             description: "",
@@ -125,4 +129,5 @@ class NewQuest extends React.Component {
     }
 }
 
-export default NewQuest
+export default connect(null,
+    { createQuest, notify })(NewQuest)

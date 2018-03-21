@@ -1,7 +1,10 @@
 import React from 'react'
 import questService from '../services/quests'
 import Toggleable from './Toggleable'
-import "../index.css";
+import "../index.css"
+import { connect } from 'react-redux'
+import { notify } from '../reducers/notificationReducer'
+import { editQuest } from '../reducers/questReducer'
 
 const QuestForm = ({ handleSubmit, handleChange, name, description, points, type, activationCode, deactivated }) => {
     return (
@@ -90,8 +93,10 @@ class EditQuest extends React.Component {
             activationCode: this.state.activationCode,
             deactivated: this.state.deactivated
         }
-        const editedQuest = await questService.update(this.quest.id, questObject)
-        this.editQuest(editedQuest)
+        
+        console.log(this.quest)
+        await this.props.editQuest(questObject, this.quest.id)
+        this.props.notify(`${questObject.name} has been edited.`, 5000)
     }
 
     handleQuestChange = (event) => {
@@ -120,4 +125,5 @@ class EditQuest extends React.Component {
     }
 }
 
-export default EditQuest
+export default connect(null,
+    { editQuest , notify})(EditQuest)

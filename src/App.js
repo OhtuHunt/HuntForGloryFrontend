@@ -13,6 +13,7 @@ import Notification from "./components/Notification"
 import userService from "./services/users"
 import { notify } from './reducers/notificationReducer'
 import { setActivationCode, clearActivationCode } from './reducers/activationCodeReducer'
+import {initializeQuests, createQuest, removeQuest, deactivateQuest, setQuests, startQuest, finishQuest} from './reducers/questReducer'
 import { connect } from 'react-redux'
 import SwipeableRoutes from 'react-swipeable-routes'
 
@@ -22,7 +23,6 @@ class App extends React.Component {
     this.state = {
       quests: [],
       quest: null,
-      activationCode: "",
       user: null,
       users: []
     }
@@ -47,13 +47,17 @@ class App extends React.Component {
         this.handleLogout()
       }
     }
+    
+    await this.props.initializeQuests()
+    const quests = this.props.quests
 
-    const quests = await questService.getAll()
     const sortedUsers = users.sort((a, b) => { return b.points - a.points })
     const updatedQuests = this.setQuestState(quests)
+    this.props.setQuests(updatedQuests)
     this.setState({ quests: updatedQuests, users: sortedUsers })
   }
 
+  //Updates the quests' usersStarted list
   setQuestState = (quests) => {
     let updatedQuests = []
     if (this.state.user !== null) {
@@ -81,52 +85,28 @@ class App extends React.Component {
   }
 
   handleStartQuest = async (quest) => {
-    const user = await questService.startQuest(quest.id)
-    const quests = await questService.getAll()
-    const updatedQuests = this.setQuestState(quests)
-    this.setState({
-      user: { ...user, token: this.state.user.token }, quests: updatedQuests
-    })
+    await this.props.startQuest(quest.id)
   }
 
   handleDeleteQuest = async (id) => {
     if (window.confirm("Do you want to delete this quest?")) {
-      await questService.remove(id)
-      const filteredQuests = this.state.quests.filter(quest => quest.id !== id)
-      this.setState({
-        quests: filteredQuests
-      })
+      await this.props.removeQuest(id)
     }
   }
 
   handleCompleteQuest = async (quest) => {
     try {
       const user = await questService.finishQuest(quest.id, this.props.store.getState().activationCode)
-      const quests = await questService.getAll()
+      const quests = this.props.quests
       const updatedQuests = this.setQuestState(quests)
       this.setState({
-        user: { ...user, token: this.state.user.token }, quests: updatedQuests
+        user: { ...user, token: this.state.user.token }
       })
+      await this.props.setQuests(updatedQuests)
     } catch (exception) {
       this.props.notify("Invalid activation code", 3000)
     }
     this.props.clearActivationCode()
-  }
-
-  createNewQuest = (newQuest) => {
-    this.setState({
-      quests: this.state.quests.concat(newQuest)
-    })
-    this.props.notify(`${newQuest.name} has been created.`, 5000)
-  }
-
-  editQuest = (quest) => {
-    let editedQuests = this.state.quests.map(q => q.id === quest.id ? quest : q)
-    this.setState({
-      quests: editedQuests,
-      quest: null
-    })
-    this.props.notify(`${quest.name} has been edited.`, 5000)
   }
 
   editUser = (user) => {
@@ -153,13 +133,8 @@ class App extends React.Component {
   }
 
   handleDeactivate = async (id) => {
-    const quest = await questService.deactivateQuest(id)
-    const updatedQuests = this.state.quests.map(q => q.id === quest.id ? quest : q)
-    this.setState({
-      quest: quest,
-      quests: updatedQuests
-    })
-    this.props.notify(`Deactivated ${quest.name}`, 5000)
+    const quest = await this.props.deactivateQuest(id)
+    this.props.notify(`Deactivated this quest`, 5000)
   }
 
   handleActivationCodeChange = event => {
@@ -201,7 +176,7 @@ class App extends React.Component {
   }
 
   render() {
-    const questById = id => this.state.quests.find(quest => quest.id === id)
+    const questById = id => this.props.quests.find(quest => quest.id === id)
     return (
       <HashRouter>
         <div>
@@ -242,7 +217,6 @@ class App extends React.Component {
                         handleComplete={this.handleCompleteQuest}
                         handleActivationCodeChange={this.handleActivationCodeChange}
                         handleDelete={this.handleDeleteQuest.bind(this)}
-                        editQuest={this.editQuest.bind(this)}
                         handleDeactivate={this.handleDeactivate.bind(this)}
                       />
                     )}
@@ -251,7 +225,7 @@ class App extends React.Component {
                     exact
                     path="/"
                     render={() => (
-                      <ShowAll state={this.state} />)}
+                      <ShowAll store={this.props.store} />)}
                   />
                   <Route
                     path="/leaderboard"
@@ -262,12 +236,12 @@ class App extends React.Component {
                     path="/userpage"
                     render={() => (
                       <Userpage
-                        createNewQuest={this.createNewQuest.bind(this)}
                         state={this.state}
                         handleDelete={this.handleDeleteAccount.bind(this)}
                         handleLogout={this.handleLogout}
                         user={this.state.user}
                         editUser={this.editUser}
+                        store={this.props.store}
                       />)}
                   />
                 </SwipeableRoutes>
@@ -282,8 +256,19 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    activationCode: state.activationCode
+    activationCode: state.activationCode,
+    quests: state.quests
   }
 }
 
-export default connect(mapStateToProps, { notify, setActivationCode, clearActivationCode })(App)
+export default connect(mapStateToProps,
+   { notify, 
+    setActivationCode, 
+    clearActivationCode, 
+    initializeQuests, 
+    createQuest, 
+    removeQuest, 
+    deactivateQuest,
+    setQuests,
+    startQuest,
+    finishQuest })(App)

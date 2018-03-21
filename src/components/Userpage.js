@@ -2,7 +2,7 @@ import React from 'react'
 import NewQuest from './NewQuest'
 import EditUserInformation from './EditUserInformation'
 
-const Userpage = ({ user, createNewQuest, handleDelete, state, handleLogout, editUser }) => {
+const Userpage = ({ user, createNewQuest, handleDelete, state, handleLogout, editUser, store }) => {
     return (
         <div style={{height: '100%'}}>
         {user !== undefined ? 
@@ -15,7 +15,7 @@ const Userpage = ({ user, createNewQuest, handleDelete, state, handleLogout, edi
             <br></br>
             <br></br>
             <br></br>
-            {state.user.admin ? <NewQuest createNewQuest={createNewQuest} /> : null}
+            {state.user.admin ? <NewQuest createNewQuest={createNewQuest} store={store}/> : null}
             <br></br>
             <br></br>
             <br></br>

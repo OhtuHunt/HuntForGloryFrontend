@@ -1,25 +1,29 @@
 import React from 'react'
 import GenerateCard from "./GenerateCard"
+import { connect } from 'react-redux'
 
-const ShowAll = ({state, handleQuestShowClick}) => {
-  return (
-    <div className="showAll" style={{ overflowX: 'visible'}}>
-      {state !== undefined ?
-      <div>
-      {state.quests.map(quest => <GenerateCard
-        key={quest.id}
-        id={quest.id}
-        title={quest.name}
-        questType={quest.type}
-        points={quest.points}
-      />)}
+class ShowAll extends React.Component{
+  render() {
+    return (
+      <div className="showAll" style={{ overflowX: 'visible'}}>
+        <div>
+        {this.props.quests.map(quest => <GenerateCard
+          key={quest.id}
+          id={quest.id}
+          title={quest.name}
+          questType={quest.type}
+          points={quest.points}
+        />)}
+        </div>
       </div>
-      :
-      <div>
-      </div>
-      }
-    </div>
-  )
+    )
+  }
 }
 
-export default ShowAll
+const mapStateToProps = (state) => {
+  return {
+    quests: state.quests
+  }
+}
+
+export default connect(mapStateToProps, null)(ShowAll)

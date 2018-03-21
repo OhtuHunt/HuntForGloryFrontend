@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit'
 
-const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, handleActivationCodeChange, editQuest, handleDeactivate, store }) => {
+const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, handleActivationCodeChange, handleDeactivate, store }) => {
   if (quest === undefined) {
     return <Redirect to="/" />
   }
@@ -15,7 +15,7 @@ const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, hand
       <div>
         <Card style={{ height: '100%', width: 'auto' }}>
           <CardBody>
-            <QuestInfo quest={quest} state={state} handleDelete={handleDelete} editQuest={editQuest} handleDeactivate={handleDeactivate} />
+            <QuestInfo quest={quest} state={state} handleDelete={handleDelete} store={store} handleDeactivate={handleDeactivate} />
             <h2> Quest Completed! </h2>
           </CardBody>
         </Card>
@@ -26,7 +26,7 @@ const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, hand
       <div>
         <Card style={{ height: '100%', width: 'auto' }}>
           <CardBody>
-            <QuestInfo quest={quest} state={state} handleDelete={handleDelete} editQuest={editQuest} handleDeactivate={handleDeactivate} />
+            <QuestInfo quest={quest} state={state} handleDelete={handleDelete} store={store} handleDeactivate={handleDeactivate} />
             <ShowActivationCodeForm quest={quest} state={state} handleComplete={handleComplete} store={store}
               handleActivationCodeChange={handleActivationCodeChange}
             />
@@ -40,7 +40,7 @@ const ShowOne = ({ quest, state, handleDelete, handleStart, handleComplete, hand
     <div>
       <Card style={{ height: '100%', width: 'auto' }}>
         <CardBody>
-          <QuestInfo quest={quest} state={state} handleDelete={handleDelete} editQuest={editQuest} handleDeactivate={handleDeactivate} />
+          <QuestInfo quest={quest} state={state} handleDelete={handleDelete} store={store} handleDeactivate={handleDeactivate} />
           <ShowStartButton quest={quest} handleStart={handleStart} />
         </CardBody>
       </Card>
@@ -52,10 +52,10 @@ const questInfoStyle = {
   height: window.innerHeight * 0.4
 }
 
-const QuestInfo = ({ quest, state, handleDelete, editQuest, handleDeactivate }) => {
+const QuestInfo = ({ quest, state, handleDelete, store, handleDeactivate }) => {
   return (
     <div>
-      <AdminToolsForQuest quest={quest} state={state} handleDelete={handleDelete} editQuest={editQuest} handleDeactivate={handleDeactivate} />
+      <AdminToolsForQuest quest={quest} state={state} handleDelete={handleDelete} store={store} handleDeactivate={handleDeactivate} />
       <h1> {quest.name} </h1>
       <div className="soloDesc" style={questInfoStyle}>{quest.description}</div>
     </div>
@@ -159,7 +159,7 @@ class ShowStartButton extends React.Component {
   }
 }
 
-const AdminToolsForQuest = ({ quest, state, handleDelete, editQuest, handleDeactivate }) => {
+const AdminToolsForQuest = ({ quest, state, handleDelete, store, handleDeactivate }) => {
   if (state.user !== null) {
     if (state.user.admin) {
       return (
@@ -169,7 +169,7 @@ const AdminToolsForQuest = ({ quest, state, handleDelete, editQuest, handleDeact
           </button>
           <br></br>
           <br></br>
-          <EditQuest quest={quest} editQuest={editQuest} />
+          <EditQuest quest={quest} store={store} />
           <br></br>
           <br></br>
           <button className="deleteQuest" onClick={() => handleDeactivate(quest.id)}>Deactivate</button>
