@@ -15,11 +15,11 @@ const questReducer = (store = [], action) => {
         case 'SET_QUESTS':
             return store = action.quests
         case 'START_QUEST':
-            const old = store.filter(q => q.id !== action.startedQuest.id)
-            return store = old.concat(action.startedQuest)
+            const oldWithoutStarted = store.filter(q => q.id !== action.startedQuest.id)
+            return store = oldWithoutStarted.concat(action.startedQuest)
         case 'FINISH_QUEST':
-            const old = store.filter(q => q.id !== action.finishedQuest.id)
-            return store = old.concat(action.finishedQuest)
+            const oldWithoutFinished = store.filter(q => q.id !== action.finishedQuest.id)
+            return store = oldWithoutFinished.concat(action.finishedQuest)
         default:
             return store
     }
@@ -28,7 +28,6 @@ const questReducer = (store = [], action) => {
 export const initializeQuests = () => {
     return async (dispatch) => {
         const quests = await questService.getAll()
-        console.log(quests)
         dispatch({
             type: 'INIT_QUESTS',
             quests
@@ -86,8 +85,8 @@ export const setQuests = (quests) => {
 }
 
 export const startQuest = (id) => {
-    const startedQuest = await questService.startQuest(id)
     return async (dispatch) => {
+        const startedQuest = await questService.startQuest(id)
         dispatch({
             type: 'START_QUEST',
             startedQuest: { ...startedQuest, started: true }
@@ -96,8 +95,8 @@ export const startQuest = (id) => {
 }
 
 export const finishQuest = (id) => {
-    const finishedQuest = await questService.finishQuest(id)
     return async (dispatch) => {
+        const finishedQuest = await questService.finishQuest(id)
         dispatch({
             type: 'FINISH_QUEST',
             finishedQuest: { ...finishedQuest, finished: true }

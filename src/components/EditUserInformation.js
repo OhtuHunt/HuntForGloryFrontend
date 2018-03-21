@@ -1,6 +1,9 @@
 import React from 'react'
 import Toggleable from './Toggleable'
 import userService from '../services/users'
+import { editUser } from '../reducers/usersReducer'
+import { connect } from 'react-redux'
+import { notify } from '../reducers/notificationReducer'
 
 class EditUserInformation extends React.Component {
     constructor(props) {
@@ -18,17 +21,25 @@ class EditUserInformation extends React.Component {
         const email = (this.state.email === '') ? this.props.user.email : this.state.email
 
         const user = {
+            id: this.props.user.id,
             username,
             email,
-            tmc_id: this.props.user.tmc_id,
             admin: this.props.user.admin,
             points: this.props.user.points,
             quests: this.props.user.quests
 
         }
-        const editedUser = await userService.update(user, this.props.user.id)
-        console.log(editedUser)
-        this.props.edit(editedUser)
+        await this.props.editUser(user)
+        window.localStorage.setItem(
+            "LoggedTmcUser",
+            JSON.stringify({...user, token: this.props.loggedUser.token})
+        )
+        console.log(window.localStorage.getItem("LoggedTmcUser"))
+
+        this.props.notify('New user information has been saved', 5000)
+        // const editedUser = await userService.update(user, this.props.user.id)
+        // console.log(editedUser)
+        // this.props.edit(editedUser)
     }
 
     handleFormChange = (event) => {
@@ -68,4 +79,10 @@ class EditUserInformation extends React.Component {
     }
 }
 
-export default EditUserInformation
+const mapStateToProps = (state) => {
+    return {
+        loggedUser: state.loggedUser
+    }
+}
+
+export default connect(mapStateToProps, { editUser, notify })(EditUserInformation)

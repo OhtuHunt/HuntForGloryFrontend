@@ -1,11 +1,11 @@
-const activationCodeReducer = (state = '', action) => {
+const activationCodeReducer = (store = '', action) => {
     switch(action.type) {
         case 'SET_CODE':
             return action.data
         case 'CLEAR_CODE':
             return ''
         default:
-            return state
+            return store
     }
 }
 

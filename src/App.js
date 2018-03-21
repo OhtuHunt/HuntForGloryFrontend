@@ -13,24 +13,20 @@ import Notification from "./components/Notification"
 import userService from "./services/users"
 import { notify } from './reducers/notificationReducer'
 import { setActivationCode, clearActivationCode } from './reducers/activationCodeReducer'
-import {initializeQuests, createQuest, removeQuest, deactivateQuest, setQuests, startQuest, finishQuest} from './reducers/questReducer'
+import { initializeQuests, createQuest, removeQuest, deactivateQuest, setQuests, startQuest, finishQuest } from './reducers/questReducer'
+import { getUsers } from './reducers/usersReducer'
+import { setLoggedUser } from './reducers/loggedUserReducer'
 import { connect } from 'react-redux'
 import SwipeableRoutes from 'react-swipeable-routes'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      quests: [],
-      quest: null,
-      user: null,
-      users: []
-    }
 
   }
 
   async componentWillMount() {
-    const users = await userService.getAll()
+    await this.props.getUsers()
     const loggedInUser = window.localStorage.getItem("LoggedTmcUser")
     if (loggedInUser !== null) {
       const parsedUser = JSON.parse(loggedInUser)
@@ -38,49 +34,52 @@ class App extends React.Component {
         token: parsedUser.token
       }
       try {
-        const user = users.find(u => u.id === parsedUser.id)
+        const user = this.props.users.find(u => u.id === parsedUser.id)
         const updatedUser = { ...parsedUser, quests: user.quests }
         questService.setToken(newToken)
         userService.setToken(newToken)
+        this.props.setLoggedUser(updatedUser)
         this.setState({ user: updatedUser })
+
       } catch (exception) {
         this.handleLogout()
       }
     }
-    
+
     await this.props.initializeQuests()
     const quests = this.props.quests
 
-    const sortedUsers = users.sort((a, b) => { return b.points - a.points })
     const updatedQuests = this.setQuestState(quests)
     this.props.setQuests(updatedQuests)
-    this.setState({ quests: updatedQuests, users: sortedUsers })
+    this.setState({ quests: updatedQuests })
   }
 
   //Updates the quests' usersStarted list
   setQuestState = (quests) => {
     let updatedQuests = []
-    if (this.state.user !== null) {
-      quests.forEach(q => {
-        if (q.usersStarted.length !== 0) {
-          let us = q.usersStarted
-          const isStarted = us.find(a => {
-            return a.user === this.state.user.id
-          })
-          if (isStarted) {
-            if (isStarted.finishTime !== null) {
-              updatedQuests = updatedQuests.concat({ ...q, finished: true })
-            } else {
-              updatedQuests = updatedQuests.concat({ ...q, started: true })
-            }
+    if (this.props.loggedUser === null) {
+      return updatedQuests
+    }
+    quests.forEach(q => {
+      if (q.usersStarted.length !== 0) {
+        let us = q.usersStarted
+        const isStarted = us.find(a => {
+          return a.user === this.props.loggedUser.id
+        })
+        if (isStarted) {
+          if (isStarted.finishTime !== null) {
+            updatedQuests = updatedQuests.concat({ ...q, finished: true })
           } else {
-            updatedQuests = updatedQuests.concat(q)
+            updatedQuests = updatedQuests.concat({ ...q, started: true })
           }
         } else {
           updatedQuests = updatedQuests.concat(q)
         }
-      })
-    }
+      } else {
+        updatedQuests = updatedQuests.concat(q)
+      }
+    })
+
     return updatedQuests
   }
 
@@ -100,7 +99,7 @@ class App extends React.Component {
       const quests = this.props.quests
       const updatedQuests = this.setQuestState(quests)
       this.setState({
-        user: { ...user, token: this.state.user.token }
+        user: { ...user, token: this.props.loggedUser.token }
       })
       await this.props.setQuests(updatedQuests)
     } catch (exception) {
@@ -109,21 +108,9 @@ class App extends React.Component {
     this.props.clearActivationCode()
   }
 
-  editUser = (user) => {
-    this.setState({
-      user
-    })
-    window.localStorage.setItem(
-      "LoggedTmcUser",
-      JSON.stringify(this.state.user)
-    )
-
-    this.props.notify('New user information has been saved', 5000)
-  }
-
   handleDeleteAccount = () => {
     if (window.confirm("Do you want to delete your account?")) {
-      userService.remove(this.state.user.id)
+      userService.remove(this.props.loggedUser.id)
       window.localStorage.removeItem("LoggedTmcUser")
       this.setState({
         user: null
@@ -159,24 +146,15 @@ class App extends React.Component {
         token: response.data.token
       }
       questService.setToken(newToken)
-      this.setState({
-        user: cacheUser
-      })
+      this.props.setLoggedUser(cacheUser)
     } catch (exception) {
       this.props.notify("Invalid username or password", 3000)
     }
-    this.componentWillMount()
-  }
-
-  handleLogout = () => {
-    window.localStorage.removeItem("LoggedTmcUser")
-    this.setState({
-      user: null
-    })
   }
 
   render() {
     const questById = id => this.props.quests.find(quest => quest.id === id)
+      
     return (
       <HashRouter>
         <div>
@@ -197,7 +175,7 @@ class App extends React.Component {
             </ul>
           </div>
           <Notification store={this.props.store} />
-          {this.state.user === null ? (
+          {this.props.loggedUser === null ? (
             <div className="login">
               <LoginForm handleLogin={this.handleLogin} />
             </div>
@@ -212,7 +190,6 @@ class App extends React.Component {
                       <ShowOne
                         store={this.props.store}
                         quest={questById(match.params.id)}
-                        state={this.state}
                         handleStart={this.handleStartQuest}
                         handleComplete={this.handleCompleteQuest}
                         handleActivationCodeChange={this.handleActivationCodeChange}
@@ -230,24 +207,19 @@ class App extends React.Component {
                   <Route
                     path="/leaderboard"
                     render={() => (
-                      <Leaderboard users={this.state.users} />)}
+                      <Leaderboard store={this.props.store} />)}
                   />
                   <Route
                     path="/userpage"
                     render={() => (
                       <Userpage
-                        state={this.state}
-                        handleDelete={this.handleDeleteAccount.bind(this)}
-                        handleLogout={this.handleLogout}
-                        user={this.state.user}
-                        editUser={this.editUser}
                         store={this.props.store}
                       />)}
                   />
                 </SwipeableRoutes>
               </div>
             )}
-          <Footer user={this.state.user} users={this.state.users} />
+          <Footer store={this.props.store} />
         </div>
       </HashRouter>
     )
@@ -257,18 +229,24 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     activationCode: state.activationCode,
-    quests: state.quests
+    quests: state.quests,
+    users: state.users,
+    loggedUser: state.loggedUser
   }
 }
 
 export default connect(mapStateToProps,
-   { notify, 
-    setActivationCode, 
-    clearActivationCode, 
-    initializeQuests, 
-    createQuest, 
-    removeQuest, 
+  {
+    notify,
+    setActivationCode,
+    clearActivationCode,
+    initializeQuests,
+    createQuest,
+    removeQuest,
     deactivateQuest,
     setQuests,
     startQuest,
-    finishQuest })(App)
+    finishQuest,
+    getUsers,
+    setLoggedUser
+  })(App)

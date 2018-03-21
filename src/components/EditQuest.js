@@ -94,7 +94,6 @@ class EditQuest extends React.Component {
             deactivated: this.state.deactivated
         }
         
-        console.log(this.quest)
         await this.props.editQuest(questObject, this.quest.id)
         this.props.notify(`${questObject.name} has been edited.`, 5000)
     }
