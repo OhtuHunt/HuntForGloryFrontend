@@ -9,7 +9,7 @@ class Notification extends React.Component {
         }
         return (
             <div>
-                <p>{this.props.store.getState().notification}</p>
+                <p>{this.props.notification}</p>
             </div>
         )
     }

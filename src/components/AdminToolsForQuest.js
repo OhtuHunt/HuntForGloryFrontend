@@ -5,9 +5,6 @@ import EditQuest from "./EditQuest"
 class AdminToolsForQuest extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            quest: this.props.quest
-        }
         this.handleDelete = this.props.handleDelete
         this.handleDeactivate = this.props.handleDeactivate
     }
@@ -16,18 +13,18 @@ class AdminToolsForQuest extends React.Component {
             if (this.props.loggedUser.admin) {
                 return (
                     <div>
-                        <button className="deleteQuest" onClick={() => this.handleDelete(this.state.quest.id)}>
+                        <button className="deleteQuest" onClick={() => this.handleDelete(this.props.quest.id)}>
                             Delete
-            </button>
+                        </button>
                         <br></br>
                         <br></br>
-                        <EditQuest quest={this.state.quest} store={this.props.store} />
+                        <EditQuest quest={this.props.quest} />
                         <br></br>
                         <br></br>
-                        <button className="deleteQuest" onClick={() => this.handleDeactivate(this.state.quest.id)}>Deactivate</button>
+                        <button className="deleteQuest" onClick={() => this.handleDeactivate(this.props.quest.id)}>Deactivate</button>
                         <br></br>
                         <br></br>
-                        {this.state.quest.deactivated === true ?
+                        {this.props.quest.deactivated === true ?
                             <h2>DEACTIVATED</h2>
                             :
                             <div>

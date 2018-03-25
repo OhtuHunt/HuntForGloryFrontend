@@ -10,7 +10,7 @@ class Userpage extends React.Component {
     handleDeleteAccount = () => {
         if (window.confirm("Do you want to delete your account?")) {
             this.props.removeUser(this.props.loggedUser.id)
-            this.handleLogout
+            this.handleLogout()
         }
 
     }
@@ -33,11 +33,11 @@ class Userpage extends React.Component {
                         <br></br>
                         <br></br>
                         <br></br>
-                        {this.props.loggedUser.admin ? <NewQuest store={this.props.store} /> : null}
+                        {this.props.loggedUser.admin ? <NewQuest /> : null}
                         <br></br>
                         <br></br>
                         <br></br>
-                        <EditUserInformation user={this.props.loggedUser} store={this.props.store} />
+                        <EditUserInformation user={this.props.loggedUser} />
                         <br></br>
                         <br></br>
                         <br></br>

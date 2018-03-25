@@ -20,10 +20,6 @@ import { connect } from 'react-redux'
 import SwipeableRoutes from 'react-swipeable-routes'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-
-  }
 
   async componentWillMount() {
     await this.props.getUsers()
@@ -95,13 +91,7 @@ class App extends React.Component {
 
   handleCompleteQuest = async (quest) => {
     try {
-      const user = await questService.finishQuest(quest.id, this.props.store.getState().activationCode)
-      const quests = this.props.quests
-      const updatedQuests = this.setQuestState(quests)
-      this.setState({
-        user: { ...user, token: this.props.loggedUser.token }
-      })
-      await this.props.setQuests(updatedQuests)
+      await this.props.finishQuest(quest.id, this.props.activationCode)
     } catch (exception) {
       this.props.notify("Invalid activation code", 3000)
     }
@@ -120,11 +110,12 @@ class App extends React.Component {
   }
 
   handleDeactivate = async (id) => {
-    const quest = await this.props.deactivateQuest(id)
+    await this.props.deactivateQuest(id)
     this.props.notify(`Deactivated this quest`, 5000)
   }
 
   handleActivationCodeChange = event => {
+    event.preventDefault()
     this.props.setActivationCode(event.target.value)
   }
 
@@ -174,7 +165,7 @@ class App extends React.Component {
               </li>
             </ul>
           </div>
-          <Notification store={this.props.store} />
+          <Notification />
           {this.props.loggedUser === null ? (
             <div className="login">
               <LoginForm handleLogin={this.handleLogin} />
@@ -188,7 +179,6 @@ class App extends React.Component {
                     defaultParams={{ id: "0" }}
                     render={({ match }) => (
                       <ShowOne
-                        store={this.props.store}
                         quest={questById(match.params.id)}
                         handleStart={this.handleStartQuest}
                         handleComplete={this.handleCompleteQuest}
@@ -202,24 +192,22 @@ class App extends React.Component {
                     exact
                     path="/"
                     render={() => (
-                      <ShowAll store={this.props.store} />)}
+                      <ShowAll />)}
                   />
                   <Route
                     path="/leaderboard"
                     render={() => (
-                      <Leaderboard store={this.props.store} />)}
+                      <Leaderboard />)}
                   />
                   <Route
                     path="/userpage"
                     render={() => (
-                      <Userpage
-                        store={this.props.store}
-                      />)}
+                      <Userpage />)}
                   />
                 </SwipeableRoutes>
               </div>
             )}
-          <Footer store={this.props.store} />
+          <Footer />
         </div>
       </HashRouter>
     )

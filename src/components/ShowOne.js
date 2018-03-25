@@ -4,38 +4,24 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit'
 import AdminToolsForQuest from './AdminToolsForQuest'
-import questService from '../services/quests'
 
 class ShowOne extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
-      activationCode: ''
+      loading: false
     }
     this.handleDelete = this.props.handleDelete
     this.handleDeactivate = this.props.handleDeactivate
     this.handleActivationCodeChange = this.props.handleActivationCodeChange
     this.handleStart = this.props.handleStart
-  }
-
-  getQuest = (id) => {
-    const quest = this.props.quests.find(q => q.id === id)
-    if (quest !== undefined) {
-      this.setState({
-        quest: this.props.quests.find(q => q.id === id)
-      })
-    }
+    this.handleComplete = this.props.handleComplete
   }
 
   changeLoading = () => {
     this.setState({
       loading: this.state.loading === true ? false : true
     })
-  }
-
-  handleChange = (event) => {
-    this.setState({ activationCode: event.target.value })
   }
 
   handleStartSubmit = async (event) => {
@@ -75,7 +61,7 @@ class ShowOne extends React.Component {
       <div className="activationCodeForm">
         <input
           type="text"
-          onChange={this.handleChange}
+          onChange={this.handleActivationCodeChange}
           name="activationCode" />
         {this.state.loading === true ?
           <div style={{ marginLeft: '49%' }}>
@@ -115,10 +101,13 @@ class ShowOne extends React.Component {
             {this.props.quest.finished === true ?
               <h2> Quest Completed! </h2>
               :
-              <div>{this.props.quest.started === true ?
-                <div>{this.ShowActivationCodeForm()}</div>
+              <div> {this.props.quest.deactivated === true ?
+                <div> This quest has been deactivated </div>
                 :
-                <div>{this.ShowStartButton()}</div>}</div>}
+                <div>{this.props.quest.started === true ?
+                  <div>{this.ShowActivationCodeForm()}</div>
+                  :
+                  <div>{this.ShowStartButton()}</div>}</div>}</div>}
           </CardBody>
         </Card>
       </div>

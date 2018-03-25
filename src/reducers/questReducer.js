@@ -94,9 +94,9 @@ export const startQuest = (id) => {
     }
 }
 
-export const finishQuest = (id) => {
+export const finishQuest = (id, activationCode) => {
     return async (dispatch) => {
-        const finishedQuest = await questService.finishQuest(id)
+        const finishedQuest = await questService.finishQuest(id, activationCode)
         dispatch({
             type: 'FINISH_QUEST',
             finishedQuest: { ...finishedQuest, finished: true }
