@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import { editQuest } from '../reducers/questReducer'
 
+
 const QuestForm = ({ handleSubmit, handleChange, name, description, points, type, activationCode, deactivated }) => {
     return (
         <div className="createform">
