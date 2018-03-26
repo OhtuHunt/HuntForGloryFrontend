@@ -43,7 +43,8 @@ const remove = async (id) => {
 }
 
 const joinCourse = async (courseId) => {
-  const response = await axios.post(`${baseUrl}/${courseId}/join`, config())
+  console.log(config())
+  const response = await axios.post(`${baseUrl}/${courseId}/join`, null, config())
   return response
 }
 
