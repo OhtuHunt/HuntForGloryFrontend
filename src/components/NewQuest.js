@@ -18,7 +18,7 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                     <select name="course" value={course} onChange={handleChange}>
                         {courses.map(function (course) {
                             return (
-                                <option value={course.id}>{course.name}</option>
+                                <option key={course.id} value={course.id}>{course.name}</option>
                             )
                         })}
                     </select>
@@ -84,7 +84,7 @@ class NewQuest extends React.Component {
             points: 0,
             type: "",
             activationCode: "",
-            course: ""
+            course: this.props.courses[0].id
         }
     }
 
@@ -114,7 +114,7 @@ class NewQuest extends React.Component {
             points: "",
             type: "",
             activationCode: "",
-            course: ""
+            course: this.props.courses[0].id
         })
     }
 

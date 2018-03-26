@@ -42,4 +42,9 @@ const remove = async (id) => {
   return response
 }
 
-export default { getAll, create, remove, getOne, update, setToken }
+const joinCourse = async (courseId) => {
+  const response = await axios.post(`${baseUrl}/${courseId}/join`, config())
+  return response
+}
+
+export default { getAll, create, remove, getOne, update, setToken, joinCourse }

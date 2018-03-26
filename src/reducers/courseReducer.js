@@ -6,6 +6,10 @@ const courseReducer = (store = [], action) => {
             return store = action.courses
         case 'CREATE_COURSE':
             return store.concat(action.newCourse)
+        case 'JOIN_COURSE':
+            const courses = store.filter(course => course.id !== action.course.id)
+            courses.concat(action.course)
+            return store = courses
         default:
             return store
     }
@@ -27,6 +31,16 @@ export const createCourse = (course) => {
         dispatch({
             type: 'CREATE_COURSE',
             newCourse
+        })
+    }
+}
+
+export const joinCourse = (courseId) => {
+    return async (dispatch) => {
+        const course = await courseService.joinCourse(courseId)
+        dispatch({
+            type: 'JOIN_COURSE',
+            course
         })
     }
 }

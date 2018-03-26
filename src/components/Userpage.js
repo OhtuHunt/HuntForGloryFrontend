@@ -5,6 +5,7 @@ import EditUserInformation from './EditUserInformation'
 import { removeUser } from '../reducers/usersReducer'
 import { setLoggedUser } from '../reducers/loggedUserReducer'
 import { connect } from 'react-redux'
+import JoinCourse from './JoinCourse'
 
 class Userpage extends React.Component {
 
@@ -46,6 +47,10 @@ class Userpage extends React.Component {
                         <br></br>
                         <br></br>
                         <br></br>
+                        <JoinCourse />
+                        <br></br>
+                        <br></br>
+                        <br></br>                        
                         <button onClick={this.handleDeleteAccount}>delete account</button>
                     </div>
                     :
