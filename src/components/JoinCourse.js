@@ -10,7 +10,7 @@ class JoinCourse extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            courseId: this.props.courses[0].id
+            courseId: ''
         }
     }
 
@@ -25,7 +25,7 @@ class JoinCourse extends React.Component {
         console.log(this.state.courseId)
         this.props.notify(`Joined course`)
         this.setState({
-            courseId: this.props.courses[0].id
+            courseId: ''
         })
     }
 

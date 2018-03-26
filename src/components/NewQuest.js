@@ -84,7 +84,7 @@ class NewQuest extends React.Component {
             points: 0,
             type: "",
             activationCode: "",
-            course: this.props.courses[0].id
+            course: ""
         }
     }
 
@@ -114,7 +114,7 @@ class NewQuest extends React.Component {
             points: "",
             type: "",
             activationCode: "",
-            course: this.props.courses[0].id
+            course: ""
         })
     }
 
