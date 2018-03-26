@@ -1,5 +1,6 @@
 import React from 'react'
 import NewQuest from './NewQuest'
+import NewCourse from './NewCourse'
 import EditUserInformation from './EditUserInformation'
 import { removeUser } from '../reducers/usersReducer'
 import { setLoggedUser } from '../reducers/loggedUserReducer'
@@ -30,6 +31,10 @@ class Userpage extends React.Component {
                         <br></br>
                         <br></br>
                         <button onClick={this.handleLogout}>Logout</button>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        {this.props.loggedUser.admin ? <NewCourse /> : null}
                         <br></br>
                         <br></br>
                         <br></br>

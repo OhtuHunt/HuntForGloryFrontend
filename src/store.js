@@ -5,13 +5,15 @@ import activationCodeReducer from './reducers/activationCodeReducer'
 import questReducer from './reducers/questReducer'
 import usersReducer from './reducers/usersReducer'
 import loggedUserReducer from './reducers/loggedUserReducer'
+import courseReducer from './reducers/courseReducer'
 
 const reducer = combineReducers({
   notification: notificationReducer,
   activationCode: activationCodeReducer,
   quests: questReducer,
   users: usersReducer,
-  loggedUser: loggedUserReducer
+  loggedUser: loggedUserReducer,
+  courses: courseReducer
 })
 
 const store = createStore(

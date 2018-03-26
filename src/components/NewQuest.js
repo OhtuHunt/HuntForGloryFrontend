@@ -1,17 +1,29 @@
 import React from 'react'
-import questService from '../services/quests'
 import Toggleable from './Toggleable'
 import { notify } from '../reducers/notificationReducer'
 import { createQuest } from '../reducers/questReducer'
 import { connect } from 'react-redux'
 import "../index.css";
 
-const QuestForm = ({ onSubmit, handleChange, name, description, points, type, activationCode }) => {
+const QuestForm = ({ onSubmit, handleChange, name, description, points, type, activationCode, course, courses }) => {
     return (
         <div className="createform">
             <h2>create new quest</h2>
 
             <form onSubmit={onSubmit}>
+
+                <div className="form-group">
+
+                    <p>course</p>
+                    <select name="course" value={course} onChange={handleChange}>
+                        {courses.map(function (course) {
+                            return (
+                                <option value={course.id}>{course.name}</option>
+                            )
+                        })}
+                    </select>
+                </div>
+
                 <div>
                     <p>name</p>
                     <input
@@ -71,9 +83,9 @@ class NewQuest extends React.Component {
             description: "",
             points: 0,
             type: "",
-            activationCode: ""
+            activationCode: "",
+            course: ""
         }
-        this.createNewQuest = props.createNewQuest
     }
 
     formVisibility = () => {
@@ -82,13 +94,15 @@ class NewQuest extends React.Component {
 
     addQuest = async (event) => {
         event.preventDefault()
+        console.log(this.state.course)
         this.questForm.toggleVisibility()
         const questObject = {
             name: this.state.name,
             description: this.state.description,
             points: this.state.points,
             type: this.state.type,
-            activationCode: this.state.activationCode
+            activationCode: this.state.activationCode,
+            course: this.state.course
         }
 
         this.props.createQuest(questObject)
@@ -99,7 +113,8 @@ class NewQuest extends React.Component {
             description: "",
             points: "",
             type: "",
-            activationCode: ""
+            activationCode: "",
+            course: ""
         })
     }
 
@@ -109,6 +124,8 @@ class NewQuest extends React.Component {
 
 
     render() {
+        console.log("courses")
+        console.log(this.props.courses)
         return (
             <div>
                 <Toggleable buttonLabel="new quest" ref={component => this.questForm = component}>
@@ -120,6 +137,8 @@ class NewQuest extends React.Component {
                         points={this.state.points}
                         type={this.state.type}
                         activationCode={this.state.activationCode}
+                        course={this.state.course}
+                        courses={this.props.courses}
                     />
                 </Toggleable>
             </div>
@@ -129,5 +148,11 @@ class NewQuest extends React.Component {
     }
 }
 
-export default connect(null,
+const mapStateToProps = (state) => {
+    return {
+        courses: state.courses
+    }
+}
+
+export default connect(mapStateToProps,
     { createQuest, notify })(NewQuest)

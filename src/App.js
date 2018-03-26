@@ -11,10 +11,12 @@ import LoginForm from "./components/LoginForm"
 import loginService from "./services/login"
 import Notification from "./components/Notification"
 import userService from "./services/users"
+import courseService from "./services/courses"
 import { notify } from './reducers/notificationReducer'
 import { setActivationCode, clearActivationCode } from './reducers/activationCodeReducer'
 import { initializeQuests, createQuest, removeQuest, deactivateQuest, setQuests, startQuest, finishQuest } from './reducers/questReducer'
 import { getUsers } from './reducers/usersReducer'
+import { getCourses } from './reducers/courseReducer'
 import { setLoggedUser } from './reducers/loggedUserReducer'
 import { connect } from 'react-redux'
 import SwipeableRoutes from 'react-swipeable-routes'
@@ -23,6 +25,7 @@ class App extends React.Component {
 
   async componentWillMount() {
     await this.props.getUsers()
+    await this.props.getCourses()
     const loggedInUser = window.localStorage.getItem("LoggedTmcUser")
     if (loggedInUser !== null) {
       const parsedUser = JSON.parse(loggedInUser)
@@ -34,6 +37,7 @@ class App extends React.Component {
         const updatedUser = { ...parsedUser, quests: user.quests }
         questService.setToken(newToken)
         userService.setToken(newToken)
+        courseService.setToken(newToken)
         this.props.setLoggedUser(updatedUser)
         this.setState({ user: updatedUser })
 
@@ -143,9 +147,14 @@ class App extends React.Component {
     }
   }
 
+  handleLogout = () => {
+    window.localStorage.removeItem("LoggedTmcUser")
+    this.props.setLoggedUser(null)
+  }
+
   render() {
     const questById = id => this.props.quests.find(quest => quest.id === id)
-      
+
     return (
       <HashRouter>
         <div>
@@ -236,5 +245,6 @@ export default connect(mapStateToProps,
     startQuest,
     finishQuest,
     getUsers,
-    setLoggedUser
+    setLoggedUser,
+    getCourses
   })(App)

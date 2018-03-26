@@ -9,10 +9,7 @@ class ShowAll extends React.Component{
         <div>
         {this.props.quests.map(quest => <GenerateCard
           key={quest.id}
-          id={quest.id}
-          title={quest.name}
-          questType={quest.type}
-          points={quest.points}
+          quest={quest}
         />)}
         </div>
       </div>
