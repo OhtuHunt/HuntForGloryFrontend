@@ -79,7 +79,7 @@ class ShowOne extends React.Component {
   QuestInfo = () => {
     return (
       <div>
-        <AdminToolsForQuest quest={this.props.quest} handleDelete={this.handleDelete} store={this.props.store} handleDeactivate={this.handleDeactivate} />
+        <AdminToolsForQuest quest={this.props.quest} handleDelete={this.handleDelete} handleDeactivate={this.handleDeactivate} />
         <h1> {this.props.quest.name} </h1>
         <div className="soloDesc" style={{ height: window.innerHeight * 0.4 }}>{this.props.quest.description}</div>
       </div>
