@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody } from "react-simple-card";
+import { Card, CardBody } from 'react-simple-card'
 import { NavLink } from 'react-router-dom'
 
 const GenerateCard = ({ quest }) => {
@@ -22,7 +22,7 @@ const GenerateCard = ({ quest }) => {
             </Card>
         </NavLink>
 
-    );
+    )
 };
 
 export default GenerateCard
