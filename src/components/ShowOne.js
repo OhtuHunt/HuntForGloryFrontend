@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import Spinner from 'react-spinkit'
 import AdminToolsForQuest from './AdminToolsForQuest'
 import { finishQuest } from '../reducers/questReducer'
-import { get } from 'mongoose';
+import { get } from 'mongoose'
+import { notify } from '../reducers/notificationReducer'
 
 class ShowOne extends React.Component {
   constructor(props) {
@@ -63,10 +64,12 @@ class ShowOne extends React.Component {
     event.preventDefault()
     this.changeLoading()
 
-    let activationCode = await this.loadPosition()
-    console.log(activationCode)
-    this.props.finishQuest(this.props.quest.id, activationCode)
-
+    const activationCode = await this.loadPosition()
+	try {
+		await this.props.finishQuest(this.props.quest.id, activationCode)
+	} catch (exception) {
+		this.props.notify("Wrong location!", 5000)
+	}
   }
 
   ShowStartButton = () => {
@@ -167,4 +170,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { finishQuest })(ShowOne)
+export default connect(mapStateToProps, { finishQuest, notify })(ShowOne)
