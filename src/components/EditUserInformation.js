@@ -34,7 +34,6 @@ class EditUserInformation extends React.Component {
             "LoggedTmcUser",
             JSON.stringify({...user, token: this.props.loggedUser.token})
         )
-        console.log(window.localStorage.getItem("LoggedTmcUser"))
 
         this.props.notify('New user information has been saved', 5000)
         // const editedUser = await userService.update(user, this.props.user.id)
@@ -48,7 +47,7 @@ class EditUserInformation extends React.Component {
 
     render() {
         return (
-            <Toggleable buttonLabel="edit profile" ref={component => this.EditUserInformation = component}>
+            <Toggleable buttonLabel="Edit profile" cancelButtonLabel='Cancel' ref={component => this.EditUserInformation = component}>
                 <div className="createform">
                     <h2>edit profile information</h2>
 

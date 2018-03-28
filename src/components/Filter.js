@@ -18,15 +18,37 @@ class Filter extends React.Component {
         return (
             <div>
                 <Card style={style}>
-                    <CardBody>
-                        <table style={{ width: '100%' }}>
+                    <CardBody style={{padding:0}}>
+                        <table style={{ width: '100%', alignContent: 'left' }}>
                             <tbody>
                                 <tr>
-                                    {/* One line version needs to be adjusted for mobile view */}
-                                    {/* <td>filter based on </td>
-                                    <td><FieldToFilter /></td>
-                                    <td><input onChange={this.handleChange} /></td> */}
-                                    <div>filter based on <FieldToFilter /> <input onChange={this.handleChange} /></div>
+                                    <td>
+                                        <label style={{fontSize: 12}}>
+                                            finished
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label className="switch">
+                                            <input type="checkbox" name="show_done"onChange={this.handleChange}/>
+                                            <span className="slider round"></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div className='custom-select' style={{width: '100%'}}>
+                                            <select name='fieldToFilter'>
+                                                <option value=''>Filter by..</option>
+                                                <option value=''>Everything</option>
+                                                <option value='name'>Name</option>
+                                                <option value='course'>Course</option>
+                                                <option value='type'>Type</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type='text' placeholder='Write here..' onChange={this.handleChange} style={{width:'90%'}}/>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

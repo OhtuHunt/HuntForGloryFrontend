@@ -73,7 +73,7 @@ class NewCourse extends React.Component {
     render() {
         return (
             <div>
-                <Toggleable buttonLabel="new course" ref={component => this.CourseForm = component}>
+                <Toggleable buttonLabel="new course" cancelButtonLabel='Cancel' ref={component => this.CourseForm = component}>
                     <CourseForm
                         onSubmit={this.addCourse}
                         handleChange={this.handleChange}

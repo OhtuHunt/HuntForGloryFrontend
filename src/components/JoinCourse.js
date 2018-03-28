@@ -31,7 +31,7 @@ class JoinCourse extends React.Component {
 
     render() {
         return (
-            <Toggleable buttonLabel="join course" ref={component => this.JoinCourse = component}>
+            <Toggleable buttonLabel="Join course" cancelButtonLabel='Cancel' ref={component => this.JoinCourse = component}>
                 <div className="createform">
                     <h2> Join Course </h2>
                     <form onSubmit={this.handleSubmit}>
@@ -46,7 +46,7 @@ class JoinCourse extends React.Component {
                                 })}
                             </select>
                         </div>
-                        <button type="submit">join</button>
+                        <button type="submit">Join</button>
                     </form>
                 </div>
             </Toggleable>

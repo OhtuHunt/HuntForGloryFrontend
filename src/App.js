@@ -39,8 +39,6 @@ class App extends React.Component {
         userService.setToken(newToken)
         courseService.setToken(newToken)
         this.props.setLoggedUser(updatedUser)
-        this.setState({ user: updatedUser })
-
       } catch (exception) {
         this.handleLogout()
       }
