@@ -5,7 +5,7 @@ import { createQuest } from '../reducers/questReducer'
 import { connect } from 'react-redux'
 import "../index.css";
 
-const QuestForm = ({ onSubmit, handleChange, name, description, points, type, activationCode, course, courses }) => {
+const QuestForm = ({ onSubmit, handleChange, name, description, points, type, activationCode, course, courses, latitude, longitude, radius }) => {
     return (
         <div className="createform">
             <h2>create new quest</h2>
@@ -53,22 +53,48 @@ const QuestForm = ({ onSubmit, handleChange, name, description, points, type, ac
                 </div>
                 <div>
                     <p>type</p>
-                    <input
-                        type="text"
-                        name="type"
-                        value={type}
-                        onChange={handleChange}
-                    />
+                    <label>
+                        <input type='radio' name='type' value="location" onChange={handleChange}/>
+                        Location
+                        <input type='radio' name='type' value="activation code" onChange={handleChange} />
+                        Activation Code
+                    </label>
                 </div>
-                <div>
-                    <p>activationcode</p>
-                    <input
-                        type="text"
-                        name="activationCode"
-                        value={activationCode}
-                        onChange={handleChange}
-                    />
-                </div>
+                {type === "activation code" ?
+                    <div>
+                        <p>activationcode</p>
+                        <input
+                            type="text"
+                            name="activationCode"
+                            value={activationCode}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    :
+                    <div>
+                        <p> latitude </p>
+                        <input
+                            type="number"
+                            name="latitude"
+                            value={latitude}
+                            onChange={handleChange}
+                        />
+                        <p> longitude </p>
+                        <input
+                            type="number"
+                            name="longitude"
+                            value={longitude}
+                            onChange={handleChange}
+                        />
+                        <p> radius </p>
+                        <input
+                            type="number"
+                            name="radius"
+                            value={radius}
+                            onChange={handleChange}
+                        />
+                    </div>}
+
                 <button type="submit">create</button>
             </form>
         </div>
@@ -84,6 +110,9 @@ class NewQuest extends React.Component {
             points: 0,
             type: "",
             activationCode: "",
+            latitude: "",
+            longitude: "",
+            radius: "",
             course: this.props.courses[0] ? this.props.courses[0].id : null
         }
     }
@@ -140,6 +169,9 @@ class NewQuest extends React.Component {
                             activationCode={this.state.activationCode}
                             course={this.state.course}
                             courses={this.props.courses}
+                            latitude={this.state.latitude}
+                            longitude={this.state.longitude}
+                            radius={this.state.radius}
                         /> :
                         <div> There are no courses available at the moment. If you want to create a new quest, you first have to create a course </div>}
                 </Toggleable>
