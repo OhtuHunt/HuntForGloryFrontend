@@ -11,7 +11,7 @@ class FieldToFilter extends React.Component {
 
         return (
             <div>
-                <form action={this.handleChange}>
+                <form onChange={this.handleChange}>
                 <input type='radio' name='quest' value='' /> everything
                     <input type='radio' name='quest' value='name' /> name
                         <input type='radio' name='quest' value='course' /> course
