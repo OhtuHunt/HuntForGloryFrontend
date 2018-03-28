@@ -12,6 +12,10 @@ export default class Togglable extends React.Component {
         this.setState({ visible: !this.state.visible })
     }
 
+    visibilityToFalse = () => {
+        this.setState({ visible: false })
+    }
+
     render() {
         const hideWhenVisible = { display: this.state.visible ? 'none' : '' }
         const showWhenVisible = { display: this.state.visible ? '' : 'none' }

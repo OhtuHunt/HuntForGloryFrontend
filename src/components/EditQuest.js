@@ -8,14 +8,27 @@ import { editQuest } from '../reducers/questReducer'
 
 
 const QuestForm = ({ handleSubmit, handleChange, name, description, points, type, activationCode, deactivated }) => {
+
+    const handleEditClick = (event) => {
+        event.preventDefault()
+        const editedQuest = {
+            name: event.target.name.value,
+            description: event.target.description.value,
+            points: event.target.points.value,
+            type: event.target.type.value,
+            activationCode: event.target.activationCode.value
+        }
+        handleSubmit(editedQuest)
+    }
+
     return (
         <div className="createform">
             <h2>edit quest</h2>
 
-            <form  onSubmit={handleSubmit}>
+            <form onSubmit={handleEditClick}>
                 <div>
                     <p>name</p>
-                <input 
+                    <input
                         type="text"
                         name="name"
                         value={name}
@@ -23,7 +36,7 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                     />
                 </div>
                 <div>
-                <p>description</p>
+                    <p>description</p>
                     <input
                         type="textarea"
                         name="description"
@@ -32,7 +45,7 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                     />
                 </div>
                 <div>
-                <p>points</p>
+                    <p>points</p>
                     <input
                         type="number"
                         name="points"
@@ -41,7 +54,7 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                     />
                 </div>
                 <div>
-                <p>type</p>
+                    <p>type</p>
                     <input
                         type="text"
                         name="type"
@@ -50,7 +63,7 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                     />
                 </div>
                 <div>
-                <p>activationcode</p>
+                    <p>activationcode</p>
                     <input
                         type="text"
                         name="activationCode"
@@ -73,30 +86,28 @@ class EditQuest extends React.Component {
             points: Number(props.quest.points),
             type: props.quest.type,
             activationCode: props.quest.activationCode,
-            deactivated: props.quest.deactivated
+            deactivated: props.quest.deactivated,
+            id: props.quest.id
         }
-        this.editQuest = props.editQuest
-        this.quest = props.quest
     }
 
     formVisibility = () => {
         this.setState({ visible: !this.state.visible })
     }
 
-    handleSubmit = async (event) => {
-        event.preventDefault()
+    handleSubmit = async (editedQuest) => {
+        console.log(editedQuest)
         this.questForm.toggleVisibility()
-        const questObject = {
-            name: this.state.name,
-            description: this.state.description,
-            points: this.state.points,
-            type: this.state.type,
-            activationCode: this.state.activationCode,
-            deactivated: this.state.deactivated
-        }
-        
-        await this.props.editQuest(questObject, this.quest.id)
-        this.props.notify(`${questObject.name} has been edited.`, 5000)
+        this.setState({
+            name: editedQuest.name,
+            description: editedQuest.description,
+            points: editedQuest.points,
+            type: editedQuest.type,
+            activationCode: editedQuest.activationCode
+        })
+        const editedWithDeactivation = { ...editedQuest, deactivated: this.props.quest.deactivated }
+        await this.props.editQuest(editedWithDeactivation, this.props.quest.id)
+        this.props.notify(`${editedQuest.name} has been edited.`, 5000)
     }
 
     handleQuestChange = (event) => {
@@ -105,6 +116,18 @@ class EditQuest extends React.Component {
 
 
     render() {
+        if (this.state.id !== this.props.quest.id) {
+            this.setState({
+                name: this.props.quest.name,
+                description: this.props.quest.description,
+                points: this.props.quest.points,
+                type: this.props.quest.type,
+                activationCode: this.props.quest.activationCode,
+                deactivated: this.props.quest.deactivated,
+                id: this.props.quest.id
+            })
+            this.questForm.visibilityToFalse()
+        }
         return (
             <div>
                 <Toggleable buttonLabel="edit quest" ref={component => this.questForm = component}>
@@ -126,4 +149,4 @@ class EditQuest extends React.Component {
 }
 
 export default connect(null,
-    { editQuest , notify})(EditQuest)
+    { editQuest, notify })(EditQuest)

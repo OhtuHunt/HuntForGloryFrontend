@@ -27,6 +27,8 @@ const filteredQuests = (quests, filter, field) => {
       return filter === '' ? quests : quests.filter(quest => quest.course.toLowerCase().includes(filter))
     case 'type':
       return filter === '' ? quests : quests.filter(quest => quest.type.toLowerCase().includes(filter))
+    case 'not_done':
+      return filter === '' ? quests : quests.filter(quest => quest.finished === null || quest.finished === undefined)
     default:
       return filter === '' ? quests : quests.filter(quest => {
         let bool = false
