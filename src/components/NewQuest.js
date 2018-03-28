@@ -110,9 +110,9 @@ class NewQuest extends React.Component {
             points: 0,
             type: "",
             activationCode: "",
-            latitude: "",
-            longitude: "",
-            radius: "",
+            latitude: null,
+            longitude: null,
+            radius: null,
             course: this.props.courses[0] ? this.props.courses[0].id : null
         }
     }
@@ -125,12 +125,19 @@ class NewQuest extends React.Component {
         event.preventDefault()
         console.log(this.state.course)
         this.questForm.toggleVisibility()
+
+        let activationCode = this.state.activationCode
+
+        if (this.state.type === 'location') {
+            activationCode = {lat: this.state.latitude, lng: this.state.longitude, radius: this.state.radius}
+        }
+
         const questObject = {
             name: this.state.name,
             description: this.state.description,
             points: this.state.points,
             type: this.state.type,
-            activationCode: this.state.activationCode,
+            activationCode: activationCode,
             course: this.state.course
         }
 
@@ -143,7 +150,10 @@ class NewQuest extends React.Component {
             points: "",
             type: "",
             activationCode: "",
-            course: ""
+            course: "",
+            latitude: null,
+            longitude: null,
+            radius: null
         })
     }
 

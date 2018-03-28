@@ -4,6 +4,8 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit'
 import AdminToolsForQuest from './AdminToolsForQuest'
+import { finishQuest } from '../reducers/questReducer'
+import { get } from 'mongoose';
 
 class ShowOne extends React.Component {
   constructor(props) {
@@ -38,6 +40,35 @@ class ShowOne extends React.Component {
     this.changeLoading()
   }
 
+  loadPosition = async () => {
+    try {
+      const position = await this.getCurrentPosition()
+      const { latitude, longitude } = position.coords
+      return {
+        lat: latitude,
+        lng: longitude
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  getCurrentPosition = (options = {}) => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, options)
+    })
+  }
+
+  handleLocationSubmit = async (event) => {
+    event.preventDefault()
+    this.changeLoading()
+
+    let activationCode = await this.loadPosition()
+    console.log(activationCode)
+    this.props.finishQuest(this.props.quest.id, activationCode)
+
+  }
+
   ShowStartButton = () => {
     return (
       <div>
@@ -57,6 +88,12 @@ class ShowOne extends React.Component {
   }
 
   ShowActivationCodeForm = () => {
+    if (this.props.quest.type === 'location') {
+      return (
+        this.ShowLocationSubmitButton()
+      )
+    }
+
     return (
       <div className="activationCodeForm">
         <input
@@ -76,6 +113,14 @@ class ShowOne extends React.Component {
     )
   }
 
+  ShowLocationSubmitButton = () => {
+    return (
+      <div className="activationCodeForm">
+        <button onClick={this.handleLocationSubmit}> Complete location </button>
+      </div>
+    )
+  }
+
   QuestInfo = () => {
     return (
       <div>
@@ -86,8 +131,6 @@ class ShowOne extends React.Component {
       </div>
     )
   }
-
-
 
   render() {
     if (this.props.quest === undefined) {
@@ -124,4 +167,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ShowOne)
+export default connect(mapStateToProps, { finishQuest })(ShowOne)
