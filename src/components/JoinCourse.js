@@ -10,7 +10,7 @@ class JoinCourse extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            courseId: ''
+            courseId: this.props.courses[0] ? this.props.courses[0].id : null
         }
     }
 

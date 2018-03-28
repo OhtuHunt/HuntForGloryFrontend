@@ -84,7 +84,7 @@ class NewQuest extends React.Component {
             points: 0,
             type: "",
             activationCode: "",
-            course: ""
+            course: this.props.courses[0] ? this.props.courses[0].id : null
         }
     }
 
@@ -129,17 +129,19 @@ class NewQuest extends React.Component {
         return (
             <div>
                 <Toggleable buttonLabel="new quest" ref={component => this.questForm = component}>
-                    <QuestForm
-                        onSubmit={this.addQuest}
-                        handleChange={this.handleQuestChange}
-                        name={this.state.name}
-                        description={this.state.description}
-                        points={this.state.points}
-                        type={this.state.type}
-                        activationCode={this.state.activationCode}
-                        course={this.state.course}
-                        courses={this.props.courses}
-                    />
+                    {this.props.courses[0] ?
+                        <QuestForm
+                            onSubmit={this.addQuest}
+                            handleChange={this.handleQuestChange}
+                            name={this.state.name}
+                            description={this.state.description}
+                            points={this.state.points}
+                            type={this.state.type}
+                            activationCode={this.state.activationCode}
+                            course={this.state.course}
+                            courses={this.props.courses}
+                        /> :
+                        <div> There are no courses available at the moment. If you want to create a new quest, you first have to create a course </div>}
                 </Toggleable>
             </div>
         )
