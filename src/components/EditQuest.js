@@ -1,5 +1,4 @@
 import React from 'react'
-import questService from '../services/quests'
 import Toggleable from './Toggleable'
 import "../index.css"
 import { connect } from 'react-redux'

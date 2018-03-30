@@ -1,5 +1,4 @@
-html,
-body {
+html {
   padding: 0;
   margin: 0;
   height: 100%;
@@ -10,10 +9,11 @@ body {
   color: #444;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
-html {
-  overflow: hidden;
+body {
+  height: 100%;
 }
 
 button:disabled {

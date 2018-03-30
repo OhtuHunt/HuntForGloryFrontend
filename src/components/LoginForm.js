@@ -25,8 +25,10 @@ class LoginForm extends React.Component {
     handleSubmit = async (event) => {
         event.preventDefault()
         this.changeLoading()
-        await this.handleLogin(event)
-        this.changeLoading()
+        const success = await this.handleLogin(event)
+        if (!success) {
+            this.changeLoading()
+        }
     }
     
     render() {

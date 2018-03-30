@@ -144,8 +144,10 @@ class App extends React.Component {
   
       const updatedQuests = this.setQuestState(quests)
       this.props.setQuests(updatedQuests)
+      return true
     } catch (exception) {
       this.props.notify("Invalid username or password", 3000)
+      return false
     }
   }
 

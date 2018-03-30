@@ -2,7 +2,6 @@ import React from 'react'
 import GenerateCard from "./GenerateCard"
 import { connect } from 'react-redux'
 import Filter from './Filter'
-import Toggleable from './Toggleable'
 
 class ShowAll extends React.Component {
   render() {

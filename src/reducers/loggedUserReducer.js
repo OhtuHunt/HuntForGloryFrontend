@@ -1,4 +1,3 @@
-import userService from '../services/users'
 
 const loggedUserReducer = (store = null, action) => {
     switch(action.type) {

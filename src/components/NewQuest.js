@@ -110,9 +110,9 @@ class NewQuest extends React.Component {
 			points: 0,
 			type: '',
 			activationCode: '',
-			latitude: undefined,
-			longitude: undefined,
-			radius: undefined,
+			latitude: '',
+			longitude: '',
+			radius: '',
 			course: this.props.courses[0] ? this.props.courses[0].id : undefined
 		}
 	}
@@ -140,6 +140,8 @@ class NewQuest extends React.Component {
 			course: this.state.course
 		}
 
+		console.log(questObject)
+
 		this.props.createQuest(questObject)
 		this.props.notify(`${questObject.name} has been created.`, 5000)
 
@@ -150,10 +152,11 @@ class NewQuest extends React.Component {
 			type: '',
 			activationCode: '',
 			course: '',
-			latitude: undefined,
-			longitude: undefined,
-			radius: undefined
+			latitude: '',
+			longitude: '',
+			radius: ''
 		})
+		window.scrollTo(0, 0)
 	}
 
 	handleQuestChange = (event) => {

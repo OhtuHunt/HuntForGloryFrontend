@@ -1,11 +1,9 @@
 import React from 'react'
 import { Card, CardBody } from "react-simple-card";
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit'
 import AdminToolsForQuest from './AdminToolsForQuest'
 import { finishQuest } from '../reducers/questReducer'
-import { get } from 'mongoose'
 import { notify } from '../reducers/notificationReducer'
 
 class ShowOne extends React.Component {

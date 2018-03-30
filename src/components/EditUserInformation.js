@@ -1,6 +1,5 @@
 import React from 'react'
 import Toggleable from './Toggleable'
-import userService from '../services/users'
 import { editUser } from '../reducers/usersReducer'
 import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
