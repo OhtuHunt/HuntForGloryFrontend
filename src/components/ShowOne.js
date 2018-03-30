@@ -137,7 +137,7 @@ class ShowOne extends React.Component {
 
   render() {
     if (this.props.quest === undefined) {
-      return <Redirect to='/' />
+      return <div></div>
     }
 
     return (

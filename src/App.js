@@ -6,7 +6,7 @@ import ShowAll from "./components/ShowAll"
 import Leaderboard from "./components/Leaderboard"
 import Userpage from "./components/Userpage"
 import questService from "./services/quests"
-import { Route, NavLink, HashRouter } from "react-router-dom"
+import { Route, NavLink, BrowserRouter } from "react-router-dom"
 import LoginForm from "./components/LoginForm"
 import loginService from "./services/login"
 import Notification from "./components/Notification"
@@ -39,17 +39,16 @@ class App extends React.Component {
         userService.setToken(newToken)
         courseService.setToken(newToken)
         this.props.setLoggedUser(updatedUser)
+
+        await this.props.initializeQuests()
+        const quests = this.props.quests
+    
+        const updatedQuests = this.setQuestState(quests)
+        this.props.setQuests(updatedQuests)
       } catch (exception) {
         this.handleLogout()
       }
     }
-
-    await this.props.initializeQuests()
-    const quests = this.props.quests
-
-    const updatedQuests = this.setQuestState(quests)
-    this.props.setQuests(updatedQuests)
-    this.setState({ quests: updatedQuests })
   }
 
   //Updates the quests' usersStarted list
@@ -140,6 +139,11 @@ class App extends React.Component {
       }
       questService.setToken(newToken)
       this.props.setLoggedUser(cacheUser)
+      await this.props.initializeQuests()
+      const quests = this.props.quests
+  
+      const updatedQuests = this.setQuestState(quests)
+      this.props.setQuests(updatedQuests)
     } catch (exception) {
       this.props.notify("Invalid username or password", 3000)
     }
@@ -152,9 +156,8 @@ class App extends React.Component {
 
   render() {
     const questById = id => this.props.quests.find(quest => quest.id === id)
-
     return (
-      <HashRouter>
+      <BrowserRouter>
         <div>
           <h1 className="header__title">Hunt for Glory</h1>
           <div className="header">
@@ -187,6 +190,7 @@ class App extends React.Component {
                     render={({ match }) => (
                       <ShowOne
                         quest={questById(match.params.id)}
+                        key={match.params.id}
                         handleStart={this.handleStartQuest}
                         handleComplete={this.handleCompleteQuest}
                         handleActivationCodeChange={this.handleActivationCodeChange}
@@ -199,24 +203,27 @@ class App extends React.Component {
                     exact
                     path="/"
                     render={() => (
-                      <ShowAll />)}
+                      <ShowAll 
+                      key='showAll'/>)}
                   />
                   <Route
                     path="/leaderboard"
                     render={() => (
-                      <Leaderboard />)}
+                      <Leaderboard 
+                      key='leaderboard'/>)}
                   />
                   <Route
                     path="/userpage"
                     render={() => (
-                      <Userpage />)}
+                      <Userpage 
+                      key='userpage'/>)}
                   />
                 </SwipeableRoutes>
               </div>
             )}
           <Footer />
         </div>
-      </HashRouter>
+      </BrowserRouter>
     )
   }
 }

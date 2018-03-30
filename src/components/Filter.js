@@ -31,7 +31,7 @@ class Filter extends React.Component {
                                 <tr>
                                     <td>
                                         <label className="switch">
-                                            <input type="checkbox" name="show_done"onChange={this.handleChange}/>
+                                            <input type="checkbox" />
                                             <span className="slider round"></span>
                                         </label>
                                     </td>

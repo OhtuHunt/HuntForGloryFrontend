@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
     }
 
     handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
         this.changeLoading()
         await this.handleLogin(event)
         this.changeLoading()
