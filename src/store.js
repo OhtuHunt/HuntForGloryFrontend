@@ -8,6 +8,7 @@ import loggedUserReducer from './reducers/loggedUserReducer'
 import courseReducer from './reducers/courseReducer'
 import filterReducer from './reducers/filterReducer'
 import fieldToFilterReducer from './reducers/fieldToFilterReducer'
+import errorMessageReducer from './reducers/errorMessageReducer'
 
 const reducer = combineReducers({
   notification: notificationReducer,
@@ -17,7 +18,8 @@ const reducer = combineReducers({
   loggedUser: loggedUserReducer,
   courses: courseReducer,
   filter: filterReducer,
-  fieldToFilter: fieldToFilterReducer
+  fieldToFilter: fieldToFilterReducer,
+  errorMessage: errorMessageReducer
 })
 
 const store = createStore(

@@ -19,6 +19,7 @@ import { getUsers } from './reducers/usersReducer'
 import { getCourses } from './reducers/courseReducer'
 import { setLoggedUser } from './reducers/loggedUserReducer'
 import { connect } from 'react-redux'
+import ErrorMessage from './components/ErrorMessage'
 import SwipeableRoutes from 'react-swipeable-routes'
 
 class App extends React.Component {
@@ -178,6 +179,7 @@ class App extends React.Component {
             </ul>
           </div>
           <Notification />
+          <ErrorMessage />
           {this.props.loggedUser === null ? (
             <div className="login">
               <LoginForm handleLogin={this.handleLogin} />

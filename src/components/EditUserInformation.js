@@ -3,6 +3,8 @@ import Toggleable from './Toggleable'
 import { editUser } from '../reducers/usersReducer'
 import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
+import validateProfile from '../validators/profileValidator'
+import { showErrors } from '../reducers/errorMessageReducer'
 
 class EditUserInformation extends React.Component {
     constructor(props) {
@@ -15,7 +17,6 @@ class EditUserInformation extends React.Component {
 
     handleSubmit = async (event) => {
         event.preventDefault()
-        this.EditUserInformation.toggleVisibility()
         const username = (this.state.username === '') ? this.props.user.username : this.state.username
         const email = (this.state.email === '') ? this.props.user.email : this.state.email
 
@@ -28,6 +29,17 @@ class EditUserInformation extends React.Component {
             quests: this.props.user.quests
 
         }
+
+        let errors = validateProfile(user)
+		
+		if (errors.length > 0) {
+			this.props.showErrors(errors, 5000)
+			window.scrollTo(0, 0)
+			return
+        }
+        
+        this.EditUserInformation.toggleVisibility()
+
         await this.props.editUser(user)
         window.localStorage.setItem(
             "LoggedTmcUser",
@@ -83,4 +95,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { editUser, notify })(EditUserInformation)
+export default connect(mapStateToProps, { editUser, notify , showErrors})(EditUserInformation)

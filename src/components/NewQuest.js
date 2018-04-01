@@ -4,6 +4,8 @@ import { notify } from '../reducers/notificationReducer'
 import { createQuest } from '../reducers/questReducer'
 import { connect } from 'react-redux'
 import '../index.css';
+import validateQuest from '../validators/questValidator'
+import { showErrors } from '../reducers/errorMessageReducer'
 
 const QuestForm = ({ onSubmit, handleChange, name, description, points, type, activationCode, course, courses, latitude, longitude, radius }) => {
 	return (
@@ -123,7 +125,6 @@ class NewQuest extends React.Component {
 
 	addQuest = async (event) => {
 		event.preventDefault()
-		this.questForm.toggleVisibility()
 
 		let activationCode = this.state.activationCode
 
@@ -140,7 +141,15 @@ class NewQuest extends React.Component {
 			course: this.state.course
 		}
 
-		console.log(questObject)
+		let errors = validateQuest(questObject)
+		
+		if (errors.length > 0) {
+			this.props.showErrors(errors, 5000)
+			window.scrollTo(0, 0)
+			return
+		}
+
+		this.questForm.toggleVisibility()
 
 		this.props.createQuest(questObject)
 		this.props.notify(`${questObject.name} has been created.`, 5000)
@@ -194,9 +203,9 @@ class NewQuest extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		courses: state.courses
+		courses: state.courses,
 	}
 }
 
 export default connect(mapStateToProps,
-	{ createQuest, notify })(NewQuest)
+	{ createQuest, notify, showErrors })(NewQuest)

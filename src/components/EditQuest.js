@@ -4,6 +4,8 @@ import "../index.css"
 import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import { editQuest } from '../reducers/questReducer'
+import validateQuest from '../validators/questValidator'
+import { showErrors } from '../reducers/errorMessageReducer'
 
 
 const QuestForm = ({ handleSubmit, handleChange, name, description, points, type, activationCode, deactivated, latitude, longitude, radius }) => {
@@ -143,6 +145,15 @@ class EditQuest extends React.Component {
             radius: editedQuest.activationCode.radius
         })
         const editedWithDeactivation = { ...editedQuest, deactivated: this.props.quest.deactivated }
+
+        let errors = validateQuest(editedWithDeactivation)
+		
+		if (errors.length > 0) {
+			this.props.showErrors(errors, 5000)
+			window.scrollTo(0, 0)
+			return
+		}
+
         await this.props.editQuest(editedWithDeactivation, this.props.quest.id)
         this.props.notify(`${editedQuest.name} has been edited.`, 5000)
     }
@@ -192,4 +203,4 @@ class EditQuest extends React.Component {
 }
 
 export default connect(null,
-    { editQuest, notify })(EditQuest)
+    { editQuest, notify, showErrors})(EditQuest)

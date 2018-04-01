@@ -4,6 +4,8 @@ import { notify } from '../reducers/notificationReducer'
 import { createCourse } from '../reducers/courseReducer'
 import { connect } from 'react-redux'
 import "../index.css";
+import validateCourse from '../validators/courseValidator'
+import { showErrors } from '../reducers/errorMessageReducer'
 
 const CourseForm = ({ onSubmit, handleChange, name, courseCode }) => {
     return (
@@ -50,11 +52,20 @@ class NewCourse extends React.Component {
 
     addCourse = async (event) => {
         event.preventDefault()
-        this.CourseForm.toggleVisibility()
         const courseObject = {
             name: this.state.name,
             courseCode: this.state.courseCode
         }
+
+        let errors = validateCourse(courseObject)
+		
+		if (errors.length > 0) {
+			this.props.showErrors(errors, 5000)
+			window.scrollTo(0, 0)
+			return
+		}
+
+        this.CourseForm.toggleVisibility()
 
         this.props.createCourse(courseObject)
         this.props.notify(`${courseObject.name} has been created.`, 5000)
@@ -88,5 +99,7 @@ class NewCourse extends React.Component {
     }
 }
 
+
+
 export default connect(null,
-    { createCourse, notify })(NewCourse)
+    { createCourse, notify, showErrors })(NewCourse)
