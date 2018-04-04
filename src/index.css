@@ -614,3 +614,19 @@ select {
   line-height: 10px;
   font-size: 20px;
 }
+
+.welcomePage {
+  background-color: white;
+  height: 100%;
+}
+
+.welcomePage h1 {
+  margin-top: 7px;
+  margin-bottom: 0;
+}
+
+.welcomePage h2 {
+  margin-top: 7px;
+  margin-bottom: 0;
+}
+
