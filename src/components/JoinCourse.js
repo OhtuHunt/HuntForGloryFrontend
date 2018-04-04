@@ -12,6 +12,7 @@ class JoinCourse extends React.Component {
         this.state = {
             courseId: this.props.courses[0] ? this.props.courses[0].id : ''
         }
+        this.handleExit = props.handleExit
     }
 
     handleChange = (event) => {
@@ -26,11 +27,14 @@ class JoinCourse extends React.Component {
         this.setState({
             courseId: ''
         })
+        if (this.props.startVisible) {
+            this.props.handleExit()
+        }
     }
 
     render() {
         return (
-            <Toggleable buttonLabel="Join course" cancelButtonLabel='Cancel' ref={component => this.JoinCourse = component}>
+            <Toggleable buttonLabel="Join course" cancelButtonLabel='Cancel' startVisible={this.props.startVisible} ref={component => this.JoinCourse = component}>
                 <div className="createform">
                     <h2> Join Course </h2>
                     <form onSubmit={this.handleSubmit}>

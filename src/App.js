@@ -6,7 +6,7 @@ import ShowAll from "./components/ShowAll"
 import Leaderboard from "./components/Leaderboard"
 import Userpage from "./components/Userpage"
 import questService from "./services/quests"
-import { Route, NavLink, BrowserRouter, Redirect } from "react-router-dom"
+import { Route, NavLink, HashRouter, Redirect } from "react-router-dom"
 import LoginForm from "./components/LoginForm"
 import loginService from "./services/login"
 import Notification from "./components/Notification"
@@ -21,8 +21,15 @@ import { setLoggedUser } from './reducers/loggedUserReducer'
 import { connect } from 'react-redux'
 import ErrorMessage from './components/ErrorMessage'
 import SwipeableRoutes from 'react-swipeable-routes'
+import WelcomePage from "./components/WelcomePage";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      newUser: false
+    }
+  }
 
   async componentWillMount() {
     await this.props.getUsers()
@@ -81,6 +88,17 @@ class App extends React.Component {
     return updatedQuests
   }
 
+  exitWelcome = async () => {
+    this.setState({
+      newUser: false
+    })
+    await this.props.initializeQuests()
+    const quests = this.props.quests
+
+    const updatedQuests = this.setQuestState(quests)
+    this.props.setQuests(updatedQuests)
+
+  }
   handleStartQuest = async (quest) => {
     await this.props.startQuest(quest.id)
   }
@@ -130,6 +148,7 @@ class App extends React.Component {
     event.target.password.value = ""
     try {
       const response = await loginService.login(user)
+
       const cacheUser = { ...response.data.user, token: response.data.token }
       window.localStorage.setItem(
         "LoggedTmcUser",
@@ -139,12 +158,19 @@ class App extends React.Component {
         token: response.data.token
       }
       questService.setToken(newToken)
+      userService.setToken(newToken)
+      courseService.setToken(newToken)
       this.props.setLoggedUser(cacheUser)
       await this.props.initializeQuests()
       const quests = this.props.quests
 
       const updatedQuests = this.setQuestState(quests)
       this.props.setQuests(updatedQuests)
+      if (response.data.isNewUser) {
+        this.setState({
+          newUser: true
+        })
+      }
       return true
     } catch (exception) {
       this.props.notify("Invalid username or password", 3000)
@@ -159,8 +185,11 @@ class App extends React.Component {
 
   render() {
     const questById = id => this.props.quests.find(quest => quest.id === id)
+    if (this.state.newUser) {
+      return <WelcomePage handleExit={this.exitWelcome.bind(this)} />
+    }
     return (
-      <BrowserRouter>
+      <HashRouter>
         <div>
           <h1 className="header__title">Hunt for Glory</h1>
           <div className="header">
@@ -232,7 +261,7 @@ class App extends React.Component {
             )}
           <Footer />
         </div>
-      </BrowserRouter>
+      </HashRouter>
     )
   }
 }
