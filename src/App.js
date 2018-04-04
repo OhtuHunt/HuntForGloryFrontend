@@ -185,9 +185,7 @@ class App extends React.Component {
 
   render() {
     const questById = id => this.props.quests.find(quest => quest.id === id)
-    if (this.state.newUser) {
-      return <WelcomePage handleExit={this.exitWelcome.bind(this)} />
-    }
+
     return (
       <HashRouter>
         <div>
@@ -214,49 +212,57 @@ class App extends React.Component {
               <LoginForm handleLogin={this.handleLogin} />
             </div>
           ) : (
-              <div className="content">
-                <Route
-                  exact path="/quests/0"
-                  render={() => (
-                    <Redirect to="/" />
-                  )} />
-                <SwipeableRoutes>
+              <div>
+                {this.state.newUser === true ?
+                <div>
+                  <WelcomePage handleExit={this.exitWelcome.bind(this)} />
+                </div>
+                :
+                <div className="content">
                   <Route
-                    exact
-                    path="/quests/:id"
-                    defaultParams={{ id: "0" }}
-                    render={({ match }) => (
-                      <ShowOne
-                        quest={questById(match.params.id)}
-                        key={match.params.id}
-                        handleStart={this.handleStartQuest}
-                        handleComplete={this.handleCompleteQuest}
-                        handleActivationCodeChange={this.handleActivationCodeChange}
-                        handleDelete={this.handleDeleteQuest.bind(this)}
-                        handleDeactivate={this.handleDeactivate.bind(this)}
-                      />
-                    )}
-                  />
-                  <Route
-                    exact
-                    path="/"
+                    exact path="/quests/0"
                     render={() => (
-                      <ShowAll
-                        key='showAll' />)}
-                  />
-                  <Route
-                    path="/leaderboard"
-                    render={() => (
-                      <Leaderboard
-                        key='leaderboard' />)}
-                  />
-                  <Route
-                    path="/userpage"
-                    render={() => (
-                      <Userpage
-                        key='userpage' />)}
-                  />
-                </SwipeableRoutes>
+                      <Redirect to="/" />
+                    )} />
+                  <SwipeableRoutes>
+                    <Route
+                      exact
+                      path="/quests/:id"
+                      defaultParams={{ id: "0" }}
+                      render={({ match }) => (
+                        <ShowOne
+                          quest={questById(match.params.id)}
+                          key={match.params.id}
+                          handleStart={this.handleStartQuest}
+                          handleComplete={this.handleCompleteQuest}
+                          handleActivationCodeChange={this.handleActivationCodeChange}
+                          handleDelete={this.handleDeleteQuest.bind(this)}
+                          handleDeactivate={this.handleDeactivate.bind(this)}
+                        />
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/"
+                      render={() => (
+                        <ShowAll
+                          key='showAll' />)}
+                    />
+                    <Route
+                      path="/leaderboard"
+                      render={() => (
+                        <Leaderboard
+                          key='leaderboard' />)}
+                    />
+                    <Route
+                      path="/userpage"
+                      render={() => (
+                        <Userpage
+                          key='userpage' />)}
+                    />
+                  </SwipeableRoutes>
+                </div>
+                }
               </div>
             )}
           <Footer />

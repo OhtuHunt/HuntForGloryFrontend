@@ -1,8 +1,4 @@
 import React from 'react'
-import GenerateCard from "./GenerateCard"
-import { connect } from 'react-redux'
-import Filter from './Filter'
-import { joinCourse } from '../reducers/courseReducer'
 import JoinCourse from './JoinCourse'
 
 class WelcomePage extends React.Component {
@@ -12,15 +8,12 @@ class WelcomePage extends React.Component {
     }
     render() {
         return (
-            <div className="welcomePage">
-                <h2> </h2>            
+            <div className="welcomePage">       
                 <h1>WELCOME</h1>
-                <h2>to</h2>
-                <h1>HUNT FOR GLORY</h1>
-
+                
                 <JoinCourse startVisible={true} handleExit={this.props.handleExit}/>
-                <p>Dont want to join now? Push exit and join later from the user settings.</p>
-                <button onClick={this.handleExit}>Exit</button>
+                <p>Dont want to join now? Press continue and join later from the user settings.</p>
+                <button onClick={this.handleExit}>Continue</button>
             </div>
         )
     }
