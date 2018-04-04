@@ -22,7 +22,6 @@ class JoinCourse extends React.Component {
         event.preventDefault()
         this.JoinCourse.toggleVisibility()
         this.props.joinCourse(this.state.courseId)
-        console.log(this.state.courseId)
         this.props.notify(`Joined course`)
         this.setState({
             courseId: ''

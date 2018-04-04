@@ -6,7 +6,7 @@ import ShowAll from "./components/ShowAll"
 import Leaderboard from "./components/Leaderboard"
 import Userpage from "./components/Userpage"
 import questService from "./services/quests"
-import { Route, NavLink, BrowserRouter } from "react-router-dom"
+import { Route, NavLink, BrowserRouter, Redirect } from "react-router-dom"
 import LoginForm from "./components/LoginForm"
 import loginService from "./services/login"
 import Notification from "./components/Notification"
@@ -43,7 +43,7 @@ class App extends React.Component {
 
         await this.props.initializeQuests()
         const quests = this.props.quests
-    
+
         const updatedQuests = this.setQuestState(quests)
         this.props.setQuests(updatedQuests)
       } catch (exception) {
@@ -142,7 +142,7 @@ class App extends React.Component {
       this.props.setLoggedUser(cacheUser)
       await this.props.initializeQuests()
       const quests = this.props.quests
-  
+
       const updatedQuests = this.setQuestState(quests)
       this.props.setQuests(updatedQuests)
       return true
@@ -186,6 +186,11 @@ class App extends React.Component {
             </div>
           ) : (
               <div className="content">
+                <Route
+                  exact path="/quests/0"
+                  render={() => (
+                    <Redirect to="/" />
+                  )} />
                 <SwipeableRoutes>
                   <Route
                     exact
@@ -207,20 +212,20 @@ class App extends React.Component {
                     exact
                     path="/"
                     render={() => (
-                      <ShowAll 
-                      key='showAll'/>)}
+                      <ShowAll
+                        key='showAll' />)}
                   />
                   <Route
                     path="/leaderboard"
                     render={() => (
-                      <Leaderboard 
-                      key='leaderboard'/>)}
+                      <Leaderboard
+                        key='leaderboard' />)}
                   />
                   <Route
                     path="/userpage"
                     render={() => (
-                      <Userpage 
-                      key='userpage'/>)}
+                      <Userpage
+                        key='userpage' />)}
                   />
                 </SwipeableRoutes>
               </div>
