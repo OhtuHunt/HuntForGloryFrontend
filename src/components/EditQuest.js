@@ -132,7 +132,6 @@ class EditQuest extends React.Component {
     }
 
     handleSubmit = async (editedQuest) => {
-        console.log(editedQuest)
         this.questForm.toggleVisibility()
         this.setState({
             name: editedQuest.name,
