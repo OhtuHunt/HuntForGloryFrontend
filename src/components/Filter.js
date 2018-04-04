@@ -2,11 +2,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { changeFilter } from '../reducers/filterReducer'
 import { Card, CardBody } from 'react-simple-card'
-import FieldToFilter from './FieldToFilter'
+import { changeFieldToFilter } from '../reducers/fieldToFilterReducer'
+import { changeDone } from '../reducers/doneFilterReducer'
 
 class Filter extends React.Component {
-    handleChange = (event) => {
+    handleFilterChange = (event) => {
         this.props.changeFilter(event.target.value)
+    }
+    handleFieldChange = (event) => {
+        this.props.changeFieldToFilter(event.target.value)
+    }
+
+    handleDoneChange = (event) => {
+        this.props.changeDone()
     }
 
     render() {
@@ -18,26 +26,26 @@ class Filter extends React.Component {
         return (
             <div>
                 <Card style={style}>
-                    <CardBody style={{padding:0}}>
+                    <CardBody style={{ padding: 0 }}>
                         <table style={{ width: '100%', alignContent: 'left' }}>
                             <tbody>
                                 <tr>
                                     <td>
-                                        <label style={{fontSize: 12}}>
+                                        <label style={{ fontSize: 12 }}>
                                             finished
                                         </label>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label className="switch">
+                                        <label className="switch" onChange={this.handleDoneChange}>
                                             <input type="checkbox" />
                                             <span className="slider round"></span>
                                         </label>
                                     </td>
                                     <td>
-                                        <div className='custom-select' style={{width: '100%'}}>
-                                            <select name='fieldToFilter'>
+                                        <div className='custom-select' style={{ width: '100%' }}>
+                                            <select name='fieldToFilter' onChange={this.handleFieldChange}>
                                                 <option value=''>Filter by..</option>
                                                 <option value=''>Everything</option>
                                                 <option value='name'>Name</option>
@@ -47,7 +55,7 @@ class Filter extends React.Component {
                                         </div>
                                     </td>
                                     <td>
-                                        <input type='text' placeholder='Write here..' onChange={this.handleChange} style={{width:'90%'}}/>
+                                        <input type='text' placeholder='Write here..' onChange={this.handleFilterChange} style={{ width: '90%' }} />
                                     </td>
                                 </tr>
                             </tbody>
@@ -59,4 +67,4 @@ class Filter extends React.Component {
     }
 }
 
-export default connect(null, { changeFilter })(Filter)
+export default connect(null, { changeFilter, changeFieldToFilter, changeDone })(Filter)

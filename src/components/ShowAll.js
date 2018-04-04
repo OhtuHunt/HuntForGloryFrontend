@@ -24,11 +24,9 @@ const filteredQuests = (quests, filter, field) => {
     case 'name':
       return filter === '' ? quests : quests.filter(quest => quest.name.toLowerCase().includes(filter))
     case 'course':
-      return filter === '' ? quests : quests.filter(quest => quest.course.toLowerCase().includes(filter))
+      return filter === '' ? quests : quests.filter(quest => quest.course.name.toLowerCase().includes(filter))
     case 'type':
       return filter === '' ? quests : quests.filter(quest => quest.type.toLowerCase().includes(filter))
-    case 'not_done':
-      return filter === '' ? quests : quests.filter(quest => quest.finished === null || quest.finished === undefined)
     default:
       return filter === '' ? quests : quests.filter(quest => {
         let bool = false
@@ -43,12 +41,16 @@ const filteredQuests = (quests, filter, field) => {
   }
 }
 
+const questFilteredByDone = (quests, done) => {
+  return done ? quests : quests.filter(quest => quest.finished === null || quest.finished === undefined)
+}
+
 const mapStateToProps = (state) => {
   return {
     quests: state.quests,
     filter: state.filter,
     field: state.fieldToFilter,
-    questsToShow: filteredQuests(state.quests, state.filter, state.fieldToFilter)
+    questsToShow: filteredQuests(questFilteredByDone(state.quests, state.done), state.filter, state.fieldToFilter)
   }
 }
 

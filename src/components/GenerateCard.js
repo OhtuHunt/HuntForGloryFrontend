@@ -13,7 +13,7 @@ const GenerateCard = ({ quest }) => {
                         <tbody>
                             <tr>
                                 <td className="questType">{quest.type}</td>
-                                {quest.course ? <td className="questCourse">{quest.course.name}</td> : <td></td>}
+                                <td className="questCourse">{quest.course.name}</td>
                                 <td className="points">{quest.points}</td>
                             </tr>
                         </tbody>
