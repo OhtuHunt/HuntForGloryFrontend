@@ -8,9 +8,11 @@ const fieldToFilterReducer = (store = '', action) => {
 }
 
 export const changeFieldToFilter = (field) => {
-    return {
+    return async (dispatch) => {
+        dispatch({
         type: 'CHANGE_FIELD',
         field
+        })
     }
 }
 

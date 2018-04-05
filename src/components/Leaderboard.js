@@ -9,6 +9,7 @@ class Leaderboard extends React.Component {
             number++
             return number
         }
+        
         return (
             <div className="leaderboard">
                 <h2 className="leaderboardHeader">LEADERBOARD</h2>

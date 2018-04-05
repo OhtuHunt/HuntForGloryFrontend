@@ -5,6 +5,8 @@ import Spinner from 'react-spinkit'
 import AdminToolsForQuest from './AdminToolsForQuest'
 import { finishQuest } from '../reducers/questReducer'
 import { notify } from '../reducers/notificationReducer'
+import QrCodeReader from './QrCodeReader'
+import Toggleable  from './Toggleable'
 
 class ShowOne extends React.Component {
   constructor(props) {
@@ -100,7 +102,8 @@ class ShowOne extends React.Component {
         <input
           type="text"
           onChange={this.handleActivationCodeChange}
-          name="activationCode" />
+          name="activationCode"
+          value={this.props.activationCode} />
         {this.state.loading === true ?
           <div style={{ marginLeft: '49%' }}>
             <Spinner name="circle" fadeIn="none" />
@@ -108,6 +111,9 @@ class ShowOne extends React.Component {
           :
           <div>
             <button onClick={this.handleCompleteSubmit}> Complete </button>
+            <Toggleable buttonLabel={'Read QR'} cancelButtonLabel={'Cancel'}>
+              <QrCodeReader/>
+            </Toggleable>
           </div>
         }
       </div>

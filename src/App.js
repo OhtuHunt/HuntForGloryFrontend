@@ -21,7 +21,7 @@ import { setLoggedUser } from './reducers/loggedUserReducer'
 import { connect } from 'react-redux'
 import ErrorMessage from './components/ErrorMessage'
 import SwipeableRoutes from 'react-swipeable-routes'
-import WelcomePage from "./components/WelcomePage";
+import WelcomePage from './components/WelcomePage'
 
 class App extends React.Component {
   constructor(props) {

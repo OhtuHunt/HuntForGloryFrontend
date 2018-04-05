@@ -21,6 +21,7 @@ button:disabled {
 }
 .points {
   text-align: right;
+  width: 25%;
 }
 .questType {
   width: 25%;

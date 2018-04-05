@@ -31,9 +31,14 @@ const filteredQuests = (quests, filter, field) => {
       return filter === '' ? quests : quests.filter(quest => {
         let bool = false
         Object.values(quest).filter(v => v).map(key => {
-          if (key.toString().toLowerCase().includes(filter)) {
+          if (key.name !== undefined && key.name.toString().toLowerCase().includes(filter)) {
             bool = true
+          } else {
+            if (key.toString().toLowerCase().includes(filter)) {
+              bool = true
+            }
           }
+          return true
         }
         )
         return bool
@@ -41,8 +46,8 @@ const filteredQuests = (quests, filter, field) => {
   }
 }
 
-const questFilteredByDone = (quests, done) => {
-  return done ? quests : quests.filter(quest => quest.finished === null || quest.finished === undefined)
+const questFilteredByDone = (quests, showNotDone) => {
+  return showNotDone ? quests.filter(quest => quest.finished === undefined) : quests
 }
 
 const mapStateToProps = (state) => {
@@ -50,6 +55,7 @@ const mapStateToProps = (state) => {
     quests: state.quests,
     filter: state.filter,
     field: state.fieldToFilter,
+    done: state.done,
     questsToShow: filteredQuests(questFilteredByDone(state.quests, state.done), state.filter, state.fieldToFilter)
   }
 }

@@ -8,8 +8,10 @@ const doneFilterReducer = (store = false, action) => {
 }
 
 export const changeDone = () => {
-    return {
-        type: 'CHANGE_DONE',
+    return async (dispatch) => {
+        dispatch({
+        type: 'CHANGE_DONE'
+        })
     }
 }
 
