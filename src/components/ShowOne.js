@@ -6,13 +6,13 @@ import AdminToolsForQuest from './AdminToolsForQuest'
 import { finishQuest } from '../reducers/questReducer'
 import { notify } from '../reducers/notificationReducer'
 import QrCodeReader from './QrCodeReader'
-import Toggleable  from './Toggleable'
 
 class ShowOne extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false
+      loading: false,
+      QR: false
     }
     this.handleDelete = this.props.handleDelete
     this.handleDeactivate = this.props.handleDeactivate
@@ -90,6 +90,11 @@ class ShowOne extends React.Component {
     )
   }
 
+  handleQR = () => {
+    this.setState({
+      QR: !this.state.QR
+    })
+  }
   ShowActivationCodeForm = () => {
     if (this.props.quest.type === 'location') {
       return (
@@ -111,9 +116,8 @@ class ShowOne extends React.Component {
           :
           <div>
             <button onClick={this.handleCompleteSubmit}> Complete </button>
-            <Toggleable buttonLabel={'Read QR'} cancelButtonLabel={'Cancel'}>
-              <QrCodeReader/>
-            </Toggleable>
+            <br></br>
+            {this.state.QR === true ? <div><QrCodeReader handleQR={this.handleQR.bind(this)}/><button onClick={this.handleQR}>Cancel</button></div> : <button onClick={this.handleQR}>Read QR</button>}
           </div>
         }
       </div>

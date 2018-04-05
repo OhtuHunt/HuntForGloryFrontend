@@ -14,6 +14,7 @@ class QrCodeReader extends React.Component {
     handleScan(data) {
         if(data) {
             this.props.setActivationCode(data)
+            this.props.handleQR()
         }
     }
 
