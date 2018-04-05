@@ -32,7 +32,7 @@ class Filter extends React.Component {
                                 <tr>
                                     <td>
                                         <label style={{ fontSize: 12 }}>
-                                            finished
+                                            not done
                                         </label>
                                     </td>
                                 </tr>
