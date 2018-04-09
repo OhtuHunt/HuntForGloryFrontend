@@ -2,6 +2,7 @@ import React from 'react'
 import Toggleable from './Toggleable'
 import { notify } from '../reducers/notificationReducer'
 import { joinCourse } from '../reducers/courseReducer'
+import { initializeQuests } from '../reducers/questReducer'
 import { connect } from 'react-redux'
 import "../index.css";
 
@@ -19,11 +20,13 @@ class JoinCourse extends React.Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault()
         this.JoinCourse.toggleVisibility()
-        this.props.joinCourse(this.state.courseId)
+        await this.props.joinCourse(this.state.courseId)
+        await this.props.initializeQuests()
         this.props.notify(`Joined course`)
+
         this.setState({
             courseId: ''
         })
@@ -64,4 +67,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    { joinCourse, notify })(JoinCourse)
+    { joinCourse, notify, initializeQuests })(JoinCourse)

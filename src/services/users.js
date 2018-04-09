@@ -23,6 +23,11 @@ const getAll = async () => {
     return response.data
 }
 
+const getOne = async (id) => {
+    const response = await axios.get(`${baseUrl}/${id}`)
+    return response.data
+}
+
 const update = async (updatedUser, id) => {
     const response = await axios.put(`${baseUrl}/${id}`, updatedUser, config())
     return response.data
@@ -33,4 +38,4 @@ const remove = async (id) => {
     return response
 }
 
-export default { getAll, remove, update, setToken }
+export default { getAll, remove, update, setToken, getOne }

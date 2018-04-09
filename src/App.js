@@ -17,7 +17,7 @@ import { setActivationCode, clearActivationCode } from './reducers/activationCod
 import { initializeQuests, createQuest, removeQuest, deactivateQuest, setQuests, startQuest, finishQuest } from './reducers/questReducer'
 import { getUsers } from './reducers/usersReducer'
 import { getCourses } from './reducers/courseReducer'
-import { setLoggedUser } from './reducers/loggedUserReducer'
+import { setLoggedUser, updateUserPoints } from './reducers/loggedUserReducer'
 import { connect } from 'react-redux'
 import ErrorMessage from './components/ErrorMessage'
 import SwipeableRoutes from 'react-swipeable-routes'
@@ -112,7 +112,10 @@ class App extends React.Component {
   handleCompleteQuest = async (quest) => {
     try {
       await this.props.finishQuest(quest.id, this.props.activationCode)
+      await this.props.updateUserPoints(this.props.loggedUser.id)
+      window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
     } catch (exception) {
+      console.log(exception)
       this.props.notify("Invalid activation code", 3000)
     }
     this.props.clearActivationCode()
@@ -295,5 +298,6 @@ export default connect(mapStateToProps,
     finishQuest,
     getUsers,
     setLoggedUser,
-    getCourses
+    getCourses,
+    updateUserPoints
   })(App)
