@@ -444,7 +444,11 @@ ul.headerButtons li a {
 }
 
 .leaderboardHeader {
-  color: #865700
+  color: #865700;
+}
+
+.finishedQuestHeader {
+  color: green;
 }
 
 .leaderboard {

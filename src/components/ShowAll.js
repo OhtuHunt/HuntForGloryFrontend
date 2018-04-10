@@ -56,7 +56,7 @@ const mapStateToProps = (state) => {
     filter: state.filter,
     field: state.fieldToFilter,
     done: state.done,
-    questsToShow: filteredQuests(questFilteredByDone(state.quests, state.done), state.filter, state.fieldToFilter)
+    questsToShow: filteredQuests(questFilteredByDone(state.quests, state.done), state.filter, state.fieldToFilter).sort((a, b) => { return b.name < a.name })
   }
 }
 
