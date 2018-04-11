@@ -50,7 +50,7 @@ class Userpage extends React.Component {
                         <JoinCourse />
                         <br></br>
                         <br></br>
-                        <br></br>                        
+                        <br></br>
                         <button onClick={this.handleDeleteAccount}>Delete account</button>
                     </div>
                     :

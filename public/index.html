@@ -45,19 +45,49 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 
-  <script type="text/javascript">
-    //This is the "Offline copy of pages" service worker
+  <!-- <script src="init.js"></script> -->
 
-    //Add this below content to your HTML page, or add the js file to your page at the very top to register sercie worker
-    if (navigator.serviceWorker.controller) {
-      console.log('[PWA Builder] active service worker found, no need to register')
+  <script type="text/javascript">
+
+    const applicationServerPublicKey = 'BPib8iMxeYKkkT-wlMh2QbrwjhtEqmMh-Y2ddF_YBLhJXJaErgOh0XVodCK55pRTSdfIQZp8SAfG2igOtHJHl2Y';
+    let isSubscribed = false;
+    let swRegistration = null;
+
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      console.log('Service Worker and Push is supported');
+
+      navigator.serviceWorker.register('pwabuilder-sw.js')
+        .then(function (swReg) {
+          console.log('Service Worker is registered', swReg);
+
+          swRegistration = swReg;
+          const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+          swRegistration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: applicationServerKey
+          })
+        })
+        .catch(function (error) {
+          console.error('Service Worker Error', error);
+        });
     } else {
-      //Register the ServiceWorker
-      navigator.serviceWorker.register('pwabuilder-sw.js', {
-        scope: './'
-      }).then(function (reg) {
-        console.log('Service worker has been registered for scope:' + reg.scope);
-      });
+      console.warn('Push messaging is not supported');
+      pushButton.textContent = 'Push Not Supported';
+    }
+
+    function urlB64ToUint8Array(base64String) {
+      const padding = '='.repeat((4 - base64String.length % 4) % 4);
+      const base64 = (base64String + padding)
+        .replace(/\-/g, '+')
+        .replace(/_/g, '/');
+
+      const rawData = window.atob(base64);
+      const outputArray = new Uint8Array(rawData.length);
+
+      for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
     }
   </script>
 </body>
