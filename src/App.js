@@ -116,9 +116,10 @@ class App extends React.Component {
       window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
     } catch (exception) {
       console.log(exception)
-      this.props.notify("Invalid activation code", 3000)
+      this.props.notify("Invalid activation code", 4000)
     }
     this.props.clearActivationCode()
+    window.scrollTo(0, 0)
   }
 
   handleDeleteAccount = () => {
@@ -134,7 +135,7 @@ class App extends React.Component {
 
   handleDeactivate = async (id) => {
     await this.props.deactivateQuest(id)
-    this.props.notify(`Deactivated this quest`, 5000)
+    this.props.notify(`Deactivated this quest`, 4000)
   }
 
   handleActivationCodeChange = event => {
@@ -176,7 +177,7 @@ class App extends React.Component {
       }
       return true
     } catch (exception) {
-      this.props.notify("Invalid username or password", 3000)
+      this.props.notify("Invalid username or password", 4000)
       return false
     }
   }

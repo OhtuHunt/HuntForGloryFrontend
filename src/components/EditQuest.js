@@ -154,7 +154,8 @@ class EditQuest extends React.Component {
 		}
 
         await this.props.editQuest(editedWithDeactivation, this.props.quest.id)
-        this.props.notify(`${editedQuest.name} has been edited.`, 5000)
+        window.scrollTo(0, 0)
+        this.props.notify(`${editedQuest.name} has been edited.`, 4000)
     }
 
     handleQuestChange = (event) => {

@@ -68,7 +68,7 @@ class NewCourse extends React.Component {
         this.CourseForm.toggleVisibility()
 
         this.props.createCourse(courseObject)
-        this.props.notify(`${courseObject.name} has been created.`, 5000)
+        this.props.notify(`${courseObject.name} has been created.`, 4000)
 
         this.setState({
             name: "",

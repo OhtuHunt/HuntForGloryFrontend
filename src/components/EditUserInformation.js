@@ -45,8 +45,8 @@ class EditUserInformation extends React.Component {
             "LoggedTmcUser",
             JSON.stringify({...user, token: this.props.loggedUser.token})
         )
-
-        this.props.notify('New user information has been saved', 5000)
+        window.scrollTo(0, 0)
+        this.props.notify('New user information has been saved', 4000)
         // const editedUser = await userService.update(user, this.props.user.id)
         // console.log(editedUser)
         // this.props.edit(editedUser)

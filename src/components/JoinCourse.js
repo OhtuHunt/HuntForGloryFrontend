@@ -23,9 +23,16 @@ class JoinCourse extends React.Component {
     handleSubmit = async (event) => {
         event.preventDefault()
         this.JoinCourse.toggleVisibility()
+        try {
         await this.props.joinCourse(this.state.courseId)
+        } catch (exception) {
+            console.log(exception)
+            this.props.notify(`You're already on this course!`, 4000)
+            window.scrollTo(0, 0)
+            return
+        }
         await this.props.initializeQuests()
-        this.props.notify(`Joined course`)
+        this.props.notify(`Joined course`, 4000)
 
         this.setState({
             courseId: ''
@@ -33,6 +40,7 @@ class JoinCourse extends React.Component {
         if (this.props.startVisible) {
             this.props.handleExit()
         }
+        window.scrollTo(0, 0)
     }
 
     render() {

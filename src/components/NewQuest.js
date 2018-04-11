@@ -152,7 +152,7 @@ class NewQuest extends React.Component {
 		this.questForm.toggleVisibility()
 
 		this.props.createQuest(questObject)
-		this.props.notify(`${questObject.name} has been created.`, 5000)
+		this.props.notify(`${questObject.name} has been created.`, 4000)
 
 		this.setState({
 			name: '',

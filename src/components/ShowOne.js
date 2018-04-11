@@ -71,7 +71,7 @@ class ShowOne extends React.Component {
     await this.props.updateUserPoints(this.props.loggedUser.id)
     window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
 	} catch (exception) {
-		this.props.notify(`Wrong location! ${activationCode.lat}, ${activationCode.lng}`, 5000)
+		this.props.notify(`Wrong location! ${activationCode.lat}, ${activationCode.lng}`, 4000)
 	}
   }
 
