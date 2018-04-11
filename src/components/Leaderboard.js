@@ -11,7 +11,7 @@ class Leaderboard extends React.Component {
         }
         
         return (
-            <div className="leaderboard">
+            <div className="leaderboard" style={{height: window.innerHeight * 78, overflow: 'auto'}}>
                 <h2 className="leaderboardHeader">LEADERBOARD</h2>
                 <br></br>
                 <div className="leaderboardTable">

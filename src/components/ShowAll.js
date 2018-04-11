@@ -6,7 +6,7 @@ import Filter from './Filter'
 class ShowAll extends React.Component {
   render() {
     return (
-      <div className="showAll" style={{ overflowX: 'visible' }}>
+      <div className="showAll" style={{ overflowX: 'visible', height: window.innerHeight * 0.75, overflow: 'auto' }}>
         <Filter />
         <div>
           {this.props.questsToShow.map(quest => <GenerateCard

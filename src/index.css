@@ -100,6 +100,7 @@ button {
 .container {
   padding-top: 80px;
   text-align: center;
+  overflow: hidden;
 }
 body {
   display: -webkit-box;

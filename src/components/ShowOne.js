@@ -5,6 +5,7 @@ import Spinner from 'react-spinkit'
 import AdminToolsForQuest from './AdminToolsForQuest'
 import { finishQuest } from '../reducers/questReducer'
 import { notify } from '../reducers/notificationReducer'
+import { updateUserPoints } from '../reducers/loggedUserReducer'
 import QrCodeReader from './QrCodeReader'
 
 class ShowOne extends React.Component {
@@ -66,9 +67,11 @@ class ShowOne extends React.Component {
 
     const activationCode = await this.loadPosition()
 	try {
-		await this.props.finishQuest(this.props.quest.id, activationCode)
+    await this.props.finishQuest(this.props.quest.id, activationCode)
+    await this.props.updateUserPoints(this.props.loggedUser.id)
+    window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
 	} catch (exception) {
-		this.props.notify("Wrong location!", 5000)
+		this.props.notify(`Wrong location! ${activationCode.lat}, ${activationCode.lng}`, 5000)
 	}
   }
 
@@ -148,10 +151,15 @@ class ShowOne extends React.Component {
       return <div></div>
     }
 
+    const showOneStyle = {
+      height: window.innerHeight * 0.7,
+      overflow: 'auto'
+    }
+
     return (
       <div>
         <Card style={{ height: '100%', width: 'auto' }}>
-          <CardBody>
+          <CardBody style={showOneStyle}>
             {this.QuestInfo()}
             {this.props.quest.finished === true ?
               <h2> Quest Completed! </h2>
@@ -178,4 +186,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { finishQuest, notify })(ShowOne)
+export default connect(mapStateToProps, { finishQuest, notify, updateUserPoints })(ShowOne)
