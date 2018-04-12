@@ -12,6 +12,7 @@ import loginService from "./services/login"
 import Notification from "./components/Notification"
 import userService from "./services/users"
 import courseService from "./services/courses"
+import feedbackService from './services/feedbackService'
 import { notify } from './reducers/notificationReducer'
 import { setActivationCode, clearActivationCode } from './reducers/activationCodeReducer'
 import { initializeQuests, createQuest, removeQuest, deactivateQuest, setQuests, startQuest, finishQuest } from './reducers/questReducer'
@@ -46,6 +47,7 @@ class App extends React.Component {
         questService.setToken(newToken)
         userService.setToken(newToken)
         courseService.setToken(newToken)
+        feedbackService.setToken(newToken)
         this.props.setLoggedUser(updatedUser)
 
         await this.props.initializeQuests()
@@ -164,6 +166,8 @@ class App extends React.Component {
       questService.setToken(newToken)
       userService.setToken(newToken)
       courseService.setToken(newToken)
+      feedbackService.setToken(newToken)
+      console.log(newToken)
       this.props.setLoggedUser(cacheUser)
       await this.props.initializeQuests()
       const quests = this.props.quests

@@ -6,6 +6,7 @@ import { removeUser } from '../reducers/usersReducer'
 import { setLoggedUser } from '../reducers/loggedUserReducer'
 import { connect } from 'react-redux'
 import JoinCourse from './JoinCourse'
+import FeedbackForm from './FeedbackForm'
 
 class Userpage extends React.Component {
 
@@ -48,6 +49,10 @@ class Userpage extends React.Component {
                         <br></br>
                         <br></br>
                         <JoinCourse />
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <FeedbackForm user={this.props.loggedUser} />
                         <br></br>
                         <br></br>
                         <br></br>

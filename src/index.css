@@ -465,7 +465,8 @@ input {
 .createform {
   color: black;
   height: 100%;
-  background-color: white;
+  background-color: #E6E6E6;
+  border-style: ridge;
 }
 
 .createform input {
