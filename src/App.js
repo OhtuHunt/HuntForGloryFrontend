@@ -5,6 +5,7 @@ import ShowOne from "./components/ShowOne"
 import ShowAll from "./components/ShowAll"
 import Leaderboard from "./components/Leaderboard"
 import Userpage from "./components/Userpage"
+import FeedbackList from './components/FeedbackList'
 import questService from "./services/quests"
 import { Route, NavLink, HashRouter, Redirect } from "react-router-dom"
 import LoginForm from "./components/LoginForm"
@@ -20,6 +21,7 @@ import { getUsers } from './reducers/usersReducer'
 import { getCourses } from './reducers/courseReducer'
 import { setLoggedUser, updateUserPoints } from './reducers/loggedUserReducer'
 import { connect } from 'react-redux'
+import { initializeFeedbacks } from './reducers/feedbackReducer'
 import ErrorMessage from './components/ErrorMessage'
 import SwipeableRoutes from 'react-swipeable-routes'
 import WelcomePage from './components/WelcomePage'
@@ -51,6 +53,8 @@ class App extends React.Component {
         this.props.setLoggedUser(updatedUser)
 
         await this.props.initializeQuests()
+        await this.props.initializeFeedbacks()
+
         const quests = this.props.quests
 
         const updatedQuests = this.setQuestState(quests)
@@ -268,6 +272,12 @@ class App extends React.Component {
                         <Userpage
                           key='userpage' />)}
                     />
+                    <Route
+                      path="/feedbacks"
+                      render={() => (
+                        <FeedbackList
+                          key='feedbacks' />)}
+                    />
                   </SwipeableRoutes>
                 </div>
                 }
@@ -285,7 +295,8 @@ const mapStateToProps = (state) => {
     activationCode: state.activationCode,
     quests: state.quests,
     users: state.users,
-    loggedUser: state.loggedUser
+    loggedUser: state.loggedUser,
+    feedbacks: state.feedbacks
   }
 }
 
@@ -304,5 +315,6 @@ export default connect(mapStateToProps,
     getUsers,
     setLoggedUser,
     getCourses,
-    updateUserPoints
+    updateUserPoints,
+    initializeFeedbacks
   })(App)

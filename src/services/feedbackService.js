@@ -21,9 +21,13 @@ const config = () => {
 }
 
 const sendFeedback = async (feedback) => {
-    console.log(config())
     const response = await axios.post(baseUrl, feedback, config())
     return response.data
 }
 
-export default { sendFeedback, setToken }
+const getAll = async () => {
+    const response = await axios.get(baseUrl, config())
+    return response.data
+}
+
+export default { sendFeedback, setToken, getAll }
