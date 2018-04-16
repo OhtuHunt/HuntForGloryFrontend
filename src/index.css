@@ -452,6 +452,10 @@ ul.headerButtons li a {
   color: green;
 }
 
+.loggedUserInLeaderboard {
+  background-color: lightgreen;
+}
+
 .leaderboard {
   background-color: white;
   height: 75vh;

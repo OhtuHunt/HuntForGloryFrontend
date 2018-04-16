@@ -20,8 +20,6 @@ class Leaderboard extends React.Component {
             return number
         }
 
-        console.log(this.props.courses)
-
         return (
             <div className="leaderboard" style={{ height: window.innerHeight * 78, overflow: 'auto' }}>
                 <h2 className="leaderboardHeader">LEADERBOARD</h2>
@@ -40,16 +38,27 @@ class Leaderboard extends React.Component {
                                 <td>Ranking</td><td>Username</td><td>Points</td>
                             </tr>
                             {this.state.leaderboard === '' ? this.props.users.map(user =>
+                            this.props.loggedUser.id === user.id ?
+                                <tr className='loggedUserInLeaderboard' key={user.id}>
+                                    <td>{getNumber()}.</td><td>{user.username}</td><td>{user.points}</td>
+                                </tr>
+                                :
                                 <tr key={user.id}>
                                     <td>{getNumber()}.</td><td>{user.username}</td><td>{user.points}</td>
-                                </tr>)
+                                </tr>                            
+                            )
                                 :
                                 this.props.courses.filter(course => course.id === this.state.leaderboard)
                                     .map(course => course.users
                                         .sort((a, b) => { return b.points > a.points })
-                                        .map(user =>
-                                            <tr key={user.user}>
-                                                <td>{getNumber()}.</td><td>{user.username}</td><td>{user.points}</td>
+                                        .map(courseUser =>
+                                            this.props.loggedUser.id === courseUser.user._id ?
+                                            <tr className='loggedUserInLeaderboard' key={courseUser.user._id}>
+                                                <td>{getNumber()}.</td><td>{courseUser.user.username}</td><td>{courseUser.points}</td>
+                                            </tr>
+                                            :
+                                            <tr key={courseUser.user._id}>
+                                                <td>{getNumber()}.</td><td>{courseUser.user.username}</td><td>{courseUser.points}</td>
                                             </tr>))}
                         </tbody>
                     </table>
@@ -62,7 +71,8 @@ class Leaderboard extends React.Component {
 const mapStateToProps = (state) => {
     return {
         users: state.users,
-        courses: state.courses
+        courses: state.courses,
+        loggedUser: state.loggedUser
     }
 }
 

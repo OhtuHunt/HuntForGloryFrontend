@@ -3,13 +3,13 @@ import { Card, CardBody } from 'react-simple-card'
 import { NavLink } from 'react-router-dom'
 
 const GenerateCard = ({ quest }) => {
-    var Omega = '\u2713';
+    var Checked = '\u2713';
 
     return (
         <NavLink to={`/quests/${quest.id}`} style={{ cursor: 'pointer' }}>
             <Card style={{ width: 'auto' }}>
                 <CardBody>
-                    {quest.finished ? <div><h2 className='finishedQuestHeader'>{quest.name} {Omega}</h2></div> : <h2>{quest.name}</h2>}
+                    {quest.finished ? <div><h2 className='finishedQuestHeader'>{quest.name} {Checked}</h2></div> : <h2>{quest.name}</h2>}
                     <table style={{ width: '100%' }}>
                         <tbody>
                             <tr>
