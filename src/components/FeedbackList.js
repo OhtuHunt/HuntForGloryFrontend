@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 class FeedbackList extends React.Component {
 
@@ -36,13 +37,17 @@ class FeedbackList extends React.Component {
                     <div>
                         {this.props.feedbacks.map(f => {
                             return f.read ?
-                                <div key={f.id} style={listStyleRead}>
-                                    {f.title}
-                                </div>
+                                <NavLink exact to={`/feedbacks/${f.id}`} style={{ cursor: 'pointer' }}>
+                                    <div key={f.id} style={listStyleRead}>
+                                        {f.title}
+                                    </div>
+                                </NavLink>
                                 :
-                                <div key={f.id} style={listStyleNotRead}>
-                                    {f.title}
-                                </div>
+                                <NavLink exact to={`/feedbacks/${f.id}`} style={{ cursor: 'pointer' }}>
+                                    <div key={f.id} style={listStyleNotRead}>
+                                        {f.title}
+                                    </div>
+                                </NavLink>
                         })}
                     </div>
                 )

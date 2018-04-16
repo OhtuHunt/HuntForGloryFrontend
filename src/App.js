@@ -25,6 +25,7 @@ import { initializeFeedbacks } from './reducers/feedbackReducer'
 import ErrorMessage from './components/ErrorMessage'
 import SwipeableRoutes from 'react-swipeable-routes'
 import WelcomePage from './components/WelcomePage'
+import ShowFeedback from "./components/ShowFeedback";
 
 class App extends React.Component {
   constructor(props) {
@@ -54,6 +55,8 @@ class App extends React.Component {
 
         await this.props.initializeQuests()
         await this.props.initializeFeedbacks()
+
+        console.log(this.props.feedbacks)
 
         const quests = this.props.quests
 
@@ -197,6 +200,7 @@ class App extends React.Component {
 
   render() {
     const questById = id => this.props.quests.find(quest => quest.id === id)
+    const feedbackById = id => this.props.feedbacks.find(f => f.id === id)
 
     return (
       <HashRouter>
@@ -226,60 +230,72 @@ class App extends React.Component {
           ) : (
               <div>
                 {this.state.newUser === true ?
-                <div>
-                  <WelcomePage handleExit={this.exitWelcome.bind(this)} />
-                </div>
-                :
-                <div className="content">
-                  <Route
-                    exact path="/quests/0"
-                    render={() => (
-                      <Redirect to="/" />
-                    )} />
-                  <SwipeableRoutes>
+                  <div>
+                    <WelcomePage handleExit={this.exitWelcome.bind(this)} />
+                  </div>
+                  :
+                  <div className="content">
+                    <Route
+                      exact path="/quests/0"
+                      render={() => (
+                        <Redirect to="/" />
+                      )} />
                     <Route
                       exact
-                      path="/quests/:id"
+                      path="/feedbacks/:id"
                       defaultParams={{ id: "0" }}
                       render={({ match }) => (
-                        <ShowOne
-                          quest={questById(match.params.id)}
+                        <ShowFeedback
+                          feedback={feedbackById(match.params.id)}
                           key={match.params.id}
-                          handleStart={this.handleStartQuest}
-                          handleComplete={this.handleCompleteQuest}
-                          handleActivationCodeChange={this.handleActivationCodeChange}
-                          handleDelete={this.handleDeleteQuest.bind(this)}
-                          handleDeactivate={this.handleDeactivate.bind(this)}
                         />
                       )}
                     />
                     <Route
-                      exact
-                      path="/"
-                      render={() => (
-                        <ShowAll
-                          key='showAll' />)}
-                    />
-                    <Route
-                      path="/leaderboard"
-                      render={() => (
-                        <Leaderboard
-                          key='leaderboard' />)}
-                    />
-                    <Route
-                      path="/userpage"
-                      render={() => (
-                        <Userpage
-                          key='userpage' />)}
-                    />
-                    <Route
-                      path="/feedbacks"
-                      render={() => (
-                        <FeedbackList
-                          key='feedbacks' />)}
-                    />
-                  </SwipeableRoutes>
-                </div>
+                        exact
+                        path="/feedbacks"
+                        render={() => (
+                          <FeedbackList
+                            key='feedbacks' />)}
+                      />
+                    <SwipeableRoutes>
+                      <Route
+                        exact
+                        path="/quests/:id"
+                        defaultParams={{ id: "0" }}
+                        render={({ match }) => (
+                          <ShowOne
+                            quest={questById(match.params.id)}
+                            key={match.params.id}
+                            handleStart={this.handleStartQuest}
+                            handleComplete={this.handleCompleteQuest}
+                            handleActivationCodeChange={this.handleActivationCodeChange}
+                            handleDelete={this.handleDeleteQuest.bind(this)}
+                            handleDeactivate={this.handleDeactivate.bind(this)}
+                          />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path="/"
+                        render={() => (
+                          <ShowAll
+                            key='showAll' />)}
+                      />
+                      <Route
+                        path="/leaderboard"
+                        render={() => (
+                          <Leaderboard
+                            key='leaderboard' />)}
+                      />
+                      <Route
+                        path="/userpage"
+                        render={() => (
+                          <Userpage
+                            key='userpage' />)}
+                      />
+                    </SwipeableRoutes>
+                  </div>
                 }
               </div>
             )}
