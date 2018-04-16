@@ -85,7 +85,6 @@ class ShowOne extends React.Component {
     }
     )
 
-    console.log(disabled)
     return (
       <div>
         {this.state.loading === true ?
