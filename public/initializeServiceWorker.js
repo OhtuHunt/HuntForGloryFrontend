@@ -1,6 +1,6 @@
 'use strict';
 
-const applicationServerPublicKey = 'BPib8iMxeYKkkT-wlMh2QbrwjhtEqmMh-Y2ddF_YBLhJXJaErgOh0XVodCK55pRTSdfIQZp8SAfG2igOtHJHl2Y';
+const applicationServerPublicKey = 'BP7Qda2PFbhXlbC4UDwHWjicJJLKTUE3f_pCFlkXYg4CIgnu8NF6CMTRRPkxx62FJ83m4zHKfXYjB5cn6OeeYk4';
 let isSubscribed = false;
 let swRegistration = null;
 
@@ -17,8 +17,13 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
                 })
                 console.log('Service Worker is registered', swReg)
                 console.log("Subscribed")
+                swReg.update().then(function(res) {
+                    console.log("Service Worker updated")
+                })
+                .catch(function(error) {
+                    console.log("error: "+ error)
+                })
             })
-              
         })
         .catch(function (error) {
             console.error('Service Worker Error', error);
