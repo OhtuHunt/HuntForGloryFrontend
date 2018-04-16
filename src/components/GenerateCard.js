@@ -3,8 +3,7 @@ import { Card, CardBody } from 'react-simple-card'
 import { NavLink } from 'react-router-dom'
 
 const GenerateCard = ({ quest }) => {
-    var Checked = '\u2713';
-
+    var Checked = '\u2713'
     return (
         <NavLink to={`/quests/${quest.id}`} style={{ cursor: 'pointer' }}>
             <Card style={{ width: 'auto' }}>
