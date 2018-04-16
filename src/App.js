@@ -56,8 +56,6 @@ class App extends React.Component {
         await this.props.initializeQuests()
         await this.props.initializeFeedbacks()
 
-        console.log(this.props.feedbacks)
-
         const quests = this.props.quests
 
         const updatedQuests = this.setQuestState(quests)
