@@ -76,15 +76,16 @@ class ShowOne extends React.Component {
   }
 
   ShowStartButton = () => {
-    let disabled = 'disabled'
+    let disabled = true
     this.props.loggedUser.courses.map(course => {
-      if (course.course.includes(this.props.quest.course.id)) {
+      if (course.course.includes(this.props.quest.course._id)) {
         disabled = false
       }
       return ''
     }
     )
 
+    console.log(disabled)
     return (
       <div>
         {this.state.loading === true ?
