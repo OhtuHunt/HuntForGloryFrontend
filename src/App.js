@@ -25,7 +25,8 @@ import { initializeFeedbacks } from './reducers/feedbackReducer'
 import ErrorMessage from './components/ErrorMessage'
 import SwipeableRoutes from 'react-swipeable-routes'
 import WelcomePage from './components/WelcomePage'
-import ShowFeedback from "./components/ShowFeedback";
+import ShowFeedback from "./components/ShowFeedback"
+import subscriptionService from './services/subscription'
 
 class App extends React.Component {
   constructor(props) {
@@ -51,6 +52,7 @@ class App extends React.Component {
         userService.setToken(newToken)
         courseService.setToken(newToken)
         feedbackService.setToken(newToken)
+        subscriptionService.setToken(newToken)
         this.props.setLoggedUser(updatedUser)
 
         await this.props.initializeQuests()
