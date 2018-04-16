@@ -61,6 +61,7 @@ class App extends React.Component {
         const quests = this.props.quests
 
         const updatedQuests = this.setQuestState(quests)
+        console.log(updatedQuests)
         this.props.setQuests(updatedQuests)
       } catch (exception) {
         this.handleLogout()
@@ -78,7 +79,7 @@ class App extends React.Component {
       if (q.usersStarted.length !== 0) {
         let us = q.usersStarted
         const isStarted = us.find(a => {
-          return a.user === this.props.loggedUser.id
+          return a.user._id === this.props.loggedUser.id
         })
         if (isStarted) {
           if (isStarted.finishTime !== null) {
@@ -134,12 +135,8 @@ class App extends React.Component {
   handleDeleteAccount = () => {
     if (window.confirm("Do you want to delete your account?")) {
       userService.remove(this.props.loggedUser.id)
-      window.localStorage.removeItem("LoggedTmcUser")
-      this.setState({
-        user: null
-      })
+      this.handleLogout()
     }
-
   }
 
   handleDeactivate = async (id) => {
