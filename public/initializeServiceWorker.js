@@ -10,11 +10,11 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
     navigator.serviceWorker.register('pwabuilder-sw.js')
         .then(function (swReg) {
             navigator.serviceWorker.ready.then(function (swReg) {
-                const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
-                swReg.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: applicationServerKey
-                })
+                // const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+                // swReg.pushManager.subscribe({
+                //     userVisibleOnly: true,
+                //     applicationServerKey: applicationServerKey
+                // })
                 console.log('Service Worker is registered', swReg)
                 console.log("Subscribed")
                 swReg.update().then(function(res) {
