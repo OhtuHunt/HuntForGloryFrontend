@@ -16,10 +16,10 @@ const courseValidator = (course) => {
 }
 
 const validateCourseCode = (code) => {
-    if (validator.isLength(code, {min: 2, max: 10}) && validator.isAlphanumeric(code)) {
+    if (validator.isLength(code, {min: 2, max: 20}) && validator.isAlphanumeric(code)) {
         return
     }
-    return 'Course code must be an alphanumeric value and length must be between 2 and 10 characters'
+    return 'Course code must be an alphanumeric value and length must be between 2 and 20 characters'
 }
 
 const validateName = (name) => {

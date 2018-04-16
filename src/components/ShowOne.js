@@ -66,16 +66,25 @@ class ShowOne extends React.Component {
     this.changeLoading()
 
     const activationCode = await this.loadPosition()
-	try {
-    await this.props.finishQuest(this.props.quest.id, activationCode)
-    await this.props.updateUserPoints(this.props.loggedUser.id)
-    window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
-	} catch (exception) {
-		this.props.notify(`Wrong location! ${activationCode.lat}, ${activationCode.lng}`, 4000)
-	}
+    try {
+      await this.props.finishQuest(this.props.quest.id, activationCode)
+      await this.props.updateUserPoints(this.props.loggedUser.id)
+      window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
+    } catch (exception) {
+      this.props.notify(`Wrong location! ${activationCode.lat}, ${activationCode.lng}`, 4000)
+    }
   }
 
   ShowStartButton = () => {
+    let disabled = 'disabled'
+    this.props.loggedUser.courses.map(course => {
+      if (course.course.includes(this.props.quest.course.id)) {
+        disabled = false
+      }
+      return ''
+    }
+    )
+
     return (
       <div>
         {this.state.loading === true ?
@@ -84,9 +93,15 @@ class ShowOne extends React.Component {
           </div>
           :
           <div>
-            <button className="startButton" onClick={this.handleStartSubmit}>
-              Start quest
+            {disabled ?
+              <button disabled={disabled} className="startButton" onClick={this.handleStartSubmit}>
+                Join course first
         </button>
+              :
+              <button className="startButton" onClick={this.handleStartSubmit}>
+                Start quest
+        </button>}
+
           </div>
         }
       </div>
@@ -120,7 +135,7 @@ class ShowOne extends React.Component {
           <div>
             <button onClick={this.handleCompleteSubmit}> Complete </button>
             <br></br>
-            {this.state.QR === true ? <div><QrCodeReader handleQR={this.handleQR.bind(this)}/><button onClick={this.handleQR}>Cancel</button></div> : <button onClick={this.handleQR}>Read QR</button>}
+            {this.state.QR === true ? <div><QrCodeReader handleQR={this.handleQR.bind(this)} /><button onClick={this.handleQR}>Cancel</button></div> : <button onClick={this.handleQR}>Read QR</button>}
           </div>
         }
       </div>
