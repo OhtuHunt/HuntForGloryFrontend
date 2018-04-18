@@ -28,6 +28,10 @@ class PushNotificationForm extends React.Component {
             const response = await subscriptionservice.sendPushNotification(notification)
             console.log(response)
             this.props.notify(`'${this.state.message}' sent as push notification`, 5000)
+            this.setState({
+                message: ''
+            })
+            this.PushNotificationForm.toggleVisibility()
         } catch (exception) {
             this.props.notify('Something went wrong, notification not sent', 5000)
         }
@@ -40,7 +44,7 @@ class PushNotificationForm extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <label>Course</label>
                         <br></br>
-                        <select name="courseId" value={this.state.course} onChange={this.handleChange}>
+                        <select name="course" value={this.state.course} onChange={this.handleChange}>
                             {this.props.courses.map(function (course) {
                                 return (
                                     <option key={course.id} value={course.id}>{course.name}</option>

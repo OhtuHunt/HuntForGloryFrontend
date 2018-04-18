@@ -41,6 +41,10 @@ class FeedbackForm extends React.Component {
 
         window.scrollTo(0, 0)
         this.props.notify('Thank you for sending feedback!', 4000)
+        this.setState({
+            title: '',
+            content: ''
+        })
     }
 
     handleFormChange = (event) => {
