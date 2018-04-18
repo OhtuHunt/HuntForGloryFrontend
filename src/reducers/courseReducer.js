@@ -1,4 +1,5 @@
 import courseService from '../services/courses'
+import userService from '../services/users'
 
 const courseReducer = (store = [], action) => {
     switch (action.type) {
@@ -35,12 +36,14 @@ export const createCourse = (course) => {
     }
 }
 
-export const joinCourse = (courseId) => {
+export const joinCourse = (courseId, loggedUserId) => {
     return async (dispatch) => {
         const course = await courseService.joinCourse(courseId)
+        const updatedUser = await userService.getOne(loggedUserId)
         dispatch({
             type: 'JOIN_COURSE',
-            course
+            course,
+            updatedUser
         })
     }
 }

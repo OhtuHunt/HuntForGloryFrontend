@@ -110,7 +110,7 @@ class NewQuest extends React.Component {
 			name: '',
 			description: '',
 			points: 0,
-			type: '',
+			type: 'activation code',
 			activationCode: '',
 			latitude: '',
 			longitude: '',
@@ -157,10 +157,10 @@ class NewQuest extends React.Component {
 		this.setState({
 			name: '',
 			description: '',
-			points: '',
-			type: '',
+			points: 0,
+			type: 'activation code',
 			activationCode: '',
-			course: '',
+			course: this.props.courses[0] ? this.props.courses[0].id : undefined,
 			latitude: '',
 			longitude: '',
 			radius: ''

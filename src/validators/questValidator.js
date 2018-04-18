@@ -26,10 +26,10 @@ const validatePoints = (points) => {
 }
 
 const validateName = (name) => {
-    if (validator.isLength(name, {min: 1, max: 20})) {
+    if (validator.isLength(name, {min: 1, max: 30})) {
         return
     }
-    return 'Quest name must be between 1 and 20 characters long'
+    return 'Quest name must be between 1 and 30 characters long'
 }
 
 const validateLocation = (lat, lng, radius) => {

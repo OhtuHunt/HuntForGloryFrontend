@@ -6,6 +6,8 @@ const loggedUserReducer = (store = null, action) => {
             return store = action.user
         case 'UPDATE_POINTS':
             return store = {...store, points: action.updatedUser.points}
+        case 'JOIN_COURSE':
+            return store = {...store, courses: action.updatedUser.courses}
         default:
             return store
     }

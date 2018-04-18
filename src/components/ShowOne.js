@@ -94,9 +94,9 @@ class ShowOne extends React.Component {
           :
           <div>
             {disabled ?
-              <button disabled={disabled} className="startButton" onClick={this.handleStartSubmit}>
+              <div>
                 Join course first
-        </button>
+        </div>
               :
               <button className="startButton" onClick={this.handleStartSubmit}>
                 Start quest

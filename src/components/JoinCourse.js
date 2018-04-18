@@ -24,7 +24,7 @@ class JoinCourse extends React.Component {
         event.preventDefault()
         this.JoinCourse.toggleVisibility()
         try {
-        await this.props.joinCourse(this.state.courseId)
+        await this.props.joinCourse(this.state.courseId, this.props.loggedUser.id)
         } catch (exception) {
             console.log(exception)
             this.props.notify(`You're already on this course!`, 4000)
@@ -35,7 +35,7 @@ class JoinCourse extends React.Component {
         this.props.notify(`Joined course`, 4000)
 
         this.setState({
-            courseId: ''
+            courseId: this.props.courses[0] ? this.props.courses[0].id : ''
         })
         if (this.props.startVisible) {
             this.props.handleExit()
@@ -52,7 +52,7 @@ class JoinCourse extends React.Component {
                         <div className="form-group">
 
                             <p>course</p>
-                            <select name="courseId" value={this.state.course} onChange={this.handleChange}>
+                            <select name="courseId" value={this.state.courseId} onChange={this.handleChange}>
                                 {this.props.courses.map(function (course) {
                                     return (
                                         <option key={course.id} value={course.id}>{course.name}</option>
@@ -70,7 +70,8 @@ class JoinCourse extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        courses: state.courses
+        courses: state.courses,
+        loggedUser: state.loggedUser
     }
 }
 

@@ -171,7 +171,6 @@ class App extends React.Component {
       userService.setToken(newToken)
       courseService.setToken(newToken)
       feedbackService.setToken(newToken)
-      console.log(newToken)
       this.props.setLoggedUser(cacheUser)
       await this.props.initializeQuests()
       const quests = this.props.quests
