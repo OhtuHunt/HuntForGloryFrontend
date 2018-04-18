@@ -30,7 +30,7 @@ class FeedbackList extends React.Component {
         if (this.props.loggedUser) {
             if (this.props.loggedUser.admin) {
                 return (
-                    <div>
+                    <div style={{height: window.innerHeight * 0.9, overflow: 'auto'}}>
                         {this.props.feedbacks.map(f => 
                                 <NavLink key={f.id} exact to={`/feedbacks/${f.id}`} style={{ cursor: 'pointer' }}>
                                 {f.read ?

@@ -24,7 +24,7 @@ class ShowFeedback extends React.Component {
         }
         console.log(this.props.feedback.read)
         return (
-            <div>
+            <div style={{height: window.innerHeight * 0.9, overflow: 'auto'}}>
                 <h3> {this.props.feedback.title} </h3>
                 <div> {this.props.feedback.content} </div>
 

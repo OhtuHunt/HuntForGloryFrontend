@@ -16,14 +16,14 @@ const validateFeedback = (feedback) => {
 }
 
 const validateTitle = (title) => {
-    if (validator.isLength(title, {min: 1, max: 15}) && validator.isAlphanumeric(title)) {
+    if (validator.isLength(title, {min: 1, max: 50}) && validator.isAlphanumeric(title)) {
         return
     }
     return 'Feedback title must only contain alphanumeric characters and has to be between 1 and 15 characters long'
 }
 
 const validateContent = (content) => {
-    if (validator.isLength(content, {min: 10, max: 200})) {
+    if (validator.isLength(content, {min: 1, max: 400})) {
         return
     }
     return 'Feedback content must be between 10 and 200 characters long'

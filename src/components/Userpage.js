@@ -9,6 +9,7 @@ import JoinCourse from './JoinCourse'
 import FeedbackForm from './FeedbackForm'
 import subscriptionService from '../services/subscription'
 import PushNotificationForm from './PushNotificationForm'
+import { NavLink } from 'react-router-dom'
 
 class Userpage extends React.Component {
     constructor(props) {
@@ -120,6 +121,11 @@ class Userpage extends React.Component {
                         <JoinCourse />
                         <br></br>
                         <FeedbackForm user={this.props.loggedUser} />
+                        <br></br>
+                        <NavLink exact to='/feedbacks' style={{ cursor: 'pointer' }}>
+                            <button> Read Feedbacks </button>
+                        </NavLink>
+                        <br></br>
                         <br></br>
                         {this.state.subscribed ?
                             <button ref={disableButton => { this.disableButton = disableButton; }} onClick={this.handleDisableNotifications}>Disable notifications</button>
