@@ -18,6 +18,7 @@ body {
 
 button:disabled {
   background-color: #ccc;
+  width: 50%;
 }
 .points {
   text-align: right;
@@ -39,6 +40,7 @@ button {
   font-weight: bold;
   height: 30px;
   border-radius: 5px;
+  width: 50%;
 }
 
 .backButton:hover {

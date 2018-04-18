@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import JoinCourse from './JoinCourse'
 import FeedbackForm from './FeedbackForm'
 import subscriptionService from '../services/subscription'
+import PushNotificationForm from './PushNotificationForm'
 
 class Userpage extends React.Component {
     constructor(props) {
@@ -107,6 +108,8 @@ class Userpage extends React.Component {
                             <NewCourse />
                             <br></br>
                             <NewQuest />
+                            <br></br>
+                            <PushNotificationForm />
                             <br></br>
                         </div>
                             :
