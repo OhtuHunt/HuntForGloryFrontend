@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import Toggleable from '../components/Toggleable'
+import subscriptionservice from '../services/subscription'
 
 
 class PushNotificationForm extends React.Component {
@@ -19,9 +20,17 @@ class PushNotificationForm extends React.Component {
 
     handleSubmit = async (event) => {
         event.preventDefault()
-        this.props.notify(`'${this.state.message}' sent as push notification`, 5000)
-        console.log(this.state.course)
-        console.log(this.state.message)
+        try {
+            const notification = {
+                course: this.state.course,
+                dataToSend: this.state.message
+            }
+            const response = await subscriptionservice.sendPushNotification(notification)
+            console.log(response)
+            this.props.notify(`'${this.state.message}' sent as push notification`, 5000)
+        } catch (exception) {
+            this.props.notify('Something went wrong, notification not sent', 5000)
+        }
     }
 
     render() {

@@ -23,4 +23,9 @@ const sendSubscription = async (subscription) => {
     return response
 }
 
-export default { setToken, sendSubscription }
+const sendPushNotification = async (notification) => {
+    const response = await axios.post(`${baseUrl}/send-push`, notification, config())
+    return response
+}
+
+export default { setToken, sendSubscription, sendPushNotification }
