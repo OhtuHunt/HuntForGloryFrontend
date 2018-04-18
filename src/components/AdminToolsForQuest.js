@@ -21,7 +21,11 @@ class AdminToolsForQuest extends React.Component {
                         <EditQuest quest={this.props.quest} />
                         <br></br>
                         <br></br>
-                        <button className="deleteQuest" onClick={() => this.handleDeactivate(this.props.quest.id)}>Deactivate</button>
+                        {this.props.quest.deactivated === true ?
+                            <button className="deleteQuest" onClick={() => this.handleDeactivate(this.props.quest.id)}>Activate</button>
+                            :
+                            <button className="deleteQuest" onClick={() => this.handleDeactivate(this.props.quest.id)}>Deactivate</button>
+                        }
                         <br></br>
                         <br></br>
                         {this.props.quest.deactivated === true ?

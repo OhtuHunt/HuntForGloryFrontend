@@ -163,7 +163,7 @@ class ShowOne extends React.Component {
 
   render() {
     if (this.props.quest === undefined) {
-      return <div></div>
+      return <div>Quest has been deleted</div>
     }
 
     const showOneStyle = {

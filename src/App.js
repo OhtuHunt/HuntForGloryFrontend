@@ -141,7 +141,7 @@ class App extends React.Component {
 
   handleDeactivate = async (id) => {
     await this.props.deactivateQuest(id)
-    this.props.notify(`Deactivated this quest`, 4000)
+    this.props.notify(`Deactivated/activated this quest`, 4000)
   }
 
   handleActivationCodeChange = event => {
