@@ -8,6 +8,7 @@ class FeedbackList extends React.Component {
         super(props)
     }
 
+
     render() {
 
         // Styles for read and not read feedback divs
@@ -35,20 +36,18 @@ class FeedbackList extends React.Component {
             if (this.props.loggedUser.admin) {
                 return (
                     <div>
-                        {this.props.feedbacks.map(f => {
-                            return f.read ?
-                                <NavLink exact to={`/feedbacks/${f.id}`} style={{ cursor: 'pointer' }}>
-                                    <div key={f.id} style={listStyleRead}>
+                        {this.props.feedbacks.map(f => 
+                                <NavLink key={f.id} exact to={`/feedbacks/${f.id}`} style={{ cursor: 'pointer' }}>
+                                {f.read ?
+                                    <div style={listStyleRead}>
                                         {f.title}
                                     </div>
-                                </NavLink>
                                 :
-                                <NavLink exact to={`/feedbacks/${f.id}`} style={{ cursor: 'pointer' }}>
-                                    <div key={f.id} style={listStyleNotRead}>
+                                    <div style={listStyleNotRead}>
                                         {f.title}
-                                    </div>
+                                    </div>}
                                 </NavLink>
-                        })}
+                        )}
                     </div>
                 )
             }

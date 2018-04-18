@@ -1,5 +1,4 @@
 import axios from 'axios'
-import feedbackReducer from '../reducers/feedbackReducer';
 
 let baseUrl = ''
 if (process.env.REACT_APP_LOCAL !== 'true') {
@@ -30,4 +29,9 @@ const getAll = async () => {
     return response.data
 }
 
-export default { sendFeedback, setToken, getAll }
+const markAsRead = async (id) => {
+    const response = await axios.post(`${baseUrl}/${id}/read`,null, config())
+    return response.data
+}
+
+export default { sendFeedback, setToken, getAll, markAsRead }
