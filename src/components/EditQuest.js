@@ -8,7 +8,7 @@ import validateQuest from '../validators/questValidator'
 import { showErrors } from '../reducers/errorMessageReducer'
 
 
-const QuestForm = ({ handleSubmit, handleChange, name, description, points, type, activationCode, deactivated, latitude, longitude, radius }) => {
+const QuestForm = ({ handleSubmit, handleChange, name, description, points, type, course, activationCode, deactivated, latitude, longitude, radius }) => {
 
     const handleEditClick = (event) => {
         event.preventDefault()
@@ -19,6 +19,7 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                 description: event.target.description.value,
                 points: event.target.points.value,
                 type: type,
+                course: course,
                 activationCode: event.target.activationCode.value
             }
         } else {
@@ -27,6 +28,7 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                 description: event.target.description.value,
                 points: event.target.points.value,
                 type: type,
+                course: course,
                 activationCode: {
                     lat: event.target.latitude.value,
                     lng: event.target.longitude.value,
@@ -120,6 +122,7 @@ class EditQuest extends React.Component {
             type: props.quest.type,
             activationCode: props.quest.activationCode,
             deactivated: props.quest.deactivated,
+            course: props.quest.course._id,
             id: props.quest.id,
             latitude: props.quest.activationCode.lat,
             longitude: props.quest.activationCode.lng,
@@ -138,6 +141,7 @@ class EditQuest extends React.Component {
             description: editedQuest.description,
             points: editedQuest.points,
             type: editedQuest.type,
+            course: editedQuest.course,
             activationCode: editedQuest.activationCode,
             latitude: editedQuest.activationCode.lat,
             longitude: editedQuest.activationCode.lng,
@@ -146,12 +150,12 @@ class EditQuest extends React.Component {
         const editedWithDeactivation = { ...editedQuest, deactivated: this.props.quest.deactivated }
 
         let errors = validateQuest(editedWithDeactivation)
-		
-		if (errors.length > 0) {
-			this.props.showErrors(errors, 5000)
-			window.scrollTo(0, 0)
-			return
-		}
+
+        if (errors.length > 0) {
+            this.props.showErrors(errors, 5000)
+            window.scrollTo(0, 0)
+            return
+        }
 
         await this.props.editQuest(editedWithDeactivation, this.props.quest.id)
         window.scrollTo(0, 0)
@@ -170,6 +174,7 @@ class EditQuest extends React.Component {
                 description: this.props.quest.description,
                 points: this.props.quest.points,
                 type: this.props.quest.type,
+                course: this.props.quest.course._id,
                 activationCode: this.props.quest.activationCode,
                 deactivated: this.props.quest.deactivated,
                 id: this.props.quest.id,
@@ -189,6 +194,7 @@ class EditQuest extends React.Component {
                         description={this.state.description}
                         points={this.state.points}
                         type={this.state.type}
+                        course={this.state.course}
                         activationCode={this.state.activationCode}
                         latitude={this.state.latitude}
                         longitude={this.state.longitude}
@@ -203,4 +209,4 @@ class EditQuest extends React.Component {
 }
 
 export default connect(null,
-    { editQuest, notify, showErrors})(EditQuest)
+    { editQuest, notify, showErrors })(EditQuest)
