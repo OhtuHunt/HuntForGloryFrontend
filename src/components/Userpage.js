@@ -94,7 +94,7 @@ class Userpage extends React.Component {
 
     render() {
         return (
-            <div style={{ height: window.innerHeight * 0.78, overflow: 'auto' }}>
+            <div style={{ height: window.innerHeight * 0.78, overflow: 'auto' }} className='userpage'>
                 {this.props.loggedUser !== undefined ?
                     <div>
                         <h2>Hello {this.props.loggedUser.username}!</h2>
