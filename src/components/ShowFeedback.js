@@ -3,9 +3,6 @@ import React from 'react'
 import { markFeedbackRead } from '../reducers/feedbackReducer'
 
 class ShowFeedback extends React.Component {
-    constructor(props) {
-        super(props)
-    }
 
     handleMarkAsReadClick = async (event) => {
         event.preventDefault()

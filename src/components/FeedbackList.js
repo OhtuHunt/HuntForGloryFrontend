@@ -4,11 +4,6 @@ import { NavLink } from 'react-router-dom'
 
 class FeedbackList extends React.Component {
 
-    constructor(props) {
-        super(props)
-    }
-
-
     render() {
 
         // Styles for read and not read feedback divs
