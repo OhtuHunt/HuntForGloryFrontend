@@ -28,6 +28,7 @@ class PushNotificationForm extends React.Component {
             const response = await subscriptionservice.sendPushNotification(notification)
             console.log(response)
             this.props.notify(`'${this.state.message}' sent as push notification`, 5000)
+            window.scrollTo(0, 0)
             this.setState({
                 message: ''
             })

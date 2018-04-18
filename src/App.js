@@ -249,12 +249,12 @@ class App extends React.Component {
                       )}
                     />
                     <Route
-                        exact
-                        path="/feedbacks"
-                        render={() => (
-                          <FeedbackList
-                            key='feedbacks' />)}
-                      />
+                      exact
+                      path="/feedbacks"
+                      render={() => (
+                        <FeedbackList
+                          key='feedbacks' />)}
+                    />
                     <SwipeableRoutes>
                       <Route
                         exact

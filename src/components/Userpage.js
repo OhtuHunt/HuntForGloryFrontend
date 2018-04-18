@@ -19,6 +19,18 @@ class Userpage extends React.Component {
         this.isSubscribed()
     }
 
+    resize = () => {
+        this.setState(this.state)
+      }
+    
+      componentDidMount() {
+        window.addEventListener('resize', this.resize)
+      }
+    
+      componentWillUnmount() {
+        window.removeEventListener('resize', this.resize)
+      }
+
     handleDeleteAccount = () => {
         if (window.confirm("Do you want to delete your account?")) {
             this.props.removeUser(this.props.loggedUser.id)
@@ -135,6 +147,9 @@ class Userpage extends React.Component {
                         <br></br>
                         <br></br>
                         <button onClick={this.handleDeleteAccount}>Delete account</button>
+                        <br></br>
+                        <br></br>
+                        <br></br>
                     </div>
                     :
                     <div>

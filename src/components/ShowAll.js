@@ -4,6 +4,23 @@ import { connect } from 'react-redux'
 import Filter from './Filter'
 
 class ShowAll extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
+  resize = () => {
+    this.setState(this.state)
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.resize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize)
+  }
+
   render() {
     return (
       <div className="showAll" style={{ overflowX: 'visible', height: window.innerHeight * 0.78, overflow: 'auto' }}>
