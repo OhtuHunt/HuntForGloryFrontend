@@ -19,8 +19,8 @@ const validateQuest = (quest) => {
 }
 
 const validatePoints = (points) => {
-    if (validator.isEmpty(points.toString()) || !validator.isInt(points.toString())) {
-        return 'Quest points must be an integer'
+    if (validator.isEmpty(points.toString()) || !validator.isInt(points.toString()) || (points < 0)) {
+        return 'Quest points must be a positive value'
     }
     return
 }

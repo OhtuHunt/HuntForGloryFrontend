@@ -12,6 +12,21 @@ class ShowFeedback extends React.Component {
     }
 
     render() {
+
+        const divStyle = {
+            marginLeft:'auto',
+            marginRight:'auto',
+            padding: 5,
+            width: 150,
+            marginTop: 10,
+            color: 'green',
+            fontWeight: 'bold',
+            borderStyle: 'solid',
+            borderWidth: 2
+        }
+        const buttonDivStyle = {
+            marginTop: 10
+        }
         if (this.props.feedback === undefined) {
             return (
                 <div></div>
@@ -24,13 +39,15 @@ class ShowFeedback extends React.Component {
         }
         console.log(this.props.feedback.read)
         return (
-            <div style={{height: window.innerHeight * 0.9, overflow: 'auto'}}>
+            <div style={{ height: window.innerHeight * 0.9, overflow: 'auto' }}>
                 <h3> {this.props.feedback.title} </h3>
                 <div> {this.props.feedback.content} </div>
 
                 {this.props.feedback.read ?
-                    <div></div> :
-                    <button onClick={this.handleMarkAsReadClick}> Mark as read </button>}
+                    <div style={divStyle}> MARKED AS READ </div> :
+                    <div style={buttonDivStyle}>
+                        <button onClick={this.handleMarkAsReadClick}> Mark as read </button>
+                    </div>}
             </div>
         )
     }

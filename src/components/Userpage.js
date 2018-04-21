@@ -21,15 +21,15 @@ class Userpage extends React.Component {
 
     resize = () => {
         this.setState(this.state)
-      }
-    
-      componentDidMount() {
+    }
+
+    componentDidMount() {
         window.addEventListener('resize', this.resize)
-      }
-    
-      componentWillUnmount() {
+    }
+
+    componentWillUnmount() {
         window.removeEventListener('resize', this.resize)
-      }
+    }
 
     handleDeleteAccount = () => {
         if (window.confirm("Do you want to delete your account?")) {
@@ -63,7 +63,7 @@ class Userpage extends React.Component {
         this.enableButton.disabled = true
         const applicationServerPublicKey = 'BP7Qda2PFbhXlbC4UDwHWjicJJLKTUE3f_pCFlkXYg4CIgnu8NF6CMTRRPkxx62FJ83m4zHKfXYjB5cn6OeeYk4'
         const applicationServerKey = this.urlB64ToUint8Array(applicationServerPublicKey)
-        const swReg = await  navigator.serviceWorker.ready
+        const swReg = await navigator.serviceWorker.ready
         await swReg.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: applicationServerKey
@@ -134,11 +134,19 @@ class Userpage extends React.Component {
                         <br></br>
                         <FeedbackForm user={this.props.loggedUser} />
                         <br></br>
-                        <NavLink exact to='/feedbacks' style={{ cursor: 'pointer' }}>
-                            <button> Read Feedbacks </button>
-                        </NavLink>
-                        <br></br>
-                        <br></br>
+                        {this.props.loggedUser.admin ?
+                            <div>
+                                <NavLink exact to='/feedbacks' style={{ cursor: 'pointer' }}>
+                                    <button> Read Feedbacks </button>
+                                </NavLink>
+                                <br></br>
+                                <br></br>
+                            </div>
+                            :
+                            
+                            <div></div>
+
+                        }
                         {this.state.subscribed ?
                             <button ref={disableButton => { this.disableButton = disableButton; }} onClick={this.handleDisableNotifications}>Disable notifications</button>
                             :
