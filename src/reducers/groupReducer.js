@@ -4,18 +4,20 @@ const groupReducer = (store = [], action) => {
     switch(action.type) {
         case 'GET_GROUPS':
             return store = action.data
-        case 'INIT_GROUPS':
+        case 'GET_COURSE_GROUPS':
             return store = action.data
+        case 'CREATE_GROUPS':
+            return store = store.concat(action.data)
         default:
             return store
     }
 }
 
-export const initializeGroups = (courseId) => {
+export const createGroups = (courseId) => {
     return async (dispatch) => {
         const groups = await groupService.createGroups(courseId)
         dispatch({
-            type: 'INIT_GROUPS',
+            type: 'CREATE_GROUPS',
             data: groups
         })
     }
@@ -31,7 +33,7 @@ export const getCourseGroups = (courseId) => {
     }
 }
 
-export const getGroups = (courseId) => {
+export const getGroups = () => {
     return async (dispatch) => {
         const groups = await groupService.getAll()
         dispatch({

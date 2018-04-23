@@ -19,6 +19,7 @@ import { setActivationCode, clearActivationCode } from './reducers/activationCod
 import { initializeQuests, createQuest, removeQuest, deactivateQuest, setQuests, startQuest, finishQuest } from './reducers/questReducer'
 import { getUsers } from './reducers/usersReducer'
 import { getCourses } from './reducers/courseReducer'
+import { getGroups } from './reducers/groupReducer'
 import { setLoggedUser, updateUserPoints } from './reducers/loggedUserReducer'
 import { connect } from 'react-redux'
 import { initializeFeedbacks } from './reducers/feedbackReducer'
@@ -40,6 +41,7 @@ class App extends React.Component {
   async componentWillMount() {
     await this.props.getUsers()
     await this.props.getCourses()
+    await this.props.getGroups()
     const loggedInUser = window.localStorage.getItem("LoggedTmcUser")
     if (loggedInUser !== null) {
       const parsedUser = JSON.parse(loggedInUser)
@@ -54,6 +56,7 @@ class App extends React.Component {
         courseService.setToken(newToken)
         feedbackService.setToken(newToken)
         subscriptionService.setToken(newToken)
+        groupService.setToken(newToken)
         this.props.setLoggedUser(updatedUser)
 
         await this.props.initializeQuests()
@@ -173,6 +176,7 @@ class App extends React.Component {
       courseService.setToken(newToken)
       feedbackService.setToken(newToken)
       subscriptionService.setToken(newToken)
+      groupService.setToken(newToken)
       this.props.setLoggedUser(cacheUser)
       await this.props.initializeQuests()
       const quests = this.props.quests
@@ -336,5 +340,6 @@ export default connect(mapStateToProps,
     setLoggedUser,
     getCourses,
     updateUserPoints,
-    initializeFeedbacks
+    initializeFeedbacks,
+    getGroups
   })(App)
