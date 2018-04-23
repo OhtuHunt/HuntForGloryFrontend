@@ -11,6 +11,7 @@ import fieldToFilterReducer from './reducers/fieldToFilterReducer'
 import doneFilterReducer from './reducers/doneFilterReducer'
 import errorMessageReducer from './reducers/errorMessageReducer'
 import feedbackReducer from './reducers/feedbackReducer'
+import groupReducer from './reducers/groupReducer'
 
 const reducer = combineReducers({
   notification: notificationReducer,
@@ -23,7 +24,8 @@ const reducer = combineReducers({
   fieldToFilter: fieldToFilterReducer,
   done: doneFilterReducer,
   errorMessage: errorMessageReducer,
-  feedbacks: feedbackReducer
+  feedbacks: feedbackReducer,
+  groups: groupReducer
 })
 
 const store = createStore(

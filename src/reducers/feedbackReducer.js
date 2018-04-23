@@ -1,4 +1,4 @@
-import feedbackService from '../services/feedbackService'
+import feedbackService from '../services/feedbacks'
 
 const feedbackReducer = (store = [], action) => {
     switch(action.type) {

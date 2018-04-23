@@ -141,6 +141,11 @@ class Userpage extends React.Component {
                                 </NavLink>
                                 <br></br>
                                 <br></br>
+                                <NavLink exact to='/groups' style={{ cursor: 'pointer' }}>
+                                    <button> Groups </button>
+                                </NavLink>
+                                <br></br>
+                                <br></br>
                             </div>
                             :
                             

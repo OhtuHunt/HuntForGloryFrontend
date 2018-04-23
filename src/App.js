@@ -13,7 +13,7 @@ import loginService from "./services/login"
 import Notification from "./components/Notification"
 import userService from "./services/users"
 import courseService from "./services/courses"
-import feedbackService from './services/feedbackService'
+import feedbackService from './services/feedbacks'
 import { notify } from './reducers/notificationReducer'
 import { setActivationCode, clearActivationCode } from './reducers/activationCodeReducer'
 import { initializeQuests, createQuest, removeQuest, deactivateQuest, setQuests, startQuest, finishQuest } from './reducers/questReducer'
@@ -25,8 +25,9 @@ import { initializeFeedbacks } from './reducers/feedbackReducer'
 import ErrorMessage from './components/ErrorMessage'
 import SwipeableRoutes from 'react-swipeable-routes'
 import WelcomePage from './components/WelcomePage'
-import ShowFeedback from "./components/ShowFeedback"
+import ShowFeedback from './components/ShowFeedback'
 import subscriptionService from './services/subscription'
+import GroupPage from './components/GroupPage'
 
 class App extends React.Component {
   constructor(props) {
@@ -254,6 +255,12 @@ class App extends React.Component {
                       render={() => (
                         <FeedbackList
                           key='feedbacks' />)}
+                    />
+                    <Route
+                      exact
+                      path="/groups"
+                      render={() => (
+                        <GroupPage />)}
                     />
                     <SwipeableRoutes>
                       <Route
