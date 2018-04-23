@@ -7,6 +7,7 @@ const groupReducer = (store = [], action) => {
         case 'GET_COURSE_GROUPS':
             return store = action.data
         case 'CREATE_GROUPS':
+            const oldWithoutThisCourse = store.filter(group => group.course !== action.data.course)
             return store = store.concat(action.data)
         default:
             return store
