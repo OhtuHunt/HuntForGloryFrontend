@@ -5,15 +5,23 @@ import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import { showErrors } from '../reducers/errorMessageReducer'
 import { sendFeedback } from '../reducers/feedbackReducer'
-import validateFeedback from '../validators/feedbackValidator';
+import validateFeedback from '../validators/feedbackValidator'
+import Spinner from 'react-spinkit'
 
 class FeedbackForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             title: '',
-            content: ''
+            content: '',
+            loading: false
         }
+    }
+
+    changeLoading = () => {
+        this.setState({
+            loading: this.state.loading === true ? false : true
+        })
     }
 
     formVisibility = () => {
@@ -22,24 +30,26 @@ class FeedbackForm extends React.Component {
 
     handleSubmit = async (event) => {
         event.preventDefault()
-        this.feedbackForm.toggleVisibility()
-
+        this.changeLoading()
         const feedbackObject = {
             title: this.state.title,
             content: this.state.content
         }
 
         let errors = validateFeedback(feedbackObject)
-		
-		if (errors.length > 0) {
-			this.props.showErrors(errors, 5000)
-			window.scrollTo(0, 0)
-			return
+
+        if (errors.length > 0) {
+            this.props.showErrors(errors, 5000)
+            this.changeLoading()
+            window.scrollTo(0, 0)
+            return
         }
-        
+
         await this.props.sendFeedback(feedbackObject)
 
         window.scrollTo(0, 0)
+        this.feedbackForm.toggleVisibility()
+        this.changeLoading()
         this.props.notify('Thank you for sending feedback!', 4000)
         this.setState({
             title: '',
@@ -79,7 +89,12 @@ class FeedbackForm extends React.Component {
                                     onChange={this.handleFormChange}
                                 />
                             </div>
-                            <button type="submit">send feedback</button>
+                            {this.state.loading ?
+                                <div style={{ marginLeft: '49%' }}>
+                                    <Spinner name="circle" fadeIn="none" />
+                                </div>
+                                :
+                                <button type="submit">send feedback</button>}
                         </form>
                     </div>
                 </Toggleable>

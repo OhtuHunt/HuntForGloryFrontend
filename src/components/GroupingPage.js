@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import { createGroups, moveUser } from '../reducers/groupReducer'
+import Spinner from 'react-spinkit'
 
 
 class GroupingPage extends React.Component {
@@ -10,7 +11,7 @@ class GroupingPage extends React.Component {
         this.state = {
             course: this.props.courses[0] ? this.props.courses[0].id : '',
             numberOfGroups: 1,
-
+            loading: false
         }
     }
 
@@ -18,11 +19,8 @@ class GroupingPage extends React.Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
-    handleSubmit = async (event) => {
-        event.preventDefault()
-    }
-
     randomizeGroups = async () => {
+        this.changeLoading()
         try {
             await this.props.createGroups(this.state.course, this.state.numberOfGroups)
             this.props.notify('Groups have been randomized', 5000)
@@ -30,10 +28,31 @@ class GroupingPage extends React.Component {
             console.log(exception)
             this.props.notify('Something went wrong..')
         }
+        this.changeLoading()
+    }
+
+
+    changeLoading = () => {
+        this.setState({
+            loading: this.state.loading === true ? false : true
+        })
+    }
+
+    resize = () => {
+        this.setState(this.state)
+    }
+
+    componentDidMount() {
+        window.addEventListener('resize', this.resize)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.resize)
     }
 
     handleMoveGroup = async (event) => {
         event.preventDefault()
+        this.changeLoading()
         if (event.target.currentGroup.value === event.target.groupChange.value) {
             return
         }
@@ -44,6 +63,7 @@ class GroupingPage extends React.Component {
             console.log(exception)
             this.props.notify('Something went wrong..', 5000)
         }
+        this.changeLoading()
     }
 
     render() {
@@ -65,7 +85,14 @@ class GroupingPage extends React.Component {
                 <input type='number' value={this.state.numberOfGroups} onChange={this.handleChange} name='numberOfGroups' />
                 <br></br>
                 <br></br>
-                {this.state.numberOfGroups > peopleOnCourse ? <button disabled='disabled'>Randomize</button> : <button onClick={this.randomizeGroups}>Randomize</button>}
+                {this.state.loading ? <div style={{ marginLeft: '49%' }}>
+                    <Spinner name="circle" fadeIn="none" />
+                </div>
+                    :
+                    <div>
+                        {this.state.numberOfGroups > peopleOnCourse ? <button disabled='disabled'>Randomize</button> : <button onClick={this.randomizeGroups}>Randomize</button>}
+                    </div>
+                }
                 <br></br>
                 <div className="leaderboardTable">
                     {groups

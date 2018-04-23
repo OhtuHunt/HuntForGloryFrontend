@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import Toggleable from '../components/Toggleable'
 import subscriptionservice from '../services/subscription'
+import Spinner from 'react-spinkit'
 
 
 class PushNotificationForm extends React.Component {
@@ -10,7 +11,8 @@ class PushNotificationForm extends React.Component {
         super(props)
         this.state = {
             course: this.props.courses[0] ? this.props.courses[0].id : '',
-            message: ''
+            message: '',
+            loading: false
         }
     }
 
@@ -18,8 +20,15 @@ class PushNotificationForm extends React.Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
+    changeLoading = () => {
+        this.setState({
+            loading: this.state.loading === true ? false : true
+        })
+    }
+
     handleSubmit = async (event) => {
         event.preventDefault()
+        this.changeLoading()
         try {
             const notification = {
                 course: this.state.course,
@@ -36,6 +45,7 @@ class PushNotificationForm extends React.Component {
         } catch (exception) {
             this.props.notify('Something went wrong, notification not sent', 5000)
         }
+        this.changeLoading()
     }
 
     render() {
@@ -55,9 +65,14 @@ class PushNotificationForm extends React.Component {
                         <br></br>
                         <label>Message to send</label>
                         <br></br>
-                        <input style={{textAlign: 'center'}} type='text' name='message' placeholder='Message to send' value={this.state.message} onChange={this.handleChange}></input>
+                        <input style={{ textAlign: 'center' }} type='text' name='message' placeholder='Message to send' value={this.state.message} onChange={this.handleChange}></input>
                         <br></br>
-                        <button type='submit'>Send</button>
+                        {this.state.loading ?
+                            <div style={{ marginLeft: '49%' }}>
+                                <Spinner name="circle" fadeIn="none" />
+                            </div>
+                            : 
+                            <button type='submit'>Send</button>}
                     </form>
                 </div>
             </Toggleable>

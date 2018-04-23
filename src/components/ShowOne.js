@@ -24,6 +24,18 @@ class ShowOne extends React.Component {
     })
   }
 
+  resize = () => {
+    this.setState(this.state)
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.resize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize)
+  }
+
   handleDeactivate = async (id) => {
     await this.props.deactivateQuest(id)
     this.props.notify(`Deactivated/activated this quest`, 4000)

@@ -4,14 +4,15 @@ import { notify } from '../reducers/notificationReducer'
 import { joinCourse } from '../reducers/courseReducer'
 import { initializeQuests } from '../reducers/questReducer'
 import { connect } from 'react-redux'
-import "../index.css";
+import Spinner from 'react-spinkit'
 
 
 class JoinCourse extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            courseId: this.props.courses[0] ? this.props.courses[0].id : ''
+            courseId: this.props.courses[0] ? this.props.courses[0].id : '',
+            loading: false
         }
         this.handleExit = props.handleExit
     }
@@ -22,14 +23,18 @@ class JoinCourse extends React.Component {
 
     handleSubmit = async (event) => {
         event.preventDefault()
-        this.JoinCourse.toggleVisibility()
+        this.changeLoading()
         try {
-        await this.props.joinCourse(this.state.courseId, this.props.loggedUser.id)
+            await this.props.joinCourse(this.state.courseId, this.props.loggedUser.id)
         } catch (exception) {
             console.log(exception)
             this.props.notify(`You're already on this course!`, 4000)
+            this.changeLoading()
             window.scrollTo(0, 0)
             return
+        }
+        if (!this.props.startVisible) {
+            this.JoinCourse.toggleVisibility()
         }
         await this.props.initializeQuests()
         this.props.notify(`Joined course`, 4000)
@@ -37,10 +42,17 @@ class JoinCourse extends React.Component {
         this.setState({
             courseId: this.props.courses[0] ? this.props.courses[0].id : ''
         })
+        this.changeLoading()
         if (this.props.startVisible) {
             this.props.handleExit()
         }
         window.scrollTo(0, 0)
+    }
+
+    changeLoading = () => {
+        this.setState({
+            loading: this.state.loading === true ? false : true
+        })
     }
 
     render() {
@@ -60,7 +72,12 @@ class JoinCourse extends React.Component {
                                 })}
                             </select>
                         </div>
-                        <button type="submit">Join</button>
+                        {this.state.loading ?
+                            <div style={{ marginLeft: '49%' }}>
+                                <Spinner name="circle" fadeIn="none" />
+                            </div>
+                            :
+                            <button type="submit">Join</button>}
                     </form>
                 </div>
             </Toggleable>

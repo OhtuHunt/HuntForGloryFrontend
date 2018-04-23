@@ -6,18 +6,21 @@ import { notify } from '../reducers/notificationReducer'
 import validateProfile from '../validators/profileValidator'
 import { showErrors } from '../reducers/errorMessageReducer'
 import { setLoggedUser } from '../reducers/loggedUserReducer'
+import Spinner from 'react-spinkit'
 
 class EditUserInformation extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             username: this.props.loggedUser !== undefined ? this.props.loggedUser.username : JSON.parse(window.localStorage.getItem("LoggedTmcUser")).username,
-            email: this.props.loggedUser !== undefined ? this.props.loggedUser.email : JSON.parse(window.localStorage.getItem("LoggedTmcUser")).email
+            email: this.props.loggedUser !== undefined ? this.props.loggedUser.email : JSON.parse(window.localStorage.getItem("LoggedTmcUser")).email,
+            loading: false
         }
     }
 
     handleSubmit = async (event) => {
         event.preventDefault()
+        this.changeLoading()
         const username = (this.state.username === '') ? this.props.loggedUser.username : this.state.username
         const email = (this.state.email === '') ? this.props.loggedUser.email : this.state.email
 
@@ -32,24 +35,27 @@ class EditUserInformation extends React.Component {
         }
 
         let errors = validateProfile(user)
-		
-		if (errors.length > 0) {
-			this.props.showErrors(errors, 5000)
-			window.scrollTo(0, 0)
-			return
-        }
-        
-        this.EditUserInformation.toggleVisibility()
 
+        if (errors.length > 0) {
+            this.props.showErrors(errors, 5000)
+            window.scrollTo(0, 0)
+            this.changeLoading()
+            return
+        }
+
+        if (!this.props.startVisible) {
+            this.EditUserInformation.toggleVisibility()
+        }
         await this.props.editUser(user)
         await this.props.setLoggedUser(user)
 
         window.localStorage.setItem(
             "LoggedTmcUser",
-            JSON.stringify({...user, token: this.props.loggedUser.token})
+            JSON.stringify({ ...user, token: this.props.loggedUser.token })
         )
         window.scrollTo(0, 0)
         this.props.notify('New user information has been saved', 4000)
+        this.changeLoading()
         // const editedUser = await userService.update(user, this.props.user.id)
         // console.log(editedUser)
         // this.props.edit(editedUser)
@@ -57,6 +63,13 @@ class EditUserInformation extends React.Component {
 
     handleFormChange = (event) => {
         this.setState({ [event.target.name]: event.target.value })
+    }
+
+
+    changeLoading = () => {
+        this.setState({
+            loading: this.state.loading === true ? false : true
+        })
     }
 
     render() {
@@ -85,7 +98,12 @@ class EditUserInformation extends React.Component {
                                 onChange={this.handleFormChange}
                             />
                         </div>
-                        <button type="submit">Save</button>
+                        {this.state.loading ?
+                            <div style={{ marginLeft: '49%' }}>
+                                <Spinner name="circle" fadeIn="none" />
+                            </div>
+                            :
+                            <button type="submit">Save</button>}
                     </form>
                 </div>
             </Toggleable>
@@ -99,4 +117,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { editUser, notify , showErrors, setLoggedUser})(EditUserInformation)
+export default connect(mapStateToProps, { editUser, notify, showErrors, setLoggedUser })(EditUserInformation)
