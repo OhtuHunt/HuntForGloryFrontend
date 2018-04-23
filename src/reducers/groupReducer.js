@@ -21,9 +21,19 @@ export const initializeGroups = (courseId) => {
     }
 }
 
-export const getGroups = (courseId) => {
+export const getCourseGroups = (courseId) => {
     return async (dispatch) => {
         const groups = await groupService.getGroups(courseId)
+        dispatch({
+            type: 'GET_COURSE_GROUPS',
+            data: groups
+        })
+    }
+}
+
+export const getGroups = (courseId) => {
+    return async (dispatch) => {
+        const groups = await groupService.getAll()
         dispatch({
             type: 'GET_GROUPS',
             data: groups

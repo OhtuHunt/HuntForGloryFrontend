@@ -24,7 +24,7 @@ const getAll = async () => {
     return response.data
 }
 
-const getGroups = async (courseId) => {
+const getCourseGroups = async (courseId) => {
     const response = await axios.get(`${baseUrl}/course/${courseId}`, config())
     return response.data
 }
