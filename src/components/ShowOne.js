@@ -3,10 +3,11 @@ import { Card, CardBody } from "react-simple-card";
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit'
 import AdminToolsForQuest from './AdminToolsForQuest'
-import { finishQuest } from '../reducers/questReducer'
+import { finishQuest, startQuest, removeQuest, deactivateQuest } from '../reducers/questReducer'
 import { notify } from '../reducers/notificationReducer'
 import { updateUserPoints } from '../reducers/loggedUserReducer'
 import QrCodeReader from './QrCodeReader'
+import { setActivationCode, clearActivationCode } from '../reducers/activationCodeReducer'
 
 class ShowOne extends React.Component {
   constructor(props) {
@@ -15,11 +16,6 @@ class ShowOne extends React.Component {
       loading: false,
       QR: false
     }
-    this.handleDelete = this.props.handleDelete
-    this.handleDeactivate = this.props.handleDeactivate
-    this.handleActivationCodeChange = this.props.handleActivationCodeChange
-    this.handleStart = this.props.handleStart
-    this.handleComplete = this.props.handleComplete
   }
 
   changeLoading = () => {
@@ -28,17 +24,43 @@ class ShowOne extends React.Component {
     })
   }
 
+  handleDeactivate = async (id) => {
+    await this.props.deactivateQuest(id)
+    this.props.notify(`Deactivated/activated this quest`, 4000)
+  }
+
+  handleDelete = async (id) => {
+    if (window.confirm("Do you want to delete this quest?")) {
+      await this.props.removeQuest(id)
+    }
+  }
+
+  handleActivationCodeChange = event => {
+    event.preventDefault()
+    this.props.setActivationCode(event.target.value)
+  }
+
   handleStartSubmit = async (event) => {
     event.preventDefault();
     this.changeLoading()
-    await this.handleStart(this.props.quest)
+    //await this.handleStart(this.props.quest)
+    await this.props.startQuest(this.props.quest.id)
     this.changeLoading()
   }
 
   handleCompleteSubmit = async (event) => {
     event.preventDefault()
     this.changeLoading()
-    await this.handleComplete(this.props.quest)
+    try {
+      await this.props.finishQuest(this.props.quest.id, this.props.activationCode)
+      await this.props.updateUserPoints(this.props.loggedUser.id)
+      window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
+    } catch (exception) {
+      console.log(exception)
+      this.props.notify("Invalid activation code", 4000)
+    }
+    this.props.clearActivationCode()
+    window.scrollTo(0, 0)
     this.changeLoading()
   }
 
@@ -152,7 +174,7 @@ class ShowOne extends React.Component {
 
   QuestInfo = () => {
     return (
-      <div>
+      <div className="questInfo">
         <AdminToolsForQuest quest={this.props.quest} handleDelete={this.handleDelete} handleDeactivate={this.handleDeactivate} />
         <h1> {this.props.quest.name} </h1>
         <h2>Course: {this.props.quest.course.name} </h2>
@@ -163,9 +185,7 @@ class ShowOne extends React.Component {
 
   render() {
     if (this.props.quest === undefined) {
-      return <div style={{ paddingTop: '10%' }}>
-              Quest has been deleted
-            </div>
+      return <div style={{ paddingTop: '10%' }}>Quest has been deleted</div>
     }
 
     const showOneStyle = {
@@ -203,4 +223,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { finishQuest, notify, updateUserPoints })(ShowOne)
+export default connect(mapStateToProps, { finishQuest, startQuest, notify, updateUserPoints, setActivationCode, clearActivationCode, deactivateQuest, removeQuest })(ShowOne)

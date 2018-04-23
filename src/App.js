@@ -29,6 +29,7 @@ import WelcomePage from './components/WelcomePage'
 import ShowFeedback from './components/ShowFeedback'
 import subscriptionService from './services/subscription'
 import GroupingPage from './components/GroupingPage'
+import groupService from './services/groups'
 
 class App extends React.Component {
   constructor(props) {
@@ -113,44 +114,12 @@ class App extends React.Component {
     this.props.setQuests(updatedQuests)
 
   }
-  handleStartQuest = async (quest) => {
-    await this.props.startQuest(quest.id)
-  }
-
-  handleDeleteQuest = async (id) => {
-    if (window.confirm("Do you want to delete this quest?")) {
-      await this.props.removeQuest(id)
-    }
-  }
-
-  handleCompleteQuest = async (quest) => {
-    try {
-      await this.props.finishQuest(quest.id, this.props.activationCode)
-      await this.props.updateUserPoints(this.props.loggedUser.id)
-      window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
-    } catch (exception) {
-      console.log(exception)
-      this.props.notify("Invalid activation code", 4000)
-    }
-    this.props.clearActivationCode()
-    window.scrollTo(0, 0)
-  }
 
   handleDeleteAccount = () => {
     if (window.confirm("Do you want to delete your account?")) {
       userService.remove(this.props.loggedUser.id)
       this.handleLogout()
     }
-  }
-
-  handleDeactivate = async (id) => {
-    await this.props.deactivateQuest(id)
-    this.props.notify(`Deactivated/activated this quest`, 4000)
-  }
-
-  handleActivationCodeChange = event => {
-    event.preventDefault()
-    this.props.setActivationCode(event.target.value)
   }
 
   handleLogin = async (event) => {
@@ -275,11 +244,6 @@ class App extends React.Component {
                           <ShowOne
                             quest={questById(match.params.id)}
                             key={match.params.id}
-                            handleStart={this.handleStartQuest}
-                            handleComplete={this.handleCompleteQuest}
-                            handleActivationCodeChange={this.handleActivationCodeChange}
-                            handleDelete={this.handleDeleteQuest.bind(this)}
-                            handleDeactivate={this.handleDeactivate.bind(this)}
                           />
                         )}
                       />
