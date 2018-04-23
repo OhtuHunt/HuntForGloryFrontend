@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/OhtuHunt/HuntForGloryFrontend.svg?branch=master)](https://travis-ci.org/OhtuHunt/HuntForGloryFrontend)
+
 # Frontend for [HuntForGlory](https://github.com/OhtuHunt/HuntForGlory)
 
 ### [Link to production](https://huntforglory.herokuapp.com/)
