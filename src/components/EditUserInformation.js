@@ -5,28 +5,29 @@ import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import validateProfile from '../validators/profileValidator'
 import { showErrors } from '../reducers/errorMessageReducer'
+import { setLoggedUser } from '../reducers/loggedUserReducer'
 
 class EditUserInformation extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: this.props.user.username,
-            email: this.props.user.email
+            username: this.props.loggedUser !== undefined ? this.props.loggedUser.username : JSON.parse(window.localStorage.getItem("LoggedTmcUser")).username,
+            email: this.props.loggedUser !== undefined ? this.props.loggedUser.email : JSON.parse(window.localStorage.getItem("LoggedTmcUser")).email
         }
     }
 
     handleSubmit = async (event) => {
         event.preventDefault()
-        const username = (this.state.username === '') ? this.props.user.username : this.state.username
-        const email = (this.state.email === '') ? this.props.user.email : this.state.email
+        const username = (this.state.username === '') ? this.props.loggedUser.username : this.state.username
+        const email = (this.state.email === '') ? this.props.loggedUser.email : this.state.email
 
         const user = {
-            id: this.props.user.id,
+            id: this.props.loggedUser.id,
             username,
             email,
-            admin: this.props.user.admin,
-            points: this.props.user.points,
-            quests: this.props.user.quests
+            admin: this.props.loggedUser.admin,
+            points: this.props.loggedUser.points,
+            quests: this.props.loggedUser.quests
 
         }
 
@@ -41,6 +42,8 @@ class EditUserInformation extends React.Component {
         this.EditUserInformation.toggleVisibility()
 
         await this.props.editUser(user)
+        await this.props.setLoggedUser(user)
+
         window.localStorage.setItem(
             "LoggedTmcUser",
             JSON.stringify({...user, token: this.props.loggedUser.token})
@@ -58,13 +61,14 @@ class EditUserInformation extends React.Component {
 
     render() {
         return (
-            <Toggleable buttonLabel="Edit profile" cancelButtonLabel='Cancel' ref={component => this.EditUserInformation = component}>
+            <Toggleable buttonLabel="Edit profile" startVisible={this.props.startVisible} cancelButtonLabel='Cancel' ref={component => this.EditUserInformation = component}>
                 <div className="createform">
-                    <h2>edit profile information</h2>
+                    <h2>Edit profile information</h2>
 
                     <form onSubmit={this.handleSubmit}>
                         <div>
-                            <p>username</p>
+                            <p>This is the username that is shown to others in for example leaderboards</p>
+                            <label>Username</label>
                             <input
                                 type="text"
                                 name="username"
@@ -73,7 +77,7 @@ class EditUserInformation extends React.Component {
                             />
                         </div>
                         <div>
-                            <p>email</p>
+                            <label>Email</label>
                             <input
                                 type="text"
                                 name="email"
@@ -81,7 +85,7 @@ class EditUserInformation extends React.Component {
                                 onChange={this.handleFormChange}
                             />
                         </div>
-                        <button type="submit">save</button>
+                        <button type="submit">Save</button>
                     </form>
                 </div>
             </Toggleable>
@@ -95,4 +99,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { editUser, notify , showErrors})(EditUserInformation)
+export default connect(mapStateToProps, { editUser, notify , showErrors, setLoggedUser})(EditUserInformation)

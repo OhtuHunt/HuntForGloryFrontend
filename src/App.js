@@ -27,7 +27,7 @@ import SwipeableRoutes from 'react-swipeable-routes'
 import WelcomePage from './components/WelcomePage'
 import ShowFeedback from './components/ShowFeedback'
 import subscriptionService from './services/subscription'
-import GroupPage from './components/GroupPage'
+import GroupingPage from './components/GroupingPage'
 
 class App extends React.Component {
   constructor(props) {
@@ -260,7 +260,7 @@ class App extends React.Component {
                       exact
                       path="/groups"
                       render={() => (
-                        <GroupPage />)}
+                        <GroupingPage />)}
                     />
                     <SwipeableRoutes>
                       <Route

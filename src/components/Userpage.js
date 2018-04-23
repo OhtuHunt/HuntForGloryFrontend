@@ -124,6 +124,16 @@ class Userpage extends React.Component {
                             <br></br>
                             <PushNotificationForm />
                             <br></br>
+                            <NavLink exact to='/feedbacks' style={{ cursor: 'pointer' }}>
+                                    <button> Read Feedbacks </button>
+                                </NavLink>
+                                <br></br>
+                                <br></br>
+                                <NavLink exact to='/groups' style={{ cursor: 'pointer' }}>
+                                    <button> Groups </button>
+                                </NavLink>
+                                <br></br>
+                                <br></br>
                         </div>
                             :
                             <br></br>
@@ -134,24 +144,6 @@ class Userpage extends React.Component {
                         <br></br>
                         <FeedbackForm user={this.props.loggedUser} />
                         <br></br>
-                        {this.props.loggedUser.admin ?
-                            <div>
-                                <NavLink exact to='/feedbacks' style={{ cursor: 'pointer' }}>
-                                    <button> Read Feedbacks </button>
-                                </NavLink>
-                                <br></br>
-                                <br></br>
-                                <NavLink exact to='/groups' style={{ cursor: 'pointer' }}>
-                                    <button> Groups </button>
-                                </NavLink>
-                                <br></br>
-                                <br></br>
-                            </div>
-                            :
-                            
-                            <div></div>
-
-                        }
                         {this.state.subscribed ?
                             <button ref={disableButton => { this.disableButton = disableButton; }} onClick={this.handleDisableNotifications}>Disable notifications</button>
                             :

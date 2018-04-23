@@ -163,7 +163,9 @@ class ShowOne extends React.Component {
 
   render() {
     if (this.props.quest === undefined) {
-      return <div>Quest has been deleted</div>
+      return <div style={{ paddingTop: '10%' }}>
+              Quest has been deleted
+            </div>
     }
 
     const showOneStyle = {

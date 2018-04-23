@@ -30,24 +30,27 @@ class FeedbackList extends React.Component {
         if (this.props.loggedUser) {
             if (this.props.loggedUser.admin) {
                 return (
-                    <div style={{height: window.innerHeight * 0.9, overflow: 'auto'}}>
-                        {this.props.feedbacks.map(f => 
-                                <NavLink key={f.id} exact to={`/feedbacks/${f.id}`} style={{ cursor: 'pointer' }}>
+                    <div style={{ height: window.innerHeight * 0.85, overflow: 'auto' }}>
+                        {this.props.feedbacks.map(f =>
+                            <NavLink key={f.id} exact to={`/feedbacks/${f.id}`} style={{ cursor: 'pointer' }}>
                                 {f.read ?
                                     <div style={listStyleRead}>
                                         {f.title}
                                     </div>
-                                :
+                                    :
                                     <div style={listStyleNotRead}>
                                         {f.title}
                                     </div>}
-                                </NavLink>
+                            </NavLink>
                         )}
                     </div>
                 )
             }
             return (
-                <h3> Only admins can view this content </h3>
+                <div style={{ height: window.innerHeight, overflow: 'auto' }}>
+                    <h3 > Only admins can view this content </h3>
+                </div>
+
             )
         }
         return (
