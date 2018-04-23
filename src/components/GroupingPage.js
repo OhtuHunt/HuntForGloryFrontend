@@ -124,6 +124,9 @@ class GroupingPage extends React.Component {
                             </div>
                         )}
                 </div>
+                <br></br>
+                <br></br>
+                <br></br>
             </div>
         )
     }
