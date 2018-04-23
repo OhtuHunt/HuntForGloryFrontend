@@ -194,7 +194,7 @@ class ShowOne extends React.Component {
     }
 
     return (
-      <div>
+      <div className="questStatus">
         <Card style={{ height: '100%', width: 'auto' }}>
           <CardBody style={showOneStyle}>
             {this.QuestInfo()}
