@@ -47,8 +47,4 @@ const createGroups = async (courseId, amount) => {
     return response.data
 }
 
-<<<<<<< HEAD
 export default { setToken, getAll, getCourseGroups, changeGroup, createGroups }
-=======
-export default { setToken, getAll, getCourseGroups, createGroups }
->>>>>>> c0c9b2e04a581b63fcdcc13114d514f60bac5318
