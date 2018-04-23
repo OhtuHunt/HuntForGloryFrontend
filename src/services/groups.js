@@ -25,12 +25,12 @@ const getAll = async () => {
 }
 
 const getGroups = async (courseId) => {
-    const response = await axios.get(`${baseUrl}/${courseId}`, config())
+    const response = await axios.get(`${baseUrl}/course/${courseId}`, config())
     return response.data
 }
 
 const createGroups = async (courseId) => {
-    const response = await axios.post(`${baseUrl}/${courseId}/generate`, null, config())
+    const response = await axios.post(`${baseUrl}/course/${courseId}/generate`, null, config())
     return response.data
 }
 
