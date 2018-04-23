@@ -7,8 +7,8 @@ const groupReducer = (store = [], action) => {
         case 'GET_COURSE_GROUPS':
             return store = action.data
         case 'CREATE_GROUPS':
-            const oldWithoutThisCourse = store.filter(group => group.course !== action.data.course)
-            return store = store.concat(action.data)
+            const oldWithoutThisCourse = store.filter(group => group.course !== action.data[0].course)
+            return store = oldWithoutThisCourse.concat(action.data)
         default:
             return store
     }
@@ -29,6 +29,16 @@ export const getCourseGroups = (courseId) => {
         const groups = await groupService.getGroups(courseId)
         dispatch({
             type: 'GET_COURSE_GROUPS',
+            data: groups
+        })
+    }
+}
+
+export const moveUser = (userId, groupFrom, groupTo) => {
+    return async (dispatch) => {
+        const groups = await groupService.changeGroup(userId, groupFrom, groupTo)
+        dispatch({
+            type: 'GET_GROUPS',
             data: groups
         })
     }

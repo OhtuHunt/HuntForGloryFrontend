@@ -29,6 +29,16 @@ const getCourseGroups = async (courseId) => {
     return response.data
 }
 
+const changeGroup = async (userId, groupFrom, groupTo) => {
+    const body = {
+        user: userId,
+        groupFrom: groupFrom,
+        groupTo: groupTo
+    }
+    const response = await axios.post(`${baseUrl}/move-user`, body, config())
+    return response.data
+}
+
 const createGroups = async (courseId, amount) => {
     const body = {
         groupAmount: amount
@@ -37,4 +47,4 @@ const createGroups = async (courseId, amount) => {
     return response.data
 }
 
-export default { setToken, getAll, getGroups, createGroups }
+export default { setToken, getAll, getCourseGroups, changeGroup, createGroups }

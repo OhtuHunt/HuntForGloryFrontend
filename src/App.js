@@ -29,6 +29,7 @@ import WelcomePage from './components/WelcomePage'
 import ShowFeedback from './components/ShowFeedback'
 import subscriptionService from './services/subscription'
 import GroupingPage from './components/GroupingPage'
+import groupService from './services/groups'
 
 class App extends React.Component {
   constructor(props) {
