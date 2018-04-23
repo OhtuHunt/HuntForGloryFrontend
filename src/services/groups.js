@@ -29,8 +29,11 @@ const getCourseGroups = async (courseId) => {
     return response.data
 }
 
-const createGroups = async (courseId) => {
-    const response = await axios.post(`${baseUrl}/course/${courseId}/generate`, null, config())
+const createGroups = async (courseId, amount) => {
+    const body = {
+        groupAmount: amount
+      }
+    const response = await axios.post(`${baseUrl}/course/${courseId}/generate`, body, config())
     return response.data
 }
 

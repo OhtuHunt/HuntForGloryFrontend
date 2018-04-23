@@ -13,9 +13,9 @@ const groupReducer = (store = [], action) => {
     }
 }
 
-export const createGroups = (courseId) => {
+export const createGroups = (courseId, amount) => {
     return async (dispatch) => {
-        const groups = await groupService.createGroups(courseId)
+        const groups = await groupService.createGroups(courseId, amount)
         dispatch({
             type: 'CREATE_GROUPS',
             data: groups
