@@ -66,9 +66,9 @@ describe.only('<ShowOne />', () => {
             }
         }
 
-        const showOneComponent = mount(<Provider store={store}>
+        /*const showOneComponent = mount(<Provider store={store}>
             <App store={store} />
-        </Provider>)
+        </Provider>)*/
 
         //const startButton = showOneComponent.find('.startButton')
         //startButton.simulate('click')
