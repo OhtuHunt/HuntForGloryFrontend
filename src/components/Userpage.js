@@ -106,12 +106,24 @@ class Userpage extends React.Component {
     }
 
     render() {
+        const userCourses = this.props.courses.filter(course => {
+            let isAttending = false
+            let returnValue = true
+            this.props.loggedUser.courses.map(uc => {
+                uc.course === course.id ? isAttending = true : returnValue = false
+                return returnValue
+            })
+            return isAttending
+        })
+
         return (
             <div style={{ height: window.innerHeight * 0.78, overflow: 'auto' }} className='userpage'>
                 {this.props.loggedUser !== undefined ?
                     <div>
                         <h2>Hello {this.props.loggedUser.username}!</h2>
                         <br></br>
+                        <h3>You are attending the following courses</h3>
+                        {userCourses.map(course => <div key={course.id}>{course.name}</div>)}
                         <br></br>
                         <br></br>
                         <button onClick={this.handleLogout}>Logout</button>
@@ -125,15 +137,15 @@ class Userpage extends React.Component {
                             <PushNotificationForm />
                             <br></br>
                             <NavLink exact to='/feedbacks' style={{ cursor: 'pointer' }}>
-                                    <button> Read Feedbacks </button>
-                                </NavLink>
-                                <br></br>
-                                <br></br>
-                                <NavLink exact to='/groups' style={{ cursor: 'pointer' }}>
-                                    <button> Groups </button>
-                                </NavLink>
-                                <br></br>
-                                <br></br>
+                                <button> Read Feedbacks </button>
+                            </NavLink>
+                            <br></br>
+                            <br></br>
+                            <NavLink exact to='/groups' style={{ cursor: 'pointer' }}>
+                                <button> Groups </button>
+                            </NavLink>
+                            <br></br>
+                            <br></br>
                         </div>
                             :
                             <br></br>
@@ -167,7 +179,8 @@ class Userpage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loggedUser: state.loggedUser
+        loggedUser: state.loggedUser,
+        courses: state.courses
     }
 }
 
