@@ -40,20 +40,21 @@ class FeedbackForm extends React.Component {
 
         if (errors.length > 0) {
             this.props.showErrors(errors, 5000)
-            this.changeLoading()
-            window.scrollTo(0, 0)
+            this.setState({
+                loading: false
+            })
             return
         }
 
         await this.props.sendFeedback(feedbackObject)
 
-        window.scrollTo(0, 0)
+
         this.feedbackForm.toggleVisibility()
-        this.changeLoading()
-        this.props.notify('Thank you for sending feedback!', 4000)
+        this.props.notify('Thank you for sending feedback!', 5000)
         this.setState({
             title: '',
-            content: ''
+            content: '',
+            loading: false
         })
     }
 
