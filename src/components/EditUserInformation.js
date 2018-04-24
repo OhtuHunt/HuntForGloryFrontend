@@ -30,7 +30,8 @@ class EditUserInformation extends React.Component {
             email,
             admin: this.props.loggedUser.admin,
             points: this.props.loggedUser.points,
-            quests: this.props.loggedUser.quests
+            quests: this.props.loggedUser.quests,
+            token: this.props.loggedUser.token
 
         }
 
@@ -51,7 +52,7 @@ class EditUserInformation extends React.Component {
 
         window.localStorage.setItem(
             "LoggedTmcUser",
-            JSON.stringify({ ...user, token: this.props.loggedUser.token })
+            JSON.stringify({ user })
         )
         window.scrollTo(0, 0)
         this.props.notify('New user information has been saved', 4000)
