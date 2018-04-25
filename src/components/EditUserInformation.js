@@ -17,7 +17,7 @@ class EditUserInformation extends React.Component {
             loading: false
         }
     }
-
+    
     handleSubmit = async (event) => {
         event.preventDefault()
         this.changeLoading()
@@ -31,7 +31,8 @@ class EditUserInformation extends React.Component {
             admin: this.props.loggedUser.admin,
             points: this.props.loggedUser.points,
             quests: this.props.loggedUser.quests,
-            token: this.props.loggedUser.token
+            token: this.props.loggedUser.token,
+            courses: this.props.loggedUser.courses
 
         }
 
@@ -52,7 +53,7 @@ class EditUserInformation extends React.Component {
 
         window.localStorage.setItem(
             "LoggedTmcUser",
-            JSON.stringify({ user })
+            JSON.stringify(user)
         )
         window.scrollTo(0, 0)
         this.props.notify('New user information has been saved', 4000)

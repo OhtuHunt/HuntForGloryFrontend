@@ -26,6 +26,7 @@ class JoinCourse extends React.Component {
         this.changeLoading()
         try {
             await this.props.joinCourse(this.state.courseId, this.props.loggedUser.id)
+            window.localStorage.setItem('LoggedTmcUser', JSON.stringify(this.props.loggedUser))
         } catch (exception) {
             console.log(exception)
             this.props.notify(`You're already on this course!`, 4000)

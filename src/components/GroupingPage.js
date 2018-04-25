@@ -70,7 +70,7 @@ class GroupingPage extends React.Component {
         let peopleOnCourse = this.props.courses.filter(course => course.id === this.state.course)[0].users.length
         let groups = this.props.groups.filter(group => group.course === this.state.course).sort((a, b) => { return a.groupName > b.groupName })
         return (
-            <div className="groupPage" style={{ height: window.innerHeight * 0.8, overflow: 'auto' }}>
+            <div className="groupPage" style={{ height: window.innerHeight * 0.85, overflow: 'auto' }}>
                 <h2>Groups by courses</h2>
 
                 <div className='custom-select' style={{ width: '100%' }}>
