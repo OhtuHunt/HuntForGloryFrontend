@@ -70,7 +70,7 @@ class GroupingPage extends React.Component {
         let peopleOnCourse = this.props.courses.filter(course => course.id === this.state.course)[0].users.length
         let groups = this.props.groups.filter(group => group.course === this.state.course).sort((a, b) => { return a.groupName > b.groupName })
         return (
-            <div className="groupPage" style={{ height: window.innerHeight * 0.85, overflow: 'auto' }}>
+            <div className='groupPage' style={{ height: window.innerHeight * 0.85, overflow: 'auto' }}>
                 <h2>Groups by courses</h2>
 
                 <div className='custom-select' style={{ width: '100%' }}>
@@ -86,7 +86,7 @@ class GroupingPage extends React.Component {
                 <br></br>
                 <br></br>
                 {this.state.loading ? <div style={{ marginLeft: '49%' }}>
-                    <Spinner name="circle" fadeIn="none" />
+                    <Spinner name='circle' fadeIn='none' />
                 </div>
                     :
                     <div>
@@ -94,7 +94,7 @@ class GroupingPage extends React.Component {
                     </div>
                 }
                 <br></br>
-                <div className="leaderboardTable">
+                <div className='leaderboardTable'>
                     {groups
                         .map(groupInCourse =>
                             <div key={groupInCourse.id}>
@@ -102,11 +102,11 @@ class GroupingPage extends React.Component {
                                 <table>
                                     <tbody>
                                         {groupInCourse.users.map(user =>
-                                            <tr key={user._id}>
-                                                <td>{user.user.username}</td>
+                                            <tr key={user.id}>
+                                                <td>{user.username}</td>
                                                 <td>
                                                     <form onSubmit={this.handleMoveGroup}>
-                                                        <input type='text' hidden='hidden' name='user' value={user.user._id} disabled='disabled' />
+                                                        <input type='text' hidden='hidden' name='user' value={user.id} disabled='disabled' />
                                                         <input type='text' hidden='hidden' name='currentGroup' value={groupInCourse.id} disabled='disabled' />
                                                         Move user to:
                                                         <select name='groupChange'>

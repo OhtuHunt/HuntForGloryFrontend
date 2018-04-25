@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody } from "react-simple-card";
+import { Card, CardBody } from 'react-simple-card';
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit'
 import AdminToolsForQuest from './AdminToolsForQuest'
@@ -42,7 +42,7 @@ class ShowOne extends React.Component {
   }
 
   handleDelete = async (id) => {
-    if (window.confirm("Do you want to delete this quest?")) {
+    if (window.confirm('Do you want to delete this quest?')) {
       await this.props.removeQuest(id)
     }
   }
@@ -56,7 +56,7 @@ class ShowOne extends React.Component {
     event.preventDefault();
     this.changeLoading()
     //await this.handleStart(this.props.quest)
-    await this.props.startQuest(this.props.quest.id)
+    await this.props.startQuest(this.props.loggedUser.id, this.props.quest.id)
     this.changeLoading()
   }
 
@@ -64,12 +64,12 @@ class ShowOne extends React.Component {
     event.preventDefault()
     this.changeLoading()
     try {
-      await this.props.finishQuest(this.props.quest.id, this.props.activationCode)
+      await this.props.finishQuest(this.props.loggedUser.id, this.props.quest.id, this.props.activationCode)
       await this.props.updateUserPoints(this.props.loggedUser.id)
-      window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
+      window.localStorage.setItem('LoggedTmcUser', JSON.stringify(this.props.loggedUser))
     } catch (exception) {
       console.log(exception)
-      this.props.notify("Invalid activation code", 4000)
+      this.props.notify('Invalid activation code', 4000)
     }
     this.props.clearActivationCode()
     window.scrollTo(0, 0)
@@ -101,9 +101,9 @@ class ShowOne extends React.Component {
 
     const activationCode = await this.loadPosition()
     try {
-      await this.props.finishQuest(this.props.quest.id, activationCode)
+      await this.props.finishQuest(this.props.loggedUser.id, this.props.quest.id, activationCode)
       await this.props.updateUserPoints(this.props.loggedUser.id)
-      window.localStorage.setItem("LoggedTmcUser", JSON.stringify(this.props.loggedUser))
+      window.localStorage.setItem('LoggedTmcUser', JSON.stringify(this.props.loggedUser))
     } catch (exception) {
       this.props.notify(`Wrong location! ${activationCode.lat}, ${activationCode.lng}`, 4000)
     }
@@ -112,7 +112,7 @@ class ShowOne extends React.Component {
   ShowStartButton = () => {
     let disabled = true
     this.props.loggedUser.courses.map(course => {
-      if (course.course.includes(this.props.quest.course._id)) {
+      if (course.id === this.props.quest.course.id) {
         disabled = false
       }
       return ''
@@ -123,7 +123,7 @@ class ShowOne extends React.Component {
       <div>
         {this.state.loading === true ?
           <div style={{ marginLeft: '49%' }}>
-            <Spinner name="circle" fadeIn="none" />
+            <Spinner name='circle' fadeIn='none' />
           </div>
           :
           <div>
@@ -132,7 +132,7 @@ class ShowOne extends React.Component {
                 Join course first
         </div>
               :
-              <button className="startButton" onClick={this.handleStartSubmit}>
+              <button className='startButton' onClick={this.handleStartSubmit}>
                 Start quest
         </button>}
 
@@ -155,15 +155,15 @@ class ShowOne extends React.Component {
     }
 
     return (
-      <div className="activationCodeForm">
+      <div className='activationCodeForm'>
         <input
-          type="text"
+          type='text'
           onChange={this.handleActivationCodeChange}
-          name="activationCode"
+          name='activationCode'
           value={this.props.activationCode} />
         {this.state.loading === true ?
           <div style={{ marginLeft: '49%' }}>
-            <Spinner name="circle" fadeIn="none" />
+            <Spinner name='circle' fadeIn='none' />
           </div>
           :
           <div>
@@ -178,7 +178,7 @@ class ShowOne extends React.Component {
 
   ShowLocationSubmitButton = () => {
     return (
-      <div className="activationCodeForm">
+      <div className='activationCodeForm'>
         <button onClick={this.handleLocationSubmit}> Complete location </button>
       </div>
     )
@@ -186,15 +186,14 @@ class ShowOne extends React.Component {
 
   QuestInfo = () => {
     return (
-      <div className="questInfo">
+      <div className='questInfo'>
         <AdminToolsForQuest quest={this.props.quest} handleDelete={this.handleDelete} handleDeactivate={this.handleDeactivate} />
         <h1> {this.props.quest.name} </h1>
         <h2>Course: {this.props.quest.course.name} </h2>
-        <div className="soloDesc" style={{ height: window.innerHeight * 0.4 }}>{this.props.quest.description}</div>
+        <div className='soloDesc' style={{ height: window.innerHeight * 0.4 }}>{this.props.quest.description}</div>
       </div>
     )
   }
-
   render() {
     if (this.props.quest === undefined) {
       return <div style={{ paddingTop: '10%' }}>Quest has been deleted</div>
@@ -204,9 +203,8 @@ class ShowOne extends React.Component {
       height: window.innerHeight * 0.7,
       overflow: 'auto'
     }
-
     return (
-      <div className="questStatus">
+      <div className='questStatus'>
         <Card style={{ height: '100%', width: 'auto' }}>
           <CardBody style={showOneStyle}>
             {this.QuestInfo()}

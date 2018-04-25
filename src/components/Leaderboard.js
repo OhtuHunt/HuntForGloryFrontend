@@ -21,8 +21,8 @@ class Leaderboard extends React.Component {
         }
 
         return (
-            <div className="leaderboard" style={{ height: window.innerHeight * 78, overflow: 'auto' }}>
-                <h2 className="leaderboardHeader">LEADERBOARD</h2>
+            <div className='leaderboard' style={{ height: window.innerHeight * 78, overflow: 'auto' }}>
+                <h2 className='leaderboardHeader'>LEADERBOARD</h2>
 
                 <div className='custom-select' style={{ width: '100%' }}>
                     <select name='leaderboard' onChange={this.handleLeaderboardChange}>
@@ -31,10 +31,10 @@ class Leaderboard extends React.Component {
                     </select>
                 </div>
                 <br></br>
-                <div className="leaderboardTable">
+                <div className='leaderboardTable'>
                     <table>
                         <tbody>
-                            <tr className="leaderboardTopRow">
+                            <tr className='leaderboardTopRow'>
                                 <td>Ranking</td><td>Username</td><td>Points</td>
                             </tr>
                             {this.state.leaderboard === '' ? this.props.users.map(user =>
@@ -52,13 +52,13 @@ class Leaderboard extends React.Component {
                                     .map(course => course.users
                                         .sort((a, b) => { return b.points > a.points })
                                         .map(courseUser =>
-                                            this.props.loggedUser.id === courseUser.user._id ?
-                                            <tr className='loggedUserInLeaderboard' key={courseUser.user._id}>
-                                                <td>{getNumber()}.</td><td>{courseUser.user.username}</td><td>{courseUser.points}</td>
+                                            this.props.loggedUser.id === courseUser.id ?
+                                            <tr className='loggedUserInLeaderboard' key={courseUser.id}>
+                                                <td>{getNumber()}.</td><td>{courseUser.username}</td><td>{courseUser.points}</td>
                                             </tr>
                                             :
-                                            <tr key={courseUser.user._id}>
-                                                <td>{getNumber()}.</td><td>{courseUser.user.username}</td><td>{courseUser.points}</td>
+                                            <tr key={courseUser.id}>
+                                                <td>{getNumber()}.</td><td>{courseUser.username}</td><td>{courseUser.points}</td>
                                             </tr>))}
                         </tbody>
                     </table>

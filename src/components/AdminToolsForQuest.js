@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import EditQuest from "./EditQuest"
+import EditQuest from './EditQuest'
 
 class AdminToolsForQuest extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class AdminToolsForQuest extends React.Component {
             if (this.props.loggedUser.admin) {
                 return (
                     <div>
-                        <button className="deleteQuest" onClick={() => this.handleDelete(this.props.quest.id)}>
+                        <button className='deleteQuest' onClick={() => this.handleDelete(this.props.quest.id)}>
                             Delete
                         </button>
                         <br></br>
@@ -22,9 +22,9 @@ class AdminToolsForQuest extends React.Component {
                         <br></br>
                         <br></br>
                         {this.props.quest.deactivated === true ?
-                            <button className="deleteQuest" onClick={() => this.handleDeactivate(this.props.quest.id)}>Activate</button>
+                            <button className='deleteQuest' onClick={() => this.handleDeactivate(this.props.quest.id)}>Activate</button>
                             :
-                            <button className="deleteQuest" onClick={() => this.handleDeactivate(this.props.quest.id)}>Deactivate</button>
+                            <button className='deleteQuest' onClick={() => this.handleDeactivate(this.props.quest.id)}>Deactivate</button>
                         }
                         <br></br>
                         <br></br>

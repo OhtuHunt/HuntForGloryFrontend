@@ -1,4 +1,5 @@
 import questService from '../services/quests'
+import userService from '../services/users'
 
 const questReducer = (store = [], action) => {
     switch (action.type) {
@@ -20,6 +21,9 @@ const questReducer = (store = [], action) => {
         case 'FINISH_QUEST':
             const oldWithoutFinished = store.filter(q => q.id !== action.finishedQuest.id)
             return store = oldWithoutFinished.concat(action.finishedQuest)
+        case 'GET_COURSE_QUESTS':
+            const courseQuests = action.quests.filter(quest => quest.course.id === action.courseId)
+            return store = store.concat(courseQuests)
         default:
             return store
     }
@@ -31,6 +35,17 @@ export const initializeQuests = () => {
         dispatch({
             type: 'INIT_QUESTS',
             quests
+        })
+    }
+}
+
+export const getCourseQuests = (courseId) => {
+    return async (dispatch) => {
+        const quests = await questService.getAll()
+        dispatch({
+            type: 'GET_COURSE_QUESTS',
+            quests,
+            courseId
         })
     }
 }
@@ -84,22 +99,26 @@ export const setQuests = (quests) => {
     }
 }
 
-export const startQuest = (id) => {
+export const startQuest = (loggedUserId, id) => {
     return async (dispatch) => {
         const startedQuest = await questService.startQuest(id)
+        const updatedUser = await userService.getOne(loggedUserId)
         dispatch({
             type: 'START_QUEST',
-            startedQuest: { ...startedQuest, started: true }
+            startedQuest: { ...startedQuest, started: true },
+            updatedUser
         })
     }
 }
 
-export const finishQuest = (id, activationCode) => {
+export const finishQuest = (loggedUserId, id, activationCode) => {
     return async (dispatch) => {
         const finishedQuest = await questService.finishQuest(id, activationCode)
+        const updatedUser = await userService.getOne(loggedUserId)
         dispatch({
             type: 'FINISH_QUEST',
-            finishedQuest: { ...finishedQuest, finished: true }
+            finishedQuest: { ...finishedQuest, finished: true },
+            updatedUser
         })
     }
 }

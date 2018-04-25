@@ -50,12 +50,12 @@ class PushNotificationForm extends React.Component {
 
     render() {
         return (
-            <Toggleable buttonLabel="Send push notification" cancelButtonLabel='Cancel' startVisible={this.props.startVisible} ref={component => this.PushNotificationForm = component}>
+            <Toggleable buttonLabel='Send push notification' cancelButtonLabel='Cancel' startVisible={this.props.startVisible} ref={component => this.PushNotificationForm = component}>
                 <div className='createform'>
                     <form onSubmit={this.handleSubmit}>
                         <label>Course</label>
                         <br></br>
-                        <select name="course" value={this.state.course} onChange={this.handleChange}>
+                        <select name='course' value={this.state.course} onChange={this.handleChange}>
                             {this.props.courses.map(function (course) {
                                 return (
                                     <option key={course.id} value={course.id}>{course.name}</option>
@@ -69,7 +69,7 @@ class PushNotificationForm extends React.Component {
                         <br></br>
                         {this.state.loading ?
                             <div style={{ marginLeft: '49%' }}>
-                                <Spinner name="circle" fadeIn="none" />
+                                <Spinner name='circle' fadeIn='none' />
                             </div>
                             : 
                             <button type='submit'>Send</button>}

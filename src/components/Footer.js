@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { connect } from 'react-redux'
 
 // const footerTable = {
@@ -15,10 +15,10 @@ class Footer extends React.Component {
     }
 
     return (
-      <div className="footer">
-        <ul className="footerList">
+      <div className='footer'>
+        <ul className='footerList'>
           <li>{this.props.loggedUser === null ? null : <div>Points: {this.props.loggedUser.points}</div>}</li>
-          <li>{this.props.loggedUser === null ? <div><a href="https://tmc.mooc.fi">TMC</a></div> : <div>{this.props.loggedUser.username}</div>}</li>
+          <li>{this.props.loggedUser === null ? <div><a href='https://tmc.mooc.fi'>TMC</a></div> : <div>{this.props.loggedUser.username}</div>}</li>
           <li>{this.props.loggedUser === null ? null : <div>Rank: {rank}</div>}</li>
         </ul>
       </div>

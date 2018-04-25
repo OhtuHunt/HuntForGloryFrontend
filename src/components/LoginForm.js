@@ -36,20 +36,20 @@ class LoginForm extends React.Component {
             <div>
                 <h2>Log in with your TMC-credentials</h2>
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" name="username" placeholder="Username" onChange={this.handleChange} />
+                    <input type='text' name='username' placeholder='Username' onChange={this.handleChange} />
                     <br></br>
-                    <input type="password" name="password" placeholder="Password" onChange={this.handleChange} />
+                    <input type='password' name='password' placeholder='Password' onChange={this.handleChange} />
                     <br></br>
                     {this.state.loading === true ?
                         <div style={{marginLeft: '49%'}}>
-                            <Spinner name="circle" fadeIn="none"/>
+                            <Spinner name='circle' fadeIn='none'/>
                         </div>
                         :
                         <div>
                             {this.state.username.length > 0 && this.state.password.length > 0 ?
-                                <button type="submit">Login</button>
+                                <button type='submit'>Login</button>
                                 :
-                                <button type="submit" disabled>Login</button>
+                                <button type='submit' disabled>Login</button>
                             }
                         </div>
                     }

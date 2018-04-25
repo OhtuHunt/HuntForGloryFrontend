@@ -22,7 +22,7 @@ class WelcomePage extends React.Component {
 
     render() {
         return (
-            <div className="welcomePage" style={{height: window.innerHeight * 0.8, overflow: 'auto'}}>
+            <div className='welcomePage' style={{height: window.innerHeight * 0.8, overflow: 'auto'}}>
                 <h1>WELCOME</h1>
                 <EditUserInformation startVisible={true} />
                 <JoinCourse startVisible={true} handleExit={this.props.handleExit} />

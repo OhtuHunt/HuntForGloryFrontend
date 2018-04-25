@@ -8,6 +8,9 @@ const usersReducer = (store = [], action) => {
             return store.map(u => u.id === action.editedUser.id ? action.editedUser : u)
         case 'REMOVE_USER':
             return store.filter(u => u.id !== action.id)
+        case 'UPDATE_USER':
+            const usersWithoutLogged = store.filter(u => u.id !== action.loggedUser.id)
+            return store = usersWithoutLogged.concat({ ...action.loggedUser, token: null })
         default:
             return store
     }
@@ -40,6 +43,15 @@ export const removeUser = (id) => {
         dispatch({
             type: 'REMOVE_USER',
             id
+        })
+    }
+}
+
+export const updateUser = (loggedUser) => {
+    return async (dispatch) => {
+        dispatch({
+            type: 'UPDATE_USER',
+            loggedUser
         })
     }
 }

@@ -12,9 +12,9 @@ const GenerateCard = ({ quest }) => {
                     <table style={{ width: '100%' }}>
                         <tbody>
                             <tr>
-                                <td className="questType">{quest.type}</td>
-                                <td className="questCourse">{quest.course.name}</td>
-                                <td className="points">{quest.points}</td>
+                                <td className='questType'>{quest.type}</td>
+                                <td className='questCourse'>{quest.course.name}</td>
+                                <td className='points'>{quest.points}</td>
                             </tr>
                         </tbody>
                     </table>

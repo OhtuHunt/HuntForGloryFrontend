@@ -1,6 +1,6 @@
 import React from 'react'
 import Toggleable from './Toggleable'
-import "../index.css"
+import '../index.css'
 import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import { showErrors } from '../reducers/errorMessageReducer'
@@ -65,8 +65,8 @@ class FeedbackForm extends React.Component {
     render() {
         return (
             <div>
-                <Toggleable buttonLabel="Give feedback" cancelButtonLabel='Cancel' ref={component => this.feedbackForm = component}>
-                    <div className="createform">
+                <Toggleable buttonLabel='Give feedback' cancelButtonLabel='Cancel' ref={component => this.feedbackForm = component}>
+                    <div className='createform'>
                         <h2>Send Feedback</h2>
                         <br></br>
                         <div> Use this form to send us feedback about the application or information about the possible bugs you have encountered. </div>
@@ -75,8 +75,8 @@ class FeedbackForm extends React.Component {
                             <div>
                                 <p>title</p>
                                 <input
-                                    type="text"
-                                    name="title"
+                                    type='text'
+                                    name='title'
                                     value={this.state.title}
                                     onChange={this.handleFormChange}
                                 />
@@ -84,18 +84,18 @@ class FeedbackForm extends React.Component {
                             <div>
                                 <p>feedback</p>
                                 <input
-                                    type="textarea"
-                                    name="content"
+                                    type='textarea'
+                                    name='content'
                                     value={this.state.content}
                                     onChange={this.handleFormChange}
                                 />
                             </div>
                             {this.state.loading ?
                                 <div style={{ marginLeft: '49%' }}>
-                                    <Spinner name="circle" fadeIn="none" />
+                                    <Spinner name='circle' fadeIn='none' />
                                 </div>
                                 :
-                                <button type="submit">send feedback</button>}
+                                <button type='submit'>send feedback</button>}
                         </form>
                     </div>
                 </Toggleable>

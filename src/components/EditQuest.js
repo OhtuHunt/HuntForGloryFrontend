@@ -1,6 +1,6 @@
 import React from 'react'
 import Toggleable from './Toggleable'
-import "../index.css"
+import '../index.css'
 import { connect } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import { editQuest } from '../reducers/questReducer'
@@ -40,15 +40,15 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
     }
 
     return (
-        <div className="createform">
+        <div className='createform'>
             <h2>edit quest</h2>
 
             <form onSubmit={handleEditClick}>
                 <div>
                     <p>name</p>
                     <input
-                        type="text"
-                        name="name"
+                        type='text'
+                        name='name'
                         value={name}
                         onChange={handleChange}
                     />
@@ -56,8 +56,8 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                 <div>
                     <p>description</p>
                     <input
-                        type="textarea"
-                        name="description"
+                        type='textarea'
+                        name='description'
                         value={description}
                         onChange={handleChange}
                     />
@@ -65,8 +65,8 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                 <div>
                     <p>points</p>
                     <input
-                        type="number"
-                        name="points"
+                        type='number'
+                        name='points'
                         value={points}
                         onChange={handleChange}
                     />
@@ -75,8 +75,8 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                     <div>
                         <p>activationcode</p>
                         <input
-                            type="text"
-                            name="activationCode"
+                            type='text'
+                            name='activationCode'
                             value={activationCode}
                             onChange={handleChange}
                         />
@@ -106,7 +106,7 @@ const QuestForm = ({ handleSubmit, handleChange, name, description, points, type
                         />
                     </div>
                 }
-                <button type="submit">edit</button>
+                <button type='submit'>edit</button>
             </form>
         </div>
     )
@@ -122,7 +122,7 @@ class EditQuest extends React.Component {
             type: props.quest.type,
             activationCode: props.quest.activationCode,
             deactivated: props.quest.deactivated,
-            course: props.quest.course._id,
+            course: props.quest.course.id,
             id: props.quest.id,
             latitude: props.quest.activationCode.lat,
             longitude: props.quest.activationCode.lng,
@@ -174,7 +174,7 @@ class EditQuest extends React.Component {
                 description: this.props.quest.description,
                 points: this.props.quest.points,
                 type: this.props.quest.type,
-                course: this.props.quest.course._id,
+                course: this.props.quest.course.id,
                 activationCode: this.props.quest.activationCode,
                 deactivated: this.props.quest.deactivated,
                 id: this.props.quest.id,
@@ -186,7 +186,7 @@ class EditQuest extends React.Component {
         }
         return (
             <div>
-                <Toggleable buttonLabel="edit quest" cancelButtonLabel='Cancel' ref={component => this.questForm = component}>
+                <Toggleable buttonLabel='edit quest' cancelButtonLabel='Cancel' ref={component => this.questForm = component}>
                     <QuestForm
                         handleSubmit={this.handleSubmit}
                         handleChange={this.handleQuestChange}

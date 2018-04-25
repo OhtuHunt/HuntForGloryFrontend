@@ -1,18 +1,18 @@
-import "./index.css"
-import React from "react"
-import Footer from "./components/Footer"
-import ShowOne from "./components/ShowOne"
-import ShowAll from "./components/ShowAll"
-import Leaderboard from "./components/Leaderboard"
-import Userpage from "./components/Userpage"
+import './index.css'
+import React from 'react'
+import Footer from './components/Footer'
+import ShowOne from './components/ShowOne'
+import ShowAll from './components/ShowAll'
+import Leaderboard from './components/Leaderboard'
+import Userpage from './components/Userpage'
 import FeedbackList from './components/FeedbackList'
-import questService from "./services/quests"
-import { Route, NavLink, HashRouter, Redirect } from "react-router-dom"
-import LoginForm from "./components/LoginForm"
-import loginService from "./services/login"
-import Notification from "./components/Notification"
-import userService from "./services/users"
-import courseService from "./services/courses"
+import questService from './services/quests'
+import { Route, NavLink, HashRouter, Redirect } from 'react-router-dom'
+import LoginForm from './components/LoginForm'
+import loginService from './services/login'
+import Notification from './components/Notification'
+import userService from './services/users'
+import courseService from './services/courses'
 import feedbackService from './services/feedbacks'
 import { notify } from './reducers/notificationReducer'
 import { setActivationCode, clearActivationCode } from './reducers/activationCodeReducer'
@@ -43,7 +43,7 @@ class App extends React.Component {
     await this.props.getUsers()
     await this.props.getCourses()
     await this.props.getGroups()
-    const loggedInUser = window.localStorage.getItem("LoggedTmcUser")
+    const loggedInUser = window.localStorage.getItem('LoggedTmcUser')
     if (loggedInUser !== null) {
       const parsedUser = JSON.parse(loggedInUser)
       const newToken = {
@@ -116,7 +116,7 @@ class App extends React.Component {
   }
 
   handleDeleteAccount = () => {
-    if (window.confirm("Do you want to delete your account?")) {
+    if (window.confirm('Do you want to delete your account?')) {
       userService.remove(this.props.loggedUser.id)
       this.handleLogout()
     }
@@ -128,13 +128,13 @@ class App extends React.Component {
       username: event.target.username.value,
       password: event.target.password.value
     }
-    event.target.password.value = ""
+    event.target.password.value = ''
     try {
       const response = await loginService.login(user)
 
       const cacheUser = { ...response.data.user, token: response.data.token }
       window.localStorage.setItem(
-        "LoggedTmcUser",
+        'LoggedTmcUser',
         JSON.stringify(cacheUser)
       )
       const newToken = {
@@ -159,13 +159,13 @@ class App extends React.Component {
       }
       return true
     } catch (exception) {
-      this.props.notify("Invalid username or password", 4000)
+      this.props.notify('Invalid username or password', 4000)
       return false
     }
   }
 
   handleLogout = () => {
-    window.localStorage.removeItem("LoggedTmcUser")
+    window.localStorage.removeItem('LoggedTmcUser')
     this.props.setLoggedUser(null)
   }
 
@@ -176,26 +176,26 @@ class App extends React.Component {
     return (
       <HashRouter>
         <div>
-          <h1 className="header__title">Hunt for Glory</h1>
-          <div className="header">
-            <ul className="headerButtons">
+          <h1 className='header__title'>Hunt for Glory</h1>
+          <div className='header'>
+            <ul className='headerButtons'>
               <li>
-                <NavLink exact to="/">
+                <NavLink exact to='/'>
                   Quests
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/leaderboard">Leaderboard</NavLink>
+                <NavLink to='/leaderboard'>Leaderboard</NavLink>
               </li>
               <li>
-                <NavLink to="/userpage">Userpage</NavLink>
+                <NavLink to='/userpage'>Userpage</NavLink>
               </li>
             </ul>
           </div>
           <Notification />
           <ErrorMessage />
           {this.props.loggedUser === null ? (
-            <div className="login">
+            <div className='login'>
               <LoginForm handleLogin={this.handleLogin} />
             </div>
           ) : (
@@ -205,16 +205,16 @@ class App extends React.Component {
                     <WelcomePage handleExit={this.exitWelcome.bind(this)} />
                   </div>
                   :
-                  <div className="content">
+                  <div className='content'>
                     <Route
-                      exact path="/quests/0"
+                      exact path='/quests/0'
                       render={() => (
-                        <Redirect to="/" />
+                        <Redirect to='/' />
                       )} />
                     <Route
                       exact
-                      path="/feedbacks/:id"
-                      defaultParams={{ id: "0" }}
+                      path='/feedbacks/:id'
+                      defaultParams={{ id: '0' }}
                       render={({ match }) => (
                         <ShowFeedback
                           feedback={feedbackById(match.params.id)}
@@ -224,22 +224,22 @@ class App extends React.Component {
                     />
                     <Route
                       exact
-                      path="/feedbacks"
+                      path='/feedbacks'
                       render={() => (
                         <FeedbackList
                           key='feedbacks' />)}
                     />
                     <Route
                       exact
-                      path="/groups"
+                      path='/groups'
                       render={() => (
                         <GroupingPage />)}
                     />
                     <SwipeableRoutes>
                       <Route
                         exact
-                        path="/quests/:id"
-                        defaultParams={{ id: "0" }}
+                        path='/quests/:id'
+                        defaultParams={{ id: '0' }}
                         render={({ match }) => (
                           <ShowOne
                             quest={questById(match.params.id)}
@@ -249,19 +249,19 @@ class App extends React.Component {
                       />
                       <Route
                         exact
-                        path="/"
+                        path='/'
                         render={() => (
                           <ShowAll
                             key='showAll' />)}
                       />
                       <Route
-                        path="/leaderboard"
+                        path='/leaderboard'
                         render={() => (
                           <Leaderboard
                             key='leaderboard' />)}
                       />
                       <Route
-                        path="/userpage"
+                        path='/userpage'
                         render={() => (
                           <Userpage
                             key='userpage' />)}

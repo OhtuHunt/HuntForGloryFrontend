@@ -2,7 +2,8 @@ import React from 'react'
 import Toggleable from './Toggleable'
 import { notify } from '../reducers/notificationReducer'
 import { joinCourse } from '../reducers/courseReducer'
-import { initializeQuests } from '../reducers/questReducer'
+import { getCourseQuests } from '../reducers/questReducer'
+import { updateUser } from '../reducers/usersReducer'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit'
 
@@ -37,7 +38,12 @@ class JoinCourse extends React.Component {
         if (!this.props.startVisible) {
             this.JoinCourse.toggleVisibility()
         }
-        await this.props.initializeQuests()
+        console.log("BEFORE")
+        console.log(this.props.users)
+        await this.props.getCourseQuests(this.state.courseId)
+        await this.props.updateUser(this.props.loggedUser)
+        console.log("AFTER")
+        console.log(this.props.users)
         this.props.notify(`Joined course`, 4000)
 
         this.setState({
@@ -58,14 +64,14 @@ class JoinCourse extends React.Component {
 
     render() {
         return (
-            <Toggleable buttonLabel="Join course" cancelButtonLabel='Cancel' startVisible={this.props.startVisible} ref={component => this.JoinCourse = component}>
-                <div className="createform">
+            <Toggleable buttonLabel='Join course' cancelButtonLabel='Cancel' startVisible={this.props.startVisible} ref={component => this.JoinCourse = component}>
+                <div className='createform'>
                     <h2> Join Course </h2>
                     <form onSubmit={this.handleSubmit}>
-                        <div className="form-group">
+                        <div className='form-group'>
 
                             <p>course</p>
-                            <select name="courseId" value={this.state.courseId} onChange={this.handleChange}>
+                            <select name='courseId' value={this.state.courseId} onChange={this.handleChange}>
                                 {this.props.courses.map(function (course) {
                                     return (
                                         <option key={course.id} value={course.id}>{course.name}</option>
@@ -75,10 +81,10 @@ class JoinCourse extends React.Component {
                         </div>
                         {this.state.loading ?
                             <div style={{ marginLeft: '49%' }}>
-                                <Spinner name="circle" fadeIn="none" />
+                                <Spinner name='circle' fadeIn='none' />
                             </div>
                             :
-                            <button type="submit">Join</button>}
+                            <button type='submit'>Join</button>}
                     </form>
                 </div>
             </Toggleable>
@@ -89,9 +95,10 @@ class JoinCourse extends React.Component {
 const mapStateToProps = (state) => {
     return {
         courses: state.courses,
-        loggedUser: state.loggedUser
+        loggedUser: state.loggedUser,
+        users: state.users
     }
 }
 
 export default connect(mapStateToProps,
-    { joinCourse, notify, initializeQuests })(JoinCourse)
+    { joinCourse, notify, getCourseQuests, updateUser })(JoinCourse)

@@ -32,7 +32,7 @@ class Userpage extends React.Component {
     }
 
     handleDeleteAccount = () => {
-        if (window.confirm("Do you want to delete your account?")) {
+        if (window.confirm('Do you want to delete your account?')) {
             this.props.removeUser(this.props.loggedUser.id)
             this.handleLogout()
         }
@@ -40,7 +40,7 @@ class Userpage extends React.Component {
     }
 
     handleLogout = () => {
-        window.localStorage.removeItem("LoggedTmcUser")
+        window.localStorage.removeItem('LoggedTmcUser')
         this.props.setLoggedUser(null)
     }
 
@@ -106,15 +106,6 @@ class Userpage extends React.Component {
     }
 
     render() {
-        const userCourses = this.props.courses.filter(course => {
-            let isAttending = false
-            let returnValue = true
-            this.props.loggedUser.courses.map(uc => {
-                uc.course === course.id ? isAttending = true : returnValue = false
-                return returnValue
-            })
-            return isAttending
-        })
 
         return (
             <div style={{ height: window.innerHeight * 0.78, overflow: 'auto' }} className='userpage'>
@@ -123,7 +114,7 @@ class Userpage extends React.Component {
                         <h2>Hello {this.props.loggedUser.username}!</h2>
                         <br></br>
                         <h3>You are attending the following courses</h3>
-                        {userCourses.map(course => <div key={course.id}>{course.name}</div>)}
+                        {this.props.loggedUser.courses.map(course => <div key={course.id}>{course.name}</div>)}
                         <br></br>
                         <br></br>
                         <button onClick={this.handleLogout}>Logout</button>

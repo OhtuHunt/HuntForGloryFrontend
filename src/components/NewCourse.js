@@ -3,21 +3,21 @@ import Toggleable from './Toggleable'
 import { notify } from '../reducers/notificationReducer'
 import { createCourse } from '../reducers/courseReducer'
 import { connect } from 'react-redux'
-import "../index.css";
+import '../index.css';
 import validateCourse from '../validators/courseValidator'
 import { showErrors } from '../reducers/errorMessageReducer'
 
 const CourseForm = ({ onSubmit, handleChange, name, courseCode }) => {
     return (
-        <div className="createform">
+        <div className='createform'>
             <h2>create new course</h2>
 
             <form onSubmit={onSubmit}>
                 <div>
                     <p>name</p>
                     <input
-                        type="text"
-                        name="name"
+                        type='text'
+                        name='name'
                         value={name}
                         onChange={handleChange}
                     />
@@ -25,13 +25,13 @@ const CourseForm = ({ onSubmit, handleChange, name, courseCode }) => {
                 <div>
                     <p>course code</p>
                     <input
-                        type="textarea"
-                        name="courseCode"
+                        type='textarea'
+                        name='courseCode'
                         value={courseCode}
                         onChange={handleChange}
                     />
                 </div>
-                <button type="submit">create</button>
+                <button type='submit'>create</button>
             </form>
         </div>
     )
@@ -41,8 +41,8 @@ class NewCourse extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: "",
-            courseCode: ""
+            name: '',
+            courseCode: ''
         }
     }
 
@@ -71,8 +71,8 @@ class NewCourse extends React.Component {
         this.props.notify(`${courseObject.name} has been created.`, 4000)
 
         this.setState({
-            name: "",
-            courseCode: ""
+            name: '',
+            courseCode: ''
         })
     }
 
@@ -84,7 +84,7 @@ class NewCourse extends React.Component {
     render() {
         return (
             <div>
-                <Toggleable buttonLabel="New course" cancelButtonLabel='Cancel' ref={component => this.CourseForm = component}>
+                <Toggleable buttonLabel='New course' cancelButtonLabel='Cancel' ref={component => this.CourseForm = component}>
                     <CourseForm
                         onSubmit={this.addCourse}
                         handleChange={this.handleChange}

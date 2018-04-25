@@ -15,8 +15,8 @@ describe.only('<ShowOne />', () => {
             loggedUser: {
                 courses: [
                     {
-                        course: "5ad790df0599b8001454399d",
-                        name: "Test course"
+                        course: '5ad790df0599b8001454399d',
+                        name: 'Test course'
                     }
                 ]
             }
@@ -26,18 +26,18 @@ describe.only('<ShowOne />', () => {
 
     it('renders quests content correctly when quest is not started', () => {
         const quest = {
-            id: "5ad791300599b800145439a0",
+            id: '5ad791300599b800145439a0',
             usersStarted: [],
-            name: "Ensimmäinen testi",
-            description: "Eka testiquest",
+            name: 'Ensimmäinen testi',
+            description: 'Eka testiquest',
             points: 10,
-            type: "activation code",
-            activationCode: "Test",
+            type: 'activation code',
+            activationCode: 'Test',
             deactivated: false,
             started: false,
             course: {
-                _id: "5ad790df0599b8001454399d",
-                name: "Test course"
+                id: '5ad790df0599b8001454399d',
+                name: 'Test course'
             }
         }
 
@@ -57,18 +57,18 @@ describe.only('<ShowOne />', () => {
 
     it('renders quests content correctly when quest is started', () => {
         const quest = {
-            id: "5ad791300599b800145439a0",
+            id: '5ad791300599b800145439a0',
             usersStarted: [],
-            name: "Ensimmäinen testi",
-            description: "Eka testiquest",
+            name: 'Ensimmäinen testi',
+            description: 'Eka testiquest',
             points: 10,
-            type: "activation code",
-            activationCode: "Test",
+            type: 'activation code',
+            activationCode: 'Test',
             deactivated: false,
             started: true,
             course: {
-                _id: "5ad790df0599b8001454399d",
-                name: "Test course"
+                id: '5ad790df0599b8001454399d',
+                name: 'Test course'
             }
         }
 
@@ -89,18 +89,18 @@ describe.only('<ShowOne />', () => {
 
     it('renders quests content correctly when quest is completed', () => {
         const quest = {
-            id: "5ad791300599b800145439a0",
+            id: '5ad791300599b800145439a0',
             usersStarted: [],
-            name: "Ensimmäinen testi",
-            description: "Eka testiquest",
+            name: 'Ensimmäinen testi',
+            description: 'Eka testiquest',
             points: 10,
-            type: "activation code",
-            activationCode: "Test",
+            type: 'activation code',
+            activationCode: 'Test',
             deactivated: false,
             finished: true,
             course: {
-                _id: "5ad790df0599b8001454399d",
-                name: "Test course"
+                id: '5ad790df0599b8001454399d',
+                name: 'Test course'
             }
         }
 
@@ -124,18 +124,18 @@ describe.only('<ShowOne />', () => {
 
     it('renders quests content correctly when quest is deactivated and not finished', () => {
         const quest = {
-            id: "5ad791300599b800145439a0",
+            id: '5ad791300599b800145439a0',
             usersStarted: [],
-            name: "Ensimmäinen testi",
-            description: "Eka testiquest",
+            name: 'Ensimmäinen testi',
+            description: 'Eka testiquest',
             points: 10,
-            type: "activation code",
-            activationCode: "Test",
+            type: 'activation code',
+            activationCode: 'Test',
             deactivated: true,
             finished: false,
             course: {
-                _id: "5ad790df0599b8001454399d",
-                name: "Test course"
+                id: '5ad790df0599b8001454399d',
+                name: 'Test course'
             }
         }
 

@@ -12,8 +12,8 @@ class EditUserInformation extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: this.props.loggedUser !== undefined ? this.props.loggedUser.username : JSON.parse(window.localStorage.getItem("LoggedTmcUser")).username,
-            email: this.props.loggedUser !== undefined ? this.props.loggedUser.email : JSON.parse(window.localStorage.getItem("LoggedTmcUser")).email,
+            username: this.props.loggedUser !== undefined ? this.props.loggedUser.username : JSON.parse(window.localStorage.getItem('LoggedTmcUser')).username,
+            email: this.props.loggedUser !== undefined ? this.props.loggedUser.email : JSON.parse(window.localStorage.getItem('LoggedTmcUser')).email,
             loading: false
         }
     }
@@ -52,7 +52,7 @@ class EditUserInformation extends React.Component {
         await this.props.setLoggedUser(user)
 
         window.localStorage.setItem(
-            "LoggedTmcUser",
+            'LoggedTmcUser',
             JSON.stringify(user)
         )
         window.scrollTo(0, 0)
@@ -76,8 +76,8 @@ class EditUserInformation extends React.Component {
 
     render() {
         return (
-            <Toggleable buttonLabel="Edit profile" startVisible={this.props.startVisible} cancelButtonLabel='Cancel' ref={component => this.EditUserInformation = component}>
-                <div className="createform">
+            <Toggleable buttonLabel='Edit profile' startVisible={this.props.startVisible} cancelButtonLabel='Cancel' ref={component => this.EditUserInformation = component}>
+                <div className='createform'>
                     <h2>Edit profile information</h2>
 
                     <form onSubmit={this.handleSubmit}>
@@ -85,8 +85,8 @@ class EditUserInformation extends React.Component {
                             <p>This is the username that is shown to others in for example leaderboards</p>
                             <label>Username</label>
                             <input
-                                type="text"
-                                name="username"
+                                type='text'
+                                name='username'
                                 value={this.state.username}
                                 onChange={this.handleFormChange}
                             />
@@ -94,18 +94,18 @@ class EditUserInformation extends React.Component {
                         <div>
                             <label>Email</label>
                             <input
-                                type="text"
-                                name="email"
+                                type='text'
+                                name='email'
                                 value={this.state.email}
                                 onChange={this.handleFormChange}
                             />
                         </div>
                         {this.state.loading ?
                             <div style={{ marginLeft: '49%' }}>
-                                <Spinner name="circle" fadeIn="none" />
+                                <Spinner name='circle' fadeIn='none' />
                             </div>
                             :
-                            <button type="submit">Save</button>}
+                            <button type='submit'>Save</button>}
                     </form>
                 </div>
             </Toggleable>
