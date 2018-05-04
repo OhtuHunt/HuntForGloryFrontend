@@ -5,7 +5,6 @@
   "dependencies": {
     "axios": "^0.17.1",
     "cors": "^2.8.4",
-    "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "mongoose": "^5.0.0",
     "prettier": "^1.10.2",
@@ -27,14 +26,14 @@
     "validator": "^9.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build && cp -r ./img ./build/static && cp ./img/icons/favicon.ico ./build/static && rm -rf ./builds/build && mv ./build ./builds/build",
-    "buildDev": "REACT_APP_ENV=development react-scripts build && cp -r ./img ./build/static && cp ./img/icons/favicon.ico ./build/static && rm -rf ./builds/buildDev && mv ./build ./builds/buildDev",
+    "start": "REACT_APP_BASE_URL=https://huntforglory.herokuapp.com react-scripts start",
+    "build": "REACT_APP_BASE_URL=https://huntforglory.herokuapp.com react-scripts build && cp -r ./img ./build/static && cp ./img/icons/favicon.ico ./build/static && rm -rf ./builds/build && mv ./build ./builds/build",
+    "buildDev": "REACT_APP_ENV=development REACT_APP_BASE_URL=https://hunttest.herokuapp.com react-scripts build && cp -r ./img ./build/static && cp ./img/icons/favicon.ico ./build/static && rm -rf ./builds/buildDev && mv ./build ./builds/buildDev",
     "buildLocal": "REACT_APP_ENV=development REACT_APP_LOCAL=true react-scripts build && cp -r ./img ./build/static && cp ./img/icons/favicon.ico ./build/static && rm -rf ./builds/buildLocal && mv ./build ./builds/buildLocal",
     "buildAll": "npm run build && npm run buildDev && npm run buildLocal",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "dev": "REACT_APP_ENV=development react-scripts start",
+    "dev": "REACT_APP_ENV=development REACT_APP_BASE_URL=https://hunttest.herokuapp.com react-scripts start",
     "localDev": "REACT_APP_LOCAL=true REACT_APP_ENV=development react-scripts start"
   },
   "devDependencies": {

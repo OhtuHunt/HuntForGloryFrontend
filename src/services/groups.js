@@ -2,7 +2,7 @@ import axios from 'axios'
 
 let baseUrl = ''
 if (process.env.REACT_APP_LOCAL !== 'true') {
-    baseUrl = process.env.REACT_APP_ENV !== 'development' ? `https://huntforglory.herokuapp.com/api/groups` : `https://hunttest.herokuapp.com/api/groups`
+    baseUrl = process.env.REACT_APP_BASE_URL
 } else {
     baseUrl = `http://localhost:3001/api/groups`
 }
@@ -42,7 +42,7 @@ const changeGroup = async (userId, groupFrom, groupTo) => {
 const createGroups = async (courseId, amount) => {
     const body = {
         groupAmount: amount
-      }
+    }
     const response = await axios.post(`${baseUrl}/course/${courseId}/generate`, body, config())
     return response.data
 }
