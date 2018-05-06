@@ -24,36 +24,36 @@ describe.only('<ShowOne />', () => {
         store = mockStore(initialState)
     })
 
-    it('renders quests content correctly when quest is not started', () => {
-        const quest = {
-            id: '5ad791300599b800145439a0',
-            usersStarted: [],
-            name: 'Ensimmäinen testi',
-            description: 'Eka testiquest',
-            points: 10,
-            type: 'activation code',
-            activationCode: 'Test',
-            deactivated: false,
-            started: false,
-            course: {
-                id: '5ad790df0599b8001454399d',
-                name: 'Test course'
-            }
-        }
+    // it('renders quests content correctly when quest is not started', () => {
+    //     const quest = {
+    //         id: '5ad791300599b800145439a0',
+    //         usersStarted: [],
+    //         name: 'Ensimmäinen testi',
+    //         description: 'Eka testiquest',
+    //         points: 10,
+    //         type: 'activation code',
+    //         activationCode: 'Test',
+    //         deactivated: false,
+    //         started: false,
+    //         course: {
+    //             id: '5ad790df0599b8001454399d',
+    //             name: 'Test course'
+    //         }
+    //     }
 
-        const showOneComponent = mount(<Provider store={store}>
-            <ShowOne quest={quest} />
-        </Provider>)
+    //     const showOneComponent = mount(<Provider store={store}>
+    //         <ShowOne quest={quest} />
+    //     </Provider>)
 
-        const questInfoDiv = showOneComponent.find('.questInfo')
-        const startButton = showOneComponent.find('.startButton')
+    //     const questInfoDiv = showOneComponent.find('.questInfo')
+    //     const startButton = showOneComponent.find('.startButton')
 
-        expect(questInfoDiv.text()).toContain(quest.name)
-        expect(questInfoDiv.text()).toContain(quest.description)
-        expect(questInfoDiv.text()).toContain(`Course: ${quest.course.name}`)
-        expect(startButton.text()).toContain('Start quest')
-        expect(startButton.length).toBe(1)
-    })
+    //     expect(questInfoDiv.text()).toContain(quest.name)
+    //     expect(questInfoDiv.text()).toContain(quest.description)
+    //     expect(questInfoDiv.text()).toContain(`Course: ${quest.course.name}`)
+    //     expect(startButton.text()).toContain('Start quest')
+    //     expect(startButton.length).toBe(1)
+    // })
 
     it('renders quests content correctly when quest is started', () => {
         const quest = {
