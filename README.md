@@ -24,6 +24,8 @@ Scripts in package.json contain scripts for running and buildint the application
 | REACT_APP_BASE_URL | The URL for backend to connect to |
 | REACT_APP_LOCAL | True if running local and connecting to localhost:3001 |
 
+In addition, the userpage has PUBLIC_KEY to use with push notifications. Private key is stored in heroku's config variables.
+
 ### Building
 
 Run `npm run build` to generate optimized production build. Make sure to do this in the root, since copying the icons is configured so. Run `npm run buildDev` to make optimized development build. `npm run buildLocal` for optimized local build.
