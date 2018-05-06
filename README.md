@@ -14,9 +14,26 @@
 
 Frontend is implemented with ReactJS, while backend uses Node.js.
 
+### Environment variables
+
+Scripts in package.json contain scripts for running and buildint the application. These scripts contain few environment variables:
+
+| Variable | Description |
+| --------- | ----------- |
+| REACT_APP_ENV | Environment for running/building |
+| REACT_APP_BASE_URL | The URL for backend to connect to |
+| REACT_APP_LOCAL | True if running local and connecting to localhost:3001 |
+
 ### Building
 
-Run `npm run build` to generate optimized production build. Make sure to do this in the root, since copying the icons is configured so.
+Run `npm run build` to generate optimized production build. Make sure to do this in the root, since copying the icons is configured so. Run `npm run buildDev` to make optimized development build. `npm run buildLocal` for optimized local build.
+Running `npm run buildAll` creates a "builds" folder which contains build folders for production, development and local environments. 
+
+### Running
+
+- `npm start` to run the app connected to production backend.
+- `npm run dev` to run the app connected to development backend.
+- `npm run localDev` to run the app connected to https://localhost:3001.
 
 ### License
 Copyright 2018 OhtuHunt
