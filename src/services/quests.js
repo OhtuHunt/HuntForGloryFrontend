@@ -2,7 +2,7 @@ import axios from 'axios'
 
 let baseUrl = ''
 if (process.env.REACT_APP_LOCAL !== 'true') {
-    baseUrl = process.env.REACT_APP_BASE_URL
+    baseUrl = process.env.REACT_APP_BASE_URL+'/api/quests'
 } else {
     baseUrl = `http://localhost:3001/api/quests`
 }
